@@ -1,0 +1,38 @@
+Telegram username: @agency_novo_test_bot
+Telegram token: 6162036537:AAEwYYAcbjyG4GX1iK1EvT9VElKxgZfaVrE
+Chat id: -1001751402319
+
+1. Написать - @BotFather
+2. /start
+3. /newbot - create a new bot
+4.  Please choose a name for your bot.
+5.  Now let's choose a username for your bot
+7. Создать группу в телеге
+8. Добавить в нее своего бота;
+9. Сделать бота админом;
+10. Отправить в power shell  curl https://api.telegram.org/bot6162036537:AAEwYYAcbjyG4GX1iK1EvT9VElKxgZfaVrE/getUpdates
+11. https://api.telegram.org/bot6162036537:AAEwYYAcbjyG4GX1iK1EvT9VElKxgZfaVrE/getUpdates - открыть ссылку в браузере
+12. В группу в телеге отправить сообщение
+13. Обновить страницу в браузере
+   "chat": {
+          "id": -1001751402319,
+          "title": "Asser_Allure",
+          "type": "supergroup"
+        },
+        "date": 1680376228,
+        "text": "привет"
+14. Взять из сообщения  "id": Chat id: -1001751402319,
+15. Send a message using the HTTP API:
+curl -X POST  -H 'Content-Type: application/json' -d '{"chat_id": "123456789", "text": "This is a test from curl", "disable_notification": true}' https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage
+curl -X POST  -H 'Content-Type: application/json' -d '{"chat_id": "-1001751402319", "text": "This is a test from qa.guru", "disable_notification": true}' https://api.telegram.org/bot6162036537:AAEwYYAcbjyG4GX1iK1EvT9VElKxgZfaVrE/sendMessage
+16. Через консоль команда не прошла, отправила постманом (позже посоветовали гит баш, тоже ок)
+17. Скачать последнюю версию библиотеки https://github.com/qa-guru/allure-notifications/releases/tag/4.2.1
+18. В папку notifications добавить скачанный файл allure....jar
+19. В папке notifications создать файл config.json со следующей структурой (оставить раздел base и тот мессенджер, на который требуется отправлять оповещения):
+20. Выполнить в терминале следующую команду: (Run jar with notifications_
+    java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.2.1.jar //в повер шелл
+
+
+Slack
+channel: #qa_guru_17
+bot token: xoxb-1687076169986-4740795293235-tKVUiaaj6EBeSJuZfqcrXXal

@@ -1,0 +1,17 @@
+{
+  "base": {
+    "logo": "",
+    "project": "novo-estate.ru",
+    "environment": "",
+    "comment": "Tests report, @katia_prud",
+    "reportLink": "",
+    "language": "en",
+    "allureFolder": "C:\\Git\\novo_estate\\build\\reports\\allure-report\\allureReport\\",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "6162036537:AAEwYYAcbjyG4GX1iK1EvT9VElKxgZfaVrE",
+    "chat": "-1001751402319",
+    "replyTo": ""
+  }
+}
