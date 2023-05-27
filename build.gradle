@@ -1,0 +1,74 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+    id "io.freefair.lombok" version "6.0.0-m2"
+}
+
+group 'ru.prudnikova'
+version '1.0-SNAPSHOT'
+
+allure {
+    report {
+        version.set("2.19.0")
+    }
+    adapter {
+        aspectjWeaver.set true
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.19.0")
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter:5.9.2',
+            "com.codeborne:selenide:6.13.0",
+            "io.qameta.allure:allure-selenide:2.21.0",
+            "com.github.javafaker:javafaker:1.0.2",
+            'org.aeonbits.owner:owner:1.0.12',
+            "io.rest-assured:rest-assured:5.3.0",
+            'io.rest-assured:json-schema-validator:5.3.0',
+            'com.fasterxml.jackson.core:jackson-databind:2.15.1',
+            'org.slf4j:slf4j-simple:2.0.7',
+            "io.qameta.allure:allure-rest-assured:2.21.0",
+            'mysql:mysql-connector-java:8.0.32',
+            "org.springframework:spring-jdbc:5.3.27"
+    )
+}
+
+tasks.withType(Test) {//благодаря этой строчке передаются параметры в скрипт сборки
+    systemProperties(System.getProperties())
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+}
+
+task novoApi(type: Test) {
+    useJUnitPlatform {
+        includeTags "Api"
+    }
+}
+
+
+task novoWeb(type: Test) {
+    useJUnitPlatform {
+        includeTags "Web"
+    }
+}
+
