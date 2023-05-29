@@ -125,4 +125,8 @@ gradle test -Denv=remote
   
 <a name="Video"><h2>:movie_camera: Видео пример прохождения тестов</h2></a>
   
-https://github.com/PrudnikovaEkaterina/Novo/blob/31d0155c8f8c580c86b02f4629ead4d45b4d117b/design/video/499795bd7c887581758586676ca83ff3-Trim.gif
+  <p align="center">
+  <img src="design/video/499795bd7c887581758586676ca83ff3-Trim.gif" alt="test">
+</p>
+
+ 
