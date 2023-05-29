@@ -30,8 +30,9 @@ public class NovostroykiPage {
     CallMeWidget callMeWidget = new CallMeWidget();
     Footer footer = new Footer();
 
-    public void openNovostroykiPage() {
+    public NovostroykiPage openNovostroykiPage() {
         open("/novostroyki");
+        return this;
     }
 
     public void verifySearchBuildingTitleText(String title) {
