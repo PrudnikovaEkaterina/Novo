@@ -99,3 +99,7 @@ gradle clean test
 - <a name="Integration_Allure_TestOps2"><h3>Страница с тестами в [TestOps](https://allure.autotests.cloud/launch/24091/tree?treeId=4235)</h3></a>
 
 ![This is an image](design/pictures/tes2.png)
+
+<a name="Telegram"><h2>:iphone: Отчет в Telegram</h2></a>
+
+![This is an image](design/pictures/tel.png)
