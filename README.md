@@ -73,3 +73,4 @@ gradle clean test
 - BROWSER_SIZE (размер окна браузера, по умолчанию 2500х1080)
 
 ![This is an image](design/pictures/jenk_par.png)
+![This is an image](design/pictures/jen_pr.png)
