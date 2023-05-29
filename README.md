@@ -15,6 +15,7 @@
   + [Страница с проведенными тестами](#Allure_report2)
 + [:bar_chart: Интеграция с Allure TestOps](#Integration_Allure_TestOps)
 + [:iphone: Отчет в Telegram](#Telegram)
++ [:movie_camera: Видео пример прохождения тестов](#Video)
   
 <a name="Description"><h2>Описаниe</h2></a>
 Тестовый проект состоит из UI и API автотестов. Автотесты в этом проекте написаны на `Java` с использованием `Selenide`.\
@@ -121,3 +122,7 @@ gradle test -Denv=remote
 <a name="Telegram"><h2>:iphone: Отчет в Telegram</h2></a>
 
 ![This is an image](design/pictures/tel.png)
+  
+<a name="Video"><h2>:movie_camera: Видео пример прохождения тестов</h2></a>
+
+https://github.com/PrudnikovaEkaterina/Novo/blob/master/design/video/499795bd7c887581758586676ca83ff3%20-%20Trim.mp4
