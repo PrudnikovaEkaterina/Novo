@@ -91,8 +91,13 @@ gradle clean test
 
 ![This is an image](design/pictures/allure_2.png)
 
-<a name="Integration_Allure_TestOps"><h2>:bar_chart: Интеграция с Allure [TestOps][(https://allure.autotests.cloud/launch/24448)</h2></a>
+<a name="Integration_Allure_TestOps"><h2>:bar_chart: Интеграция с Allure [TestOps](https://allure.autotests.cloud/launch/24448)</h2></a>
 
 - <a name="Integration_Allure_TestOps1"><h3>Экран с результатами запуска тестов</h3></a>
 
-![This is an image](design/pictures/tes1.png)
+![This is an image](design/pictures/test1.png)
+
+
+- <a name="Integration_Allure_TestOps2"><h3>Страница с тестами в [TestOps](https://allure.autotests.cloud/launch/24091/tree?treeId=4235)</h3></a>
+
+![This is an image](design/pictures/test2.png)
