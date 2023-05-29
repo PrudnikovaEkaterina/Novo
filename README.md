@@ -71,3 +71,5 @@ gradle clean test
 - BROWSER_SIZE (размер окна браузера, по умолчанию 2500х1080)
 
 - TASK (с какими тегами запускать тесты)
+
+![This is an image](design/pictures/jenk_par.png)
