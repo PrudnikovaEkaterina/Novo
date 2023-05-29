@@ -32,7 +32,7 @@ public class NovostroykiPage {
 
     public void openNovostroykiPage() {
 
-        open(baseUrl+"/novostroyki");
+        open("https://novo-dom.ru/novostroyki");
     }
 
     public void verifySearchBuildingTitleText(String title) {
