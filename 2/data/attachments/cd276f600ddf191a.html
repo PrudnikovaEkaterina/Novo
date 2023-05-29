@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "email": "darcey.howe@gmail.com"
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2MzMzLCJleHAiOjE2ODUzNTgxMzMsIm5iZiI6MTY4NTM1NjMzMywianRpIjoidXNweWhEQ1VOOFEwa3NkZyIsInN1YiI6IjM5MCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.KTuP6xFXvQNqBzaa4AHGN3nCWjAZE_Kap-wuTQ3NDIDIgPFJNqU67dJsDZ46x7NnCkBdAwch_L62-R7agu2zmbrdY48BBD_UL9GWuEOhUHBk8McnMUeLnYiABQSZa6QyLDaNWevZXeaDSNDC3W2Lr9ttf0gqXa3ocO3NdObe2Hn7JZ5xL-X7wttNdHqszWRa1u1DI-h2pu2CZUtqACSn30bJDo_pEMTdjptSrkJUNPO9dtDkKwrt8OYU-u4swmpVQSaHYVz8_SlYVn9CeKQda6rLsV61n5vBH_yX9NaAKwiNbrPIgpLRE5shZUkDBfsFJpPu_pKFV-CThOBhyz-Hn-AeIy1RgAQw6v9yvG4ZikE0_WDkel1s7lD7WCmmFRU5AMpiYl6JrnzjclEuFqbyk3isDsbzK1JN7R84-V-5_9MqdMg8V36ubWh3B3G2egruJwFO_GwxkBSyNoiMD36F5suECBvuA12jetdqqiTbQ5u7c0ojqrWnFcqQ-IOVe2y69ZPcG1HXrQjuTFp7GTFFv6E_i75EPA8QjuVA0-PxKUNyokj-XLJsP-oIYpduE3h8Hl-e_Ff3f71fXfW2vF9MDk6D7X3fOLZqQji8V07d-zbm-dpOrWYz-UM6kRaCbAgrag8oNp6Ivi9YOXyn7GeR-m0oXOXbeZrIGJIdwgIWMTE</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2MzMzLCJleHAiOjE2ODUzNTgxMzMsIm5iZiI6MTY4NTM1NjMzMywianRpIjoidXNweWhEQ1VOOFEwa3NkZyIsInN1YiI6IjM5MCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.KTuP6xFXvQNqBzaa4AHGN3nCWjAZE_Kap-wuTQ3NDIDIgPFJNqU67dJsDZ46x7NnCkBdAwch_L62-R7agu2zmbrdY48BBD_UL9GWuEOhUHBk8McnMUeLnYiABQSZa6QyLDaNWevZXeaDSNDC3W2Lr9ttf0gqXa3ocO3NdObe2Hn7JZ5xL-X7wttNdHqszWRa1u1DI-h2pu2CZUtqACSn30bJDo_pEMTdjptSrkJUNPO9dtDkKwrt8OYU-u4swmpVQSaHYVz8_SlYVn9CeKQda6rLsV61n5vBH_yX9NaAKwiNbrPIgpLRE5shZUkDBfsFJpPu_pKFV-CThOBhyz-Hn-AeIy1RgAQw6v9yvG4ZikE0_WDkel1s7lD7WCmmFRU5AMpiYl6JrnzjclEuFqbyk3isDsbzK1JN7R84-V-5_9MqdMg8V36ubWh3B3G2egruJwFO_GwxkBSyNoiMD36F5suECBvuA12jetdqqiTbQ5u7c0ojqrWnFcqQ-IOVe2y69ZPcG1HXrQjuTFp7GTFFv6E_i75EPA8QjuVA0-PxKUNyokj-XLJsP-oIYpduE3h8Hl-e_Ff3f71fXfW2vF9MDk6D7X3fOLZqQji8V07d-zbm-dpOrWYz-UM6kRaCbAgrag8oNp6Ivi9YOXyn7GeR-m0oXOXbeZrIGJIdwgIWMTE' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "email": "darcey.howe@gmail.com"
+}'</code></pre>
+    </div>
+</body>
+</html>
