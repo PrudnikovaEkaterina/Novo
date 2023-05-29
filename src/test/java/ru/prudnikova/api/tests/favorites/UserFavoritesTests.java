@@ -27,7 +27,6 @@ public class UserFavoritesTests {
         List<Integer> userFavoritesBuildingListActual = UserFavoritesSteps.getUserFavoritesBuilding(accessToken);
         List<Integer> userFavoritesBuildingListExpected = UserFavoritesManager.selectEntityIdFromFavoritesForUser(userId);
         assertIterableEquals(userFavoritesBuildingListExpected, userFavoritesBuildingListActual);
-
     }
 
 }

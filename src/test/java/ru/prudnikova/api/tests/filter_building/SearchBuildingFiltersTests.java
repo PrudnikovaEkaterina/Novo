@@ -9,7 +9,6 @@ import ru.prudnikova.api.steps.filter_building.SearchBuildingFiltersSteps;
 
 public class SearchBuildingFiltersTests {
 
-
     @Test
     @Owner("PrudnikovaEkaterina")
     @Tag("Api")
@@ -18,9 +17,7 @@ public class SearchBuildingFiltersTests {
         int stationId = 57;
         DataBuilding dataBuilding = SearchBuildingFiltersSteps.getBuildingListWithFilterStation(stationId);
         SearchBuildingFiltersSteps.checkBuildingListContainsStationId(dataBuilding, stationId);
-
     }
-
 
     @Test
     @Owner("PrudnikovaEkaterina")
@@ -30,8 +27,6 @@ public class SearchBuildingFiltersTests {
         int roadId = 68;
         DataBuilding dataBuilding = SearchBuildingFiltersSteps.getBuildingListWithFilterRoads(roadId);
         SearchBuildingFiltersSteps.checkBuildingListContainsRoadId(dataBuilding, roadId);
-
     }
-
 
 }

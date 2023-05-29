@@ -25,5 +25,4 @@ public class UserFavoritesBD {
     private Date updatedAt;
 
 
-
 }

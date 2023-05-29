@@ -11,7 +11,6 @@ public class SearchNovostroykiFilters {
             PRICE_FROM_INPUT = $x("//input[@placeholder='Цена от']"),
             PRICE_TO_INPUT = $x("//input[@placeholder='до']");
 
-
     public SearchNovostroykiFilters setValueInGeoSearchFilter(String value) {
         GEO_SEARCH_FILTER.setValue(value);
         return this;
@@ -21,7 +20,6 @@ public class SearchNovostroykiFilters {
         $x("//li[@class='el-select-dropdown__item']//span[text()='" + searchItemName + "']").click();
         return this;
     }
-
 
     public SearchNovostroykiFilters selectDropdownDistrict(String searchDistrictName) {
         $x("//li[@class='el-select-dropdown__item']//span[text()='район " + searchDistrictName + "']").click();

@@ -21,7 +21,6 @@ public class Header {
             USER_MENU_DROPDOWN_TEXT_PROFILE = $$(".user-menu__dropdown-text").first(),
             USER_MENU_DROPDOWN_TEXT_EXIT = $$(".user-menu__dropdown-text").last();
 
-
     public Header followingNovostroykiLink() {
         NOVOSTROYKI_LINK.click();
         sleep(2000);
@@ -43,7 +42,6 @@ public class Header {
         apartmentQuizModal.verifyApartmentQuizModalTitle();
     }
 
-
     public Header followingAboutLink() {
         ABOUT_LINK.click();
         sleep(2000);
@@ -53,7 +51,6 @@ public class Header {
     public void verifyUrlFollowingAboutLink() {
         Assertions.assertEquals(baseUrl + "/about", url());
     }
-
 
     public Header followingContactsLink() {
         CONTACTS_LINK.click();
@@ -92,6 +89,5 @@ public class Header {
         USER_MENU_DROPDOWN_TEXT_EXIT.click();
         HEADER_ACCOUNT_TEXT.shouldHave(Condition.text("Войти"));
     }
-
 
 }

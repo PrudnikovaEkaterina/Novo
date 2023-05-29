@@ -8,5 +8,4 @@ import lombok.Data;
 public class UserLoginBodyModel {
     private String password;
     private String phone;
-
 }

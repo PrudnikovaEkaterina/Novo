@@ -3,8 +3,6 @@ package ru.prudnikova.data_base;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.aeonbits.owner.ConfigCache;
 import ru.prudnikova.config.DataBaseConfig;
-
-
 import javax.sql.DataSource;
 
 public enum DataSourceProvider {
@@ -13,6 +11,7 @@ public enum DataSourceProvider {
     DataBaseConfig dataBaseConfig = ConfigCache.getOrCreate(DataBaseConfig.class);
 
     private DataSource dataSource;
+
     public DataSource getDataSource() {
         if (dataSource == null) {
             MysqlDataSource mysqlDataSource = new MysqlDataSource();

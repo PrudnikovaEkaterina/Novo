@@ -40,7 +40,6 @@ public class MeTests extends TestBase {
     void changeUserEmail() {
         String userEmail = GenerationData.setRandomEmail();
         mePage.changeUserEmail(userEmail).verifyChangeUserEmail(userEmail);
-
     }
 
     @AfterEach

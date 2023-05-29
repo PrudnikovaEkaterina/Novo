@@ -10,9 +10,9 @@ import ru.prudnikova.test_data.GenerationData;
 
 
 public class ProfileTests {
+
     String phone= GenerationData.setRandomPhoneNumber();
     String accessToken = AuthSteps.getAccessToken(phone);
-
 
     @Test
     @Owner("PrudnikovaEkaterina")
@@ -41,6 +41,5 @@ public class ProfileTests {
         String email=GenerationData.setRandomEmail();
         ProfileSteps.changeUsernameAndEmail(accessToken, userName, email);
     }
-
 
 }

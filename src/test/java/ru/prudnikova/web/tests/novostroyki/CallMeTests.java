@@ -8,14 +8,16 @@ import ru.prudnikova.test_data.GenerationData;
 import ru.prudnikova.data_base.domain.CallbackPhonesBD;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.tests.TestBase;
+
 import java.util.List;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
 
 @Tag("Web")
 @Story("CallbackPhone")
 public class CallMeTests extends TestBase {
     NovostroykiPage novostroykiPage = new NovostroykiPage();
-   CallbackPhonesManager callbackPhonesManager=new CallbackPhonesManager();
+    CallbackPhonesManager callbackPhonesManager = new CallbackPhonesManager();
 
     @BeforeEach
     void beforeEach() {
@@ -26,16 +28,14 @@ public class CallMeTests extends TestBase {
     @Owner("PrudnikovaEkaterina")
     @DisplayName("Отправить заполненную форму Заказать звонок и проверить добавление соответсвующей записи в БД")
     void orderCallBackAndСheckAdditionInDatabase() {
-        String callbackPhoneModalTitle ="Укажите Ваш номер телефона и мы перезвоним!";
-        String phoneNumber= GenerationData.setRandomPhoneNumber();
-        String phoneThanksModalTitle= "Спасибо!\n" + "Мы уже обрабатываем вашу заявку";
+        String callbackPhoneModalTitle = "Укажите Ваш номер телефона и мы перезвоним!";
+        String phoneNumber = GenerationData.setRandomPhoneNumber();
+        String phoneThanksModalTitle = "Спасибо!\n" + "Мы уже обрабатываем вашу заявку";
         novostroykiPage.hoverSearchItemContent().openCallMeWidget().verifyCallbackPhoneModalTitle(callbackPhoneModalTitle)
                 .setPhoneNumber(phoneNumber).clickCallMeButton().verifyPhoneThanksModalTitle(phoneThanksModalTitle);
-        List<CallbackPhonesBD> result =callbackPhonesManager.selectLastEntryFromCallbackPhonesTables();
+        List<CallbackPhonesBD> result = callbackPhonesManager.selectLastEntryFromCallbackPhonesTables();
         Assertions.assertEquals(phoneNumber, result.get(0).getPhone());
-        Assertions.assertEquals(baseUrl+"/novostroyki", result.get(0).getLink());
-
-
+        Assertions.assertEquals(baseUrl + "/novostroyki", result.get(0).getLink());
     }
 
 }

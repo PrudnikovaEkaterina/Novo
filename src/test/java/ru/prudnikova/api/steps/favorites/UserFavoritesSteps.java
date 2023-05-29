@@ -14,8 +14,8 @@ import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
 public class UserFavoritesSteps {
     @Step("Получить список избранных ЖК пользователя")
-    public static List<Integer> getUserFavoritesBuilding (String accessToken) {
-       DataBuilding dataBuilding = given()
+    public static List<Integer> getUserFavoritesBuilding(String accessToken) {
+        DataBuilding dataBuilding = given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)
                 .header("Authorization", "Bearer " + accessToken)
@@ -24,6 +24,6 @@ public class UserFavoritesSteps {
                 .then()
                 .spec(responseSpec200)
                 .extract().as(DataBuilding.class);
-      return dataBuilding.getData().stream().map(Building::getId).collect(Collectors.toList());
+        return dataBuilding.getData().stream().map(Building::getId).collect(Collectors.toList());
     }
 }

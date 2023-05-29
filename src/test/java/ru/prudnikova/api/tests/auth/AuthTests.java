@@ -18,7 +18,6 @@ public class AuthTests {
     @DisplayName("Авторизация пользователя")
     void auth() {
         AuthSteps.auth(phoneNumber);
-
     }
 
     @Test

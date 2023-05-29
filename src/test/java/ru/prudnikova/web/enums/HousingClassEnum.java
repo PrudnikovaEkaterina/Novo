@@ -6,7 +6,7 @@ public enum HousingClassEnum {
     public final String name;
 
     HousingClassEnum(String name) {
-        this.name =name;
+        this.name = name;
     }
 
     @Override

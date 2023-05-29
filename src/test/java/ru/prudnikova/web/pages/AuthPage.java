@@ -15,9 +15,9 @@ public class AuthPage {
             PHONE_INPUT = $x("//input[@type='tel']"),
             AUTH_USER_BY_PHONE_CONFIRM_LINK = $(".el-checkbox__inner"),
             SEND_CODE_BUTTON = $x("//span[text()='Отправить код для входа ']"),
-            PASSWORD_INPUT= $x("//input[@type='text']"),
-            USER_NAME_INPUT=$x("//input[@type='text']"),
-            AUTH_TITLE=$(".complete-auth__title"),
+            PASSWORD_INPUT = $x("//input[@type='text']"),
+            USER_NAME_INPUT = $x("//input[@type='text']"),
+            AUTH_TITLE = $(".complete-auth__title"),
             COMPLETE_AUTH_NAME_BUTTON = $(".complete-auth__submit");
 
     AuthConfig authConfig = ConfigCache.getOrCreate(AuthConfig.class);
@@ -28,7 +28,6 @@ public class AuthPage {
         WebDriverRunner.getWebDriver().manage().addCookie(authCookie);
         open("/auth");
     }
-
 
     public AuthPage setPhone(String phone) {
         PHONE_INPUT.setValue(phone);
@@ -45,26 +44,24 @@ public class AuthPage {
         return this;
     }
 
-    public AuthPage setSmsCode (String smsCode) {
+    public AuthPage setSmsCode(String smsCode) {
         PASSWORD_INPUT.setValue(smsCode);
         return this;
     }
 
-    public AuthPage checkAuthTitle () {
+    public AuthPage checkAuthTitle() {
         AUTH_TITLE.shouldHave(Condition.text("Как к Вам обращаться?"));
         return this;
     }
 
 
-    public AuthPage setUserName (String name) {
+    public AuthPage setUserName(String name) {
         USER_NAME_INPUT.setValue(name);
         return this;
     }
 
-    public void clickCompleteAuthNameButton () {
+    public void clickCompleteAuthNameButton() {
         COMPLETE_AUTH_NAME_BUTTON.click();
     }
-
-
 
 }

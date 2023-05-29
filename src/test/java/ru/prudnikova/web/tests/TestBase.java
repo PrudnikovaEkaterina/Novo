@@ -14,6 +14,7 @@ import ru.prudnikova.web.helpers.Attach;
 import java.util.Map;
 
 public class TestBase {
+
     @BeforeAll
     public static void setUp() {
         ProjectConfig projectConfig = ConfigCache.getOrCreate(ProjectConfig.class);
@@ -30,6 +31,7 @@ public class TestBase {
                 "enableVideo", true));
         Configuration.browserCapabilities = capabilities;
     }
+
     @BeforeEach
     void addListener() {
         SelenideLogger.addListener("allure", new AllureSelenide());

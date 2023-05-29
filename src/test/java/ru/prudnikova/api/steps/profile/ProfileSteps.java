@@ -56,6 +56,5 @@ public class ProfileSteps {
                 .spec(responseSpec200)
                 .body("name", is(userName))
                 .body("email", is(email));
-
     }
 }

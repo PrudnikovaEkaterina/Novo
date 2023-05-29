@@ -23,7 +23,7 @@ public class SearchNovostroykiFiltersTests extends TestBase {
 
     NovostroykiPage novostroykiPage = new NovostroykiPage();
     SearchNovostroykiFilters searchFilters = new SearchNovostroykiFilters();
-    Footer footer =new Footer();
+    Footer footer = new Footer();
 
     @BeforeEach
     void beforeEach() {
@@ -107,7 +107,6 @@ public class SearchNovostroykiFiltersTests extends TestBase {
         searchFilters.setPriceTo(data1);
         novostroykiPage.verifyTagVisible(data2);
     }
-
 
     @Test
     @Owner("PrudnikovaEkaterina")

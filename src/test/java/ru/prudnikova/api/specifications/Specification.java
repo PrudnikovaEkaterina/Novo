@@ -6,7 +6,6 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.aeonbits.owner.ConfigCache;
 import ru.prudnikova.config.ProjectConfig;
-
 import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
@@ -22,7 +21,6 @@ public class Specification {
             .log().all()
             .contentType(ContentType.JSON);
 
-
     public static ResponseSpecification responseSpec200 = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
@@ -32,6 +30,5 @@ public class Specification {
             .log(STATUS)
             .log(BODY)
             .expectStatusCode(204).build();
-
 
 }

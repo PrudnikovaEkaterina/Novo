@@ -4,6 +4,7 @@ import com.codeborne.selenide.*;
 import ru.prudnikova.web.pages.components.CallMeWidget;
 import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.MoreFiltersModal;
+
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -59,7 +60,6 @@ public class NovostroykiPage {
         moreFiltersModal.verifyModalHeaderText();
         return moreFiltersModal;
     }
-
 
     public void verifyResultSearchByFilterHousingClass(String housingClass) {
         String[] mas = SEARCH_NOVOSTROYKI_CONTENT_TOTAL.getText().split(" ");

@@ -15,6 +15,7 @@ import ru.prudnikova.web.tests.TestBase;
 @Tag("Web")
 @Story("MoreFilterModal")
 public class MoreFilterModalTests extends TestBase {
+
     NovostroykiPage novostroykiPage = new NovostroykiPage();
     SearchNovostroykiFilters searchFilters = new SearchNovostroykiFilters();
 
@@ -30,15 +31,14 @@ public class MoreFilterModalTests extends TestBase {
         novostroykiPage.openMoreFiltersModal();
     }
 
-
     @Test
     @Owner("PrudnikovaEkaterina")
     @DisplayName("Проверить выдачу на странице /novostroyki  после примения фильтра Класс жилья")
     void clickCheckboxHousingClassAndVerifyResultSearch() {
-        String housingClass= GenerationData.setRandomHousingClass(HousingClassEnum.values());
+        String housingClass = GenerationData.setRandomHousingClass(HousingClassEnum.values());
         String numberOfFiltersSelected = "1";
         novostroykiPage.openMoreFiltersModal().clickCheckboxHousingClass(housingClass).clickShowButton();
-        novostroykiPage.verifyResultSearchByFilterHousingClass(housingClass+" класс");
+        novostroykiPage.verifyResultSearchByFilterHousingClass(housingClass + " класс");
         novostroykiPage.verifyNotificationIndicator(numberOfFiltersSelected);
     }
 

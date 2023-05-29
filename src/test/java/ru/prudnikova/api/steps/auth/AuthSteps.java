@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.is;
 import static ru.prudnikova.api.helpers.CustomAllureListener.withCustomTemplates;
 import static ru.prudnikova.api.specifications.Specification.*;
 
-
 public class AuthSteps {
 
     static AuthConfig authConfig = ConfigCache.getOrCreate(AuthConfig.class);
