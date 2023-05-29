@@ -7,6 +7,7 @@
 + [:computer: Запуск локально](#Launch_from_terminal)
   - <a href="#console-ui"> UI
   - <a href="#console-api"> API
+  - <a href="#console-remote"> Remote
 + [:clipboard: Параметры сборки в Jenkins:](#Build_Parameters_in_Jenkins)
 + [:chart_with_downwards_trend: Allure отчет](#Allure_report)
   + [Главный экран отчета](#Allure_report1)
@@ -65,6 +66,15 @@ gradle clean novoApi
 ```
 gradle clean test
 ```
+### <a id="console-remote"></a>Запуск тестов на selenoid
+
+```
+gradle test -Denv=remote
+```
+![This is an image](design/pictures/ctk1.png)
+![This is an image](design/pictures/ctk2.png)
+![This is an image](design/pictures/ctk3.png)
+  
 <a name="Build_Parameters_in_Jenkins"><h2>:clipboard: Параметры сборки в Jenkins:</h2></a>
 
 Сборка в Jenkins
