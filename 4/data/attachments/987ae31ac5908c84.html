@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "email": "claud.kuhic@yahoo.com"
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY0Mzk4LCJleHAiOjE2ODUzNjYxOTgsIm5iZiI6MTY4NTM2NDM5OCwianRpIjoid1Z5ZlAzYUhZR2dBTXBGayIsInN1YiI6IjQwOSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.UqrP9PWGGI5tb40m6sp1xP_cEc0JOdzQqlRUnnyNPzbGpR2siwvT6bpx1uo8BHw5oOruVvwyo5qKM2emDkps1cURESkzvT8q20vGxiX67VfyBmKU2k-N2Yyl5qZlqSkYwgKe8nQtw7UvUEpZ2sC_vdD57RUVGnhX42q6bvOuPaDqKcdRIKgyR4B2zecGjUmzuCoggNHcX_niqWbafXRXTPGlJuOmd4lamXLYmwMFUjTQvDQKZc6oygX16X_eUPC4itJLaqIm29ck1HqIc77nNMlpaEhvPS29TlIKTpEZXFV50xZvoB0FUy_mMLtalt-hQBVg4Sf8t4NCKGw_3KJ_hhJo_Rblzy4wG-hi0Rm0zoUBFTZb4XxmFaxMrOTwD4J3210AR9UIP3tBZt8pIKlfPGT3VU3OmMgirzaQfjeVMdqsNNT_UioHu2xl8JCKzDSDO2Q1Ny9rPanMZltP_Y94mVjv7Ha0a2XiVAqTHUoxn6mctac4wYOEIIkJypA64qJoL4l53LUeXffNP0NeNThOrh6mFoa0oM2InaGrHSPfKCxSv8ARvOjwcDJAOblE1BO354pe-JJ9NEt_iyXzTFM3XuyXp-jXnAce2D56EizAh_q8lRm1EL8KhKh8Wfvc8SRigkBOnWN8jbUJDJDAWLmtQp8W4LZUy2CNLb196EK9zMg</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY0Mzk4LCJleHAiOjE2ODUzNjYxOTgsIm5iZiI6MTY4NTM2NDM5OCwianRpIjoid1Z5ZlAzYUhZR2dBTXBGayIsInN1YiI6IjQwOSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.UqrP9PWGGI5tb40m6sp1xP_cEc0JOdzQqlRUnnyNPzbGpR2siwvT6bpx1uo8BHw5oOruVvwyo5qKM2emDkps1cURESkzvT8q20vGxiX67VfyBmKU2k-N2Yyl5qZlqSkYwgKe8nQtw7UvUEpZ2sC_vdD57RUVGnhX42q6bvOuPaDqKcdRIKgyR4B2zecGjUmzuCoggNHcX_niqWbafXRXTPGlJuOmd4lamXLYmwMFUjTQvDQKZc6oygX16X_eUPC4itJLaqIm29ck1HqIc77nNMlpaEhvPS29TlIKTpEZXFV50xZvoB0FUy_mMLtalt-hQBVg4Sf8t4NCKGw_3KJ_hhJo_Rblzy4wG-hi0Rm0zoUBFTZb4XxmFaxMrOTwD4J3210AR9UIP3tBZt8pIKlfPGT3VU3OmMgirzaQfjeVMdqsNNT_UioHu2xl8JCKzDSDO2Q1Ny9rPanMZltP_Y94mVjv7Ha0a2XiVAqTHUoxn6mctac4wYOEIIkJypA64qJoL4l53LUeXffNP0NeNThOrh6mFoa0oM2InaGrHSPfKCxSv8ARvOjwcDJAOblE1BO354pe-JJ9NEt_iyXzTFM3XuyXp-jXnAce2D56EizAh_q8lRm1EL8KhKh8Wfvc8SRigkBOnWN8jbUJDJDAWLmtQp8W4LZUy2CNLb196EK9zMg' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "email": "claud.kuhic@yahoo.com"
+}'</code></pre>
+    </div>
+</body>
+</html>

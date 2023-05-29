@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>POST: https://novo-dom.ru/api/auth/logout</code></pre>
+</div>
+
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY0NDE2LCJleHAiOjE2ODUzNjYyMTYsIm5iZiI6MTY4NTM2NDQxNiwianRpIjoiYTVFVGFjUXg2RU1XM0VoRyIsInN1YiI6IjE3MiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.NpOwZmhdh6T0wLTqPTwjwBXZQDbwLjCvEym0vIZGqlBuByzJVn9NG22HFaqgw3xLRe-iv6vayQE7UAMhh2DW5u-K6PrjhN1y1Ff6jG85dLv0G1qLpWWe3MPvIzcYJu8W2fDZDhEpEjwi1DN5XDKVjPuXLdbbwGFVW_XF4Tky-aauOOHko1KHq-TEmHGeTKpP-mrEkRLfDNl5BVR6SMz1NYUiUticyeh5a7URluoP97kka2Op68ehBaHdaqCLXoi7A358iGk-cuRtDXLOv078jJ5hb6zNmdubsFBCJopqjS6zO2u2wekeFTGQYVsKTj2Nz_o1PrQjYTGYWEifbTBbk4SG9pN_dM2PJE5DgkHP2qn-yHw76RhssITy24VwMr35uFQMgFwL658CdXCq8GYb-dgpLefBpUTP8DSUXbIfwtbaunfwEJ3bFjYU_XZh87djvLh48Wq9--V5DlJ7pu5M_EuQ_YjXwNdXTC-OphCdixBNNxLwJbm84Zdpqs-eBXxNUmh2TdVa8y9twEo4j7AJMLhKFrfkIL8wmL82zrXQZzA4Bp3dmuwvVZrFQBJ-0RgyKEzPSx7qUaduFcTvdPcDlcbfoWd9_XJ1chK_E-yKiKMrt4fOhzPuq5LjkqfkarEKpBZGMKybO3JzHvipKXpj7AKD9PSDaQzo6UAR0dVqZeQ</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X POST 'https://novo-dom.ru/api/auth/logout' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY0NDE2LCJleHAiOjE2ODUzNjYyMTYsIm5iZiI6MTY4NTM2NDQxNiwianRpIjoiYTVFVGFjUXg2RU1XM0VoRyIsInN1YiI6IjE3MiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.NpOwZmhdh6T0wLTqPTwjwBXZQDbwLjCvEym0vIZGqlBuByzJVn9NG22HFaqgw3xLRe-iv6vayQE7UAMhh2DW5u-K6PrjhN1y1Ff6jG85dLv0G1qLpWWe3MPvIzcYJu8W2fDZDhEpEjwi1DN5XDKVjPuXLdbbwGFVW_XF4Tky-aauOOHko1KHq-TEmHGeTKpP-mrEkRLfDNl5BVR6SMz1NYUiUticyeh5a7URluoP97kka2Op68ehBaHdaqCLXoi7A358iGk-cuRtDXLOv078jJ5hb6zNmdubsFBCJopqjS6zO2u2wekeFTGQYVsKTj2Nz_o1PrQjYTGYWEifbTBbk4SG9pN_dM2PJE5DgkHP2qn-yHw76RhssITy24VwMr35uFQMgFwL658CdXCq8GYb-dgpLefBpUTP8DSUXbIfwtbaunfwEJ3bFjYU_XZh87djvLh48Wq9--V5DlJ7pu5M_EuQ_YjXwNdXTC-OphCdixBNNxLwJbm84Zdpqs-eBXxNUmh2TdVa8y9twEo4j7AJMLhKFrfkIL8wmL82zrXQZzA4Bp3dmuwvVZrFQBJ-0RgyKEzPSx7qUaduFcTvdPcDlcbfoWd9_XJ1chK_E-yKiKMrt4fOhzPuq5LjkqfkarEKpBZGMKybO3JzHvipKXpj7AKD9PSDaQzo6UAR0dVqZeQ' -H 'Accept: */*' -H 'Content-Type: application/json'</code></pre>
+    </div>
+</body>
+</html>

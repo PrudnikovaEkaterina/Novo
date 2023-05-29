@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "name": "Adena"
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY0NDA1LCJleHAiOjE2ODUzNjYyMDUsIm5iZiI6MTY4NTM2NDQwNSwianRpIjoiN2Z4dEZFaG9rYTNZZ2tJZiIsInN1YiI6IjQxMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.DQfuCXLro9rqTd2bElNBwD1gwRSnYCpKG0kmQXcgkqZxbQPL9-J4JYlHR8iYAzxp-poIrn9MsrdloKhdvXGVyMCSPqe17UAgLSOc3M_hjjg9EcAKHh1-I--eXCbIjGiXtae5Sy8G4EFKtS31hYaIq2qk_XLukad8oJc1xfQ6YACQTYySg5GqQsEvgm5NK4NDlG1kLIFf7Ad6tKSvxK5-3nQYCzSYgFF1bWO9DDaS4l3v1QLBStTR4oBXy1XYn0ive6bHzyJen5KjB8LZZ8ugl862gHKG_XL_Oct4jnSqYgZslABPFklypRIkbS4nvelThYWRvFKwo98r2Ha9XvQi4ZQS5vuC3a-QF7Fl7Cu-s9A2j16ksVMxvKDO3IskKkZMsPfxWiWT04VIli5-wg8iJuZc-qQwtLGkuNAIaap2SEFEeL5b7kHyFKpstV2bzNhkny0o2xK6Srr-QwoVIxzvzQ3iEaqzs8V0cJVs4Qt3wzU7aJnjXgnQGx2eGxXPTH25IC2cC7M2JHU9euBkCew0FyD_7scqQbzfwIm6sA-zWPGctllst9oeB3ChIpkqGtprbl3ojB4AcR50st3qenWtrF5LKhAau3mVNLXey0Q_i7qQXnw-AyCffHneFU1DyPUk2P_Cke6RrTK4lnk_5_mhlRLs0In8CYlsDvbQS6KgYGo</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY0NDA1LCJleHAiOjE2ODUzNjYyMDUsIm5iZiI6MTY4NTM2NDQwNSwianRpIjoiN2Z4dEZFaG9rYTNZZ2tJZiIsInN1YiI6IjQxMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.DQfuCXLro9rqTd2bElNBwD1gwRSnYCpKG0kmQXcgkqZxbQPL9-J4JYlHR8iYAzxp-poIrn9MsrdloKhdvXGVyMCSPqe17UAgLSOc3M_hjjg9EcAKHh1-I--eXCbIjGiXtae5Sy8G4EFKtS31hYaIq2qk_XLukad8oJc1xfQ6YACQTYySg5GqQsEvgm5NK4NDlG1kLIFf7Ad6tKSvxK5-3nQYCzSYgFF1bWO9DDaS4l3v1QLBStTR4oBXy1XYn0ive6bHzyJen5KjB8LZZ8ugl862gHKG_XL_Oct4jnSqYgZslABPFklypRIkbS4nvelThYWRvFKwo98r2Ha9XvQi4ZQS5vuC3a-QF7Fl7Cu-s9A2j16ksVMxvKDO3IskKkZMsPfxWiWT04VIli5-wg8iJuZc-qQwtLGkuNAIaap2SEFEeL5b7kHyFKpstV2bzNhkny0o2xK6Srr-QwoVIxzvzQ3iEaqzs8V0cJVs4Qt3wzU7aJnjXgnQGx2eGxXPTH25IC2cC7M2JHU9euBkCew0FyD_7scqQbzfwIm6sA-zWPGctllst9oeB3ChIpkqGtprbl3ojB4AcR50st3qenWtrF5LKhAau3mVNLXey0Q_i7qQXnw-AyCffHneFU1DyPUk2P_Cke6RrTK4lnk_5_mhlRLs0In8CYlsDvbQS6KgYGo' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "name": "Adena"
+}'</code></pre>
+    </div>
+</body>
+</html>
