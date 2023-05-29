@@ -4,6 +4,9 @@
 # <a name="TableOfContents">Содержание страницы</a>
 + [Описаниe](#Description)
 + [:trophy: Инструменты и технологии](#ToolsAndTechnologies)
++ [:computer: Запуск локально](#Launch_from_terminal)
+  - <a href="#console-ui"> WEB
+  - <a href="#console-api"> API
 
 <a name="Description"><h2>Описаниe</h2></a>
 Тестовый проект состоит из UI и API автотестов. Автотесты в этом проекте написаны на `Java` с использованием `Selenide`.\
@@ -37,3 +40,22 @@
   <a href="https://telegram.org/"><code><img width="5%" title="Telegram" src="/design/icons/Telegram.svg"></code></a>
   <a href="https://rest-assured.io/"><code><img width="5%" title="REST-Assured" src="/design/icons/rest-assured-logo.svg"></code></a>
 </p>
+
+<a name="Launch_from_terminal"><h2>:computer: Запуск локально</h2></a>
+### <a id="console-ui"></a>Локальный запуск UI-тестов
+
+```
+gradle clean novoWeb
+```
+
+### <a id="console-api"></a>Локальный запуск API-тестов
+
+```
+gradle clean novoApi
+```
+
+### <a id="console-mobile"></a>Локальный запуск всех тестов
+
+```
+gradle clean test
+```
