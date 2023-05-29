@@ -1,0 +1,90 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "id": 0,
+    "phone": null,
+    "name": "Diedre",
+    "role": 0,
+    "manager_id": null,
+    "email": "velda.damore@yahoo.com",
+    "manager": null,
+    "phone_verified_at": null,
+    "avatar_path": null,
+    "referral_code": null,
+    "gar_object_id": 0,
+    "created_at": null,
+    "updated_at": null,
+    "favorites_flats_count": 0,
+    "favorites_buildings_count": 0,
+    "recommendations_flats_count": 0,
+    "recommendations_buildings_count": 0,
+    "avatar_url": null
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2NzU1LCJleHAiOjE2ODUzNTg1NTUsIm5iZiI6MTY4NTM1Njc1NSwianRpIjoiOVRFSXpLU3BYbGdGV2tVZSIsInN1YiI6IjM5NCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.pQ50mSfAFRJd-dCkbrL-4CpHFNPYKR5iqBMVabSuZrAE2CXaYuSnwI4GI4_29AS4qyfVphOFqR8ePTozi6PUc1Lf4VaIGSjItuGHGlshmC-LoT2a_cj95sHDg3ddGSdOex2pd-C8MqdSaFK02UXKk-v_SXiAQ13V89FIu8pUYEg8ZmITrcMdXZI1YPD_VJDg5V-pcGdeAolJlKNjZ909gbkaaBeqTxuToOc94QyRcB44V4TH8vwgRMfskjQyRlvl70wDTKTYR5vNPyM0mfyjtX1kBZXSxi0OTkFZFkUza_S70v0ppauEnLV6iDbLIHhPdf6qaxSUOYM-iy3qx96VHa2nGHYZzlyy1Lnm3N2zHhodwqay4f086MTXX1HTSwBc-Qt1kM5vffIUrOSWEBIsVcmo-yr9fESt2C2D3XrEIM5oCRHX-ScbjkNtY0Z5D1k97d3lbg5CA9yZnt6QQ9ArCNHrsN0dScuixc89Txgiwxt9728mRTDge1uB-NPRKA9TKEWj6y10RzdzuY286p5U67i8zj6pUPYF_4vKsrQ18N1UXg9SaII1rNpbpp-cSDnuuSHx9goiLYzjHRTZkj-2yLMgf9N5UMXp4_yfPbNrUVST_DUVdnBlkQ-W2nAqmkHajfvvmOdRrsBLC6atrHo174Kz1_8l0yLMwH3lspihmPE</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2NzU1LCJleHAiOjE2ODUzNTg1NTUsIm5iZiI6MTY4NTM1Njc1NSwianRpIjoiOVRFSXpLU3BYbGdGV2tVZSIsInN1YiI6IjM5NCIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.pQ50mSfAFRJd-dCkbrL-4CpHFNPYKR5iqBMVabSuZrAE2CXaYuSnwI4GI4_29AS4qyfVphOFqR8ePTozi6PUc1Lf4VaIGSjItuGHGlshmC-LoT2a_cj95sHDg3ddGSdOex2pd-C8MqdSaFK02UXKk-v_SXiAQ13V89FIu8pUYEg8ZmITrcMdXZI1YPD_VJDg5V-pcGdeAolJlKNjZ909gbkaaBeqTxuToOc94QyRcB44V4TH8vwgRMfskjQyRlvl70wDTKTYR5vNPyM0mfyjtX1kBZXSxi0OTkFZFkUza_S70v0ppauEnLV6iDbLIHhPdf6qaxSUOYM-iy3qx96VHa2nGHYZzlyy1Lnm3N2zHhodwqay4f086MTXX1HTSwBc-Qt1kM5vffIUrOSWEBIsVcmo-yr9fESt2C2D3XrEIM5oCRHX-ScbjkNtY0Z5D1k97d3lbg5CA9yZnt6QQ9ArCNHrsN0dScuixc89Txgiwxt9728mRTDge1uB-NPRKA9TKEWj6y10RzdzuY286p5U67i8zj6pUPYF_4vKsrQ18N1UXg9SaII1rNpbpp-cSDnuuSHx9goiLYzjHRTZkj-2yLMgf9N5UMXp4_yfPbNrUVST_DUVdnBlkQ-W2nAqmkHajfvvmOdRrsBLC6atrHo174Kz1_8l0yLMwH3lspihmPE' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "id": 0,
+    "phone": null,
+    "name": "Diedre",
+    "role": 0,
+    "manager_id": null,
+    "email": "velda.damore@yahoo.com",
+    "manager": null,
+    "phone_verified_at": null,
+    "avatar_path": null,
+    "referral_code": null,
+    "gar_object_id": 0,
+    "created_at": null,
+    "updated_at": null,
+    "favorites_flats_count": 0,
+    "favorites_buildings_count": 0,
+    "recommendations_flats_count": 0,
+    "recommendations_buildings_count": 0,
+    "avatar_url": null
+}'</code></pre>
+    </div>
+</body>
+</html>

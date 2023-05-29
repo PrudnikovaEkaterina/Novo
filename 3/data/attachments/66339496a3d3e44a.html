@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>GET: https://novo-dom.ru/api/me/favorites/buildings/</code></pre>
+</div>
+
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2NzYzLCJleHAiOjE2ODUzNTg1NjMsIm5iZiI6MTY4NTM1Njc2MywianRpIjoid0FwWVBoUkhkTDZ5aDRnbSIsInN1YiI6IjE3MiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.GcveaRU33BEfOFWIQLIi84z2MGR9_Npv9ZcTtNqAcKtzpETB-Vm7hdMQk8q9S61LMRwjGuEn1wdESickojEh8z6v-GtPdsgy-voDADVDP8ZDk3U6HqCSUnm7arGE2N0O9hlo_zM1QqfEx32KzOeIWcB8lWWQ5ZjctXpqsm8pBPZF9eFT7d3t6b_IxJpzbBP8TdVoqSWTHDcBmIqmTb6a-XafOTdUT1Gs_dTLHBdCjSzUZZgAjJCLVtHzeU2t0mZLcFtJGVWptoFik_XO0eGT48DaIvH6H8hoY0oF3hFM8GyS6FFhUwDZb5qgwWBQ_wkdbC_0StFT0quOzhd8eRxDlrh9OWOp_KVjsTSX719IhqMhSfjq3lZkD8Kd58mbzEPTaV0b5rqZm99nnofpZ79aI04dS_RhIuJ3WcI1aT5vN91_scX8twaPbvGmS8i_fVIMsP7Dn2yZGf1jOzqNL1SDwCmx0VvSubPrj98qhOcFVd9JWhpUoUZO68xNjnRYPuCEjyMO7AC1ivjCuScrfivza3iWE-T4euOT88rmmjGl7Pp59iHSDQFUZl_8II3FziZT1V0J-xr8khhxU8C6stQv0PxVHyVLfe_vyec8gFelynVges7OUUftfRiL6kHBumZR71ZvHki-g5IOZujJ69j3COfMz3a1GpyLAk-uOItY4uA</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X GET 'https://novo-dom.ru/api/me/favorites/buildings/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2NzYzLCJleHAiOjE2ODUzNTg1NjMsIm5iZiI6MTY4NTM1Njc2MywianRpIjoid0FwWVBoUkhkTDZ5aDRnbSIsInN1YiI6IjE3MiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.GcveaRU33BEfOFWIQLIi84z2MGR9_Npv9ZcTtNqAcKtzpETB-Vm7hdMQk8q9S61LMRwjGuEn1wdESickojEh8z6v-GtPdsgy-voDADVDP8ZDk3U6HqCSUnm7arGE2N0O9hlo_zM1QqfEx32KzOeIWcB8lWWQ5ZjctXpqsm8pBPZF9eFT7d3t6b_IxJpzbBP8TdVoqSWTHDcBmIqmTb6a-XafOTdUT1Gs_dTLHBdCjSzUZZgAjJCLVtHzeU2t0mZLcFtJGVWptoFik_XO0eGT48DaIvH6H8hoY0oF3hFM8GyS6FFhUwDZb5qgwWBQ_wkdbC_0StFT0quOzhd8eRxDlrh9OWOp_KVjsTSX719IhqMhSfjq3lZkD8Kd58mbzEPTaV0b5rqZm99nnofpZ79aI04dS_RhIuJ3WcI1aT5vN91_scX8twaPbvGmS8i_fVIMsP7Dn2yZGf1jOzqNL1SDwCmx0VvSubPrj98qhOcFVd9JWhpUoUZO68xNjnRYPuCEjyMO7AC1ivjCuScrfivza3iWE-T4euOT88rmmjGl7Pp59iHSDQFUZl_8II3FziZT1V0J-xr8khhxU8C6stQv0PxVHyVLfe_vyec8gFelynVges7OUUftfRiL6kHBumZR71ZvHki-g5IOZujJ69j3COfMz3a1GpyLAk-uOItY4uA' -H 'Accept: */*' -H 'Content-Type: application/json'</code></pre>
+    </div>
+</body>
+</html>

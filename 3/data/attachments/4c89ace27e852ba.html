@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "name": "Sydney"
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2NzU4LCJleHAiOjE2ODUzNTg1NTgsIm5iZiI6MTY4NTM1Njc1OCwianRpIjoiNmVVTDVoWWo4MTBnRXYybCIsInN1YiI6IjM5NSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.r9U5rxl8p4AGX2-nC2A-VFs5WulgNUq3CsUxnprgxVZON6-caTh6tzGUIk96vzj_olUnxKfK8JqPQPIbcLfLYthmUvW93WeDrcTZDFUp3rAozsVKV3vhqHlrLlxZfPVFYH48i4u8WEDGzJR-5H6am9zuLVUSppv7PyyYv6an13n1mQC0eGGNXKHHiJ_Bhcx2sJIBYnYGdcD3pYI4KCVh9XRsq2IJqn5h5wG9KeR6lDyeAqeQOoX44jRF5UdkVHmTdQQD12yD7biKgj1EAm4BfAFvgZvqj4D24n84jXJQYkygnYhwTWl-jHARw1iOAe8ZU_nWRo9r7F3j2dtKeX_ug47B-cc2L_wO_EWV2zQnfzWIyWLNfDF1oLsnLs06EPh3K19v5kqL8Jc53s0EKy3SzBMDTiiJfIu2vBGZYTsTWA7BVifQ4CChWNbpwdUBnd68V1nQvnTWEGtyM59_Pt_w73wM-TA3RrS-KgJ51vqIMz70WqPAlaKEnhtgnZ0UVsFnUCxYrjfNyrxh72sIq8mIkK8E_tssstQu2AwBRoULc6uCbFPaWtsgrseuAhabE2AaYb0ARb6zItusF36pMcM9mW8DSgZjCZH8HIyF3RpLARPTBh2xMeR9zlytxhIwriHFZ8uI0Q-4IGSsdiH44q0ZELb0KnHqFJg4yR58wIbXq5w</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU2NzU4LCJleHAiOjE2ODUzNTg1NTgsIm5iZiI6MTY4NTM1Njc1OCwianRpIjoiNmVVTDVoWWo4MTBnRXYybCIsInN1YiI6IjM5NSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.r9U5rxl8p4AGX2-nC2A-VFs5WulgNUq3CsUxnprgxVZON6-caTh6tzGUIk96vzj_olUnxKfK8JqPQPIbcLfLYthmUvW93WeDrcTZDFUp3rAozsVKV3vhqHlrLlxZfPVFYH48i4u8WEDGzJR-5H6am9zuLVUSppv7PyyYv6an13n1mQC0eGGNXKHHiJ_Bhcx2sJIBYnYGdcD3pYI4KCVh9XRsq2IJqn5h5wG9KeR6lDyeAqeQOoX44jRF5UdkVHmTdQQD12yD7biKgj1EAm4BfAFvgZvqj4D24n84jXJQYkygnYhwTWl-jHARw1iOAe8ZU_nWRo9r7F3j2dtKeX_ug47B-cc2L_wO_EWV2zQnfzWIyWLNfDF1oLsnLs06EPh3K19v5kqL8Jc53s0EKy3SzBMDTiiJfIu2vBGZYTsTWA7BVifQ4CChWNbpwdUBnd68V1nQvnTWEGtyM59_Pt_w73wM-TA3RrS-KgJ51vqIMz70WqPAlaKEnhtgnZ0UVsFnUCxYrjfNyrxh72sIq8mIkK8E_tssstQu2AwBRoULc6uCbFPaWtsgrseuAhabE2AaYb0ARb6zItusF36pMcM9mW8DSgZjCZH8HIyF3RpLARPTBh2xMeR9zlytxhIwriHFZ8uI0Q-4IGSsdiH44q0ZELb0KnHqFJg4yR58wIbXq5w' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "name": "Sydney"
+}'</code></pre>
+    </div>
+</body>
+</html>
