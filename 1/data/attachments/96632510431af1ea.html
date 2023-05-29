@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "email": "nelia.kunde@gmail.com"
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU1Nzc2LCJleHAiOjE2ODUzNTc1NzYsIm5iZiI6MTY4NTM1NTc3NiwianRpIjoicHRkUm9pN2pMTU1yVjlVdiIsInN1YiI6IjM4NyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.rbB8pq73hwr-AZ3nwgCNgy9R2z5rMuhJQJQob681vu0AgMTUfNV1vIBg6mZ06jr3qhCaCdIB0ZKYgYfDY6L9VFURO5fH4DccEPjznLpwO2H4th9Lvsb4yPaULFP941B0jFzED_rZXtLdKzdZankuH6b5grJ7tg4KNbwm-iR-Mde703tcfpuFdCIpdTar1gfxGL4UZQaWb9OaQSwYENBRSdvs1M1hhkM5MwgbsV_9d1RI6_7eCdeGsDAMqsmDSzEkce_aR37LYhqnvn0mU3v2Knl2j8deD3TicFeqhupbvaLkpqtA9jWEZGThmXomAaOGPL0m58m6MiFa5iFww43T1u1WCeJAWUBUs0VBDJItXVrH-8QLw4gn9ouuNCDxgHrN65iXOx4Gkm5-rC28T6SXKMtsdi0jkypX6ve-kUFVx7IFDpcaSFsCmC134K86qTjtjvI7Atc5Pqfk3Mr00J1mV8CASsuxqMCEmYZF1jAftfpnJGtQM55I_juEf1IXtKUSoJmChWHtlNXNbqWQywEGpGX-ZnS2NoEkkKUez02JDV5xQhE2tUX469MbGphXhGDfEuFbFVf6nDMPEeEcthBGgwVV7M7Qs8g-o5AyeUSteFS_3OQ5oN2a_iFQKSDSjio_gsOjkCgpT7PAd9LVjThgBepCvOuF8_o3vDqryhhYw98</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzU1Nzc2LCJleHAiOjE2ODUzNTc1NzYsIm5iZiI6MTY4NTM1NTc3NiwianRpIjoicHRkUm9pN2pMTU1yVjlVdiIsInN1YiI6IjM4NyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.rbB8pq73hwr-AZ3nwgCNgy9R2z5rMuhJQJQob681vu0AgMTUfNV1vIBg6mZ06jr3qhCaCdIB0ZKYgYfDY6L9VFURO5fH4DccEPjznLpwO2H4th9Lvsb4yPaULFP941B0jFzED_rZXtLdKzdZankuH6b5grJ7tg4KNbwm-iR-Mde703tcfpuFdCIpdTar1gfxGL4UZQaWb9OaQSwYENBRSdvs1M1hhkM5MwgbsV_9d1RI6_7eCdeGsDAMqsmDSzEkce_aR37LYhqnvn0mU3v2Knl2j8deD3TicFeqhupbvaLkpqtA9jWEZGThmXomAaOGPL0m58m6MiFa5iFww43T1u1WCeJAWUBUs0VBDJItXVrH-8QLw4gn9ouuNCDxgHrN65iXOx4Gkm5-rC28T6SXKMtsdi0jkypX6ve-kUFVx7IFDpcaSFsCmC134K86qTjtjvI7Atc5Pqfk3Mr00J1mV8CASsuxqMCEmYZF1jAftfpnJGtQM55I_juEf1IXtKUSoJmChWHtlNXNbqWQywEGpGX-ZnS2NoEkkKUez02JDV5xQhE2tUX469MbGphXhGDfEuFbFVf6nDMPEeEcthBGgwVV7M7Qs8g-o5AyeUSteFS_3OQ5oN2a_iFQKSDSjio_gsOjkCgpT7PAd9LVjThgBepCvOuF8_o3vDqryhhYw98' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "email": "nelia.kunde@gmail.com"
+}'</code></pre>
+    </div>
+</body>
+</html>
