@@ -7,7 +7,10 @@
 + [:computer: Запуск локально](#Launch_from_terminal)
   - <a href="#console-ui"> UI
   - <a href="#console-api"> API
-  + [:clipboard: Параметры сборки в Jenkins:](#Build_Parameters_in_Jenkins)
++ [:clipboard: Параметры сборки в Jenkins:](#Build_Parameters_in_Jenkins)
++ [:chart_with_downwards_trend: Allure отчет](#Allure_report)
+  + [Главный экран отчета](#Allure_report1)
+  + [Страница с проведенными тестами](#Allure_report2)
 
 <a name="Description"><h2>Описаниe</h2></a>
 Тестовый проект состоит из UI и API автотестов. Автотесты в этом проекте написаны на `Java` с использованием `Selenide`.\
@@ -74,3 +77,12 @@ gradle clean test
 
 ![This is an image](design/pictures/jenk_par.png)
 ![This is an image](design/pictures/jen_pr.png)
+<a name="Allure_report"><h2>:chart_with_downwards_trend: [Allure](https://jenkins.autotests.cloud/job/novo/) отчет</h2></a>
+
+- <a name="Allure_report1"><h3>Главный экран отчета</h3></a>
+
+![This is an image](design/pictures/allure_1.png)
+
+-  <a name="Allure_report2"><h3>Страница с проведенными тестами</h3></a>
+
+![This is an image](design/pictures/allure_2.png)
