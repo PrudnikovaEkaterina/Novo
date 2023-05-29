@@ -1,6 +1,5 @@
 package ru.prudnikova.web.tests.novostroyki;
 
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
@@ -13,15 +12,18 @@ import ru.prudnikova.web.enums.CityEnum;
 import ru.prudnikova.web.enums.DeveloperEnum;
 import ru.prudnikova.web.enums.RoomEnum;
 import ru.prudnikova.web.pages.NovostroykiPage;
+import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.SearchNovostroykiFilters;
 import ru.prudnikova.web.tests.TestBase;
-import static com.codeborne.selenide.Selenide.*;
 
 @Tag("Web")
 @Story("SearchFilters")
+
 public class SearchNovostroykiFiltersTests extends TestBase {
+
     NovostroykiPage novostroykiPage = new NovostroykiPage();
     SearchNovostroykiFilters searchFilters = new SearchNovostroykiFilters();
+    Footer footer =new Footer();
 
     @BeforeEach
     void beforeEach() {
@@ -108,14 +110,11 @@ public class SearchNovostroykiFiltersTests extends TestBase {
 
 
     @Test
-    @Disabled
     @Owner("PrudnikovaEkaterina")
-    @DisplayName("")
-    void scrollNovostroykiItemsToLastPage() throws InterruptedException {
-        Selenide.executeJavaScript("arguments[0].scrollIntoView()",$$(".search-item__main").last());
-//        Selenide.executeJavaScript(document.querySelector('.infinity-scroll__viewport').scrollTop = document.querySelector('.search-novostroyki-content__items').offsetHeight);
-
-}
-
+    @DisplayName("Проскроллить новостройки до последней страницы и проверить отображение футера")
+    void scrollNovostroykiItemsToLastPage() {
+        novostroykiPage.scrollNovostroykiItemsToLastPage();
+        footer.verifyFooterMenuHeader();
+    }
 
 }

@@ -2,6 +2,7 @@ package ru.prudnikova.web.pages;
 
 import com.codeborne.selenide.*;
 import ru.prudnikova.web.pages.components.CallMeWidget;
+import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.MoreFiltersModal;
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Selenide.*;
@@ -12,7 +13,8 @@ public class NovostroykiPage {
             SEARCH_ITEM_TITLE_TEXT = $(".search-item__title-text"),
             MORE_FILTERS_BUTTON = $(".more-filters__button-text"),
             NOTIFICATION_INDICATOR = $x("//a[@class='notification-indicator']"),
-            SEARCH_ITEM_CONTENT = $$(".search-item__content").first(),
+            SEARCH_ITEM_CONTENT_FIRST = $$(".search-item__content").first(),
+            SEARCH_ITEM_CONTENT_LAST = $$(".search-item__content").last(),
             CALL_ME_WIDGET_BUTTON_ICON = $x("//div[@class='call-me-widget search-item__call-me'][1]"),
             SEARCH_NOVOSTROYKI_CONTENT_TOTAL = $(".search-novostroyki-content__total");
 
@@ -24,6 +26,7 @@ public class NovostroykiPage {
 
     MoreFiltersModal moreFiltersModal = new MoreFiltersModal();
     CallMeWidget callMeWidget = new CallMeWidget();
+    Footer footer = new Footer();
 
     public void openNovostroykiPage() {
 
@@ -35,6 +38,7 @@ public class NovostroykiPage {
     }
 
     public void verifyResultSearchBuildingContent(String content) {
+        sleep(1000);
         SEARCH_ITEM_ADDRESS_TEXT.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(content)));
     }
 
@@ -72,13 +76,24 @@ public class NovostroykiPage {
     }
 
     public NovostroykiPage hoverSearchItemContent() {
-        SEARCH_ITEM_CONTENT.hover();
+        SEARCH_ITEM_CONTENT_FIRST.hover();
         return this;
     }
 
     public CallMeWidget openCallMeWidget() {
         CALL_ME_WIDGET_BUTTON_ICON.shouldBe(Condition.visible).click();
         return callMeWidget;
+    }
+
+    public void scrollNovostroykiItemsToLastPage() {
+        boolean b = true;
+        while (b) {
+            actions().moveToElement(SEARCH_ITEM_CONTENT_LAST).build().perform();
+            Selenide.executeJavaScript("document.querySelector('.infinity-scroll__viewport').scrollBy(0,500)");
+            sleep(1000);
+            if (footer.footerContainerIsVisible())
+                b = false;
+        }
     }
 
 }

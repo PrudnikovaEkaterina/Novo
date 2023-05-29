@@ -31,6 +31,7 @@ public class MeTests extends TestBase {
         String userName = GenerationData.setRandomUserName();
         mePage.changeUserName(userName);
         header.checkAccountName(userName);
+        sleep(1000);
     }
 
     @Test
