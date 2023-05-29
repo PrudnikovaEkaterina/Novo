@@ -9,6 +9,7 @@
   - <a href="#console-api"> API
   - <a href="#console-remote"> Remote
 + [:clipboard: Параметры сборки в Jenkins:](#Build_Parameters_in_Jenkins)
++ [:clipboard: Сборка в Github:](#Github)
 + [:chart_with_downwards_trend: Allure отчет](#Allure_report)
   + [Главный экран отчета](#Allure_report1)
   + [Страница с проведенными тестами](#Allure_report2)
@@ -89,6 +90,13 @@ gradle test -Denv=remote
 
 ![This is an image](design/pictures/jenk_par.png)
 ![This is an image](design/pictures/jen_pr.png)
+  
+<a name="Github"><h2>:clipboard: Сборка в Github на странице Actions с формированием Allure report:</h2></a>
+  
+![This is an image](design/pictures/гит1.png)
+![This is an image](design/pictures/гит2.png)
+ ![This is an image](design/pictures/гит3.png)
+  
 <a name="Allure_report"><h2>:chart_with_downwards_trend: [Allure](https://jenkins.autotests.cloud/job/novo/) отчет</h2></a>
 
 - <a name="Allure_report1"><h3>Главный экран отчета</h3></a>
