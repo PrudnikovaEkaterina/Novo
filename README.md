@@ -7,6 +7,7 @@
 + [:computer: Запуск локально](#Launch_from_terminal)
   - <a href="#console-ui"> WEB
   - <a href="#console-api"> API
+  + [:clipboard: Параметры сборки в Jenkins:](#Build_Parameters_in_Jenkins)
 
 <a name="Description"><h2>Описаниe</h2></a>
 Тестовый проект состоит из UI и API автотестов. Автотесты в этом проекте написаны на `Java` с использованием `Selenide`.\
@@ -59,3 +60,16 @@ gradle clean novoApi
 ```
 gradle clean test
 ```
+<a name="Build_Parameters_in_Jenkins"><h2>:clipboard: Параметры сборки в Jenkins:</h2></a>
+
+Сборка в Jenkins
+
+- BROWSER (браузер, по умолчанию chrome)
+
+- BROWSER_VERSION (версия браузера, по умолчанию 100.0)
+
+- BROWSER_SIZE (размер окна браузера, по умолчанию 2500х1080)
+
+- BASEURL (какой адрес открывать для запуска тестов)
+
+- TASK (с какими тегами запускать тесты)
