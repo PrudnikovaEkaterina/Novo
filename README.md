@@ -11,7 +11,9 @@
 + [:chart_with_downwards_trend: Allure отчет](#Allure_report)
   + [Главный экран отчета](#Allure_report1)
   + [Страница с проведенными тестами](#Allure_report2)
-
++ [:bar_chart: Интеграция с Allure TestOps](#Integration_Allure_TestOps)
++ [:iphone: Отчет в Telegram](#Telegram)
+  
 <a name="Description"><h2>Описаниe</h2></a>
 Тестовый проект состоит из UI и API автотестов. Автотесты в этом проекте написаны на `Java` с использованием `Selenide`.\
 Краткий список интересных фактов о проекте: \
@@ -86,3 +88,14 @@ gradle clean test
 -  <a name="Allure_report2"><h3>Страница с проведенными тестами</h3></a>
 
 ![This is an image](design/pictures/allure_2.png)
+
+<a name="Integration_Allure_TestOps"><h2>:bar_chart: Интеграция с Allure [TestOps](https://allure.autotests.cloud/launch/24448)</h2></a>
+
+- <a name="Integration_Allure_TestOps1"><h3>Экран с результатами запуска тестов</h3></a>
+
+![This is an image](design/pictures/tes1.png)
+
+
+- <a name="Integration_Allure_TestOps2"><h3>Страница с тестами в [TestOps](https://allure.autotests.cloud/launch/24091/tree?treeId=4235)</h3></a>
+
+![This is an image](design/pictures/tes2.png)
