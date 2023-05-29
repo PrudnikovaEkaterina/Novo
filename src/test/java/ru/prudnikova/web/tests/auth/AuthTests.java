@@ -1,6 +1,7 @@
 package ru.prudnikova.web.tests.auth;
 
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import org.aeonbits.owner.ConfigCache;
 import org.junit.jupiter.api.*;
 import ru.prudnikova.config.AuthConfig;
@@ -9,7 +10,8 @@ import ru.prudnikova.web.pages.AuthPage;
 import ru.prudnikova.web.pages.components.Header;
 import ru.prudnikova.web.tests.TestBase;
 
-
+@Tag("Web")
+@Story("Auth")
 public class AuthTests extends TestBase {
     AuthPage authPage = new AuthPage();
     Header header = new Header();
@@ -27,7 +29,6 @@ public class AuthTests extends TestBase {
 
     @Test
     @Owner("PrudnikovaEkaterina")
-    @Tag("Web")
     @DisplayName("Позитивная проверка регистрации нового пользователя")
     void registrationNewUserSuccessful() {
         String phoneNumber = GenerationData.setRandomPhoneNumber();
@@ -43,7 +44,6 @@ public class AuthTests extends TestBase {
 
     @Test
     @Owner("PrudnikovaEkaterina")
-    @Tag("Web")
     @DisplayName("Позитивная проверка авторизации пользователя")
     void authUserSuccessful() {
         String phoneNumber = "79085040794";

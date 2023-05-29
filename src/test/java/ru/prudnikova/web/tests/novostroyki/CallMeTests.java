@@ -1,17 +1,18 @@
 package ru.prudnikova.web.tests.novostroyki;
 
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.prudnikova.data_base.managers.CallbackPhonesManager;
 import ru.prudnikova.test_data.GenerationData;
-import ru.prudnikova.web.domain.CallbackPhonesBD;
+import ru.prudnikova.data_base.domain.CallbackPhonesBD;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.tests.TestBase;
-
 import java.util.List;
-
 import static com.codeborne.selenide.Configuration.baseUrl;
 
+@Tag("Web")
+@Story("CallbackPhone")
 public class CallMeTests extends TestBase {
     NovostroykiPage novostroykiPage = new NovostroykiPage();
    CallbackPhonesManager callbackPhonesManager=new CallbackPhonesManager();
@@ -23,7 +24,6 @@ public class CallMeTests extends TestBase {
 
     @Test
     @Owner("PrudnikovaEkaterina")
-    @Tag("Web")
     @DisplayName("Отправить заполненную форму Заказать звонок и проверить добавление соответсвующей записи в БД")
     void orderCallBackAndСheckAdditionInDatabase() {
         String callbackPhoneModalTitle ="Укажите Ваш номер телефона и мы перезвоним!";

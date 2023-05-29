@@ -1,4 +1,4 @@
-package ru.prudnikova.web.domain;
+package ru.prudnikova.data_base.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

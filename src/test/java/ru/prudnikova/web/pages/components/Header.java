@@ -17,7 +17,7 @@ public class Header {
             ABOUT_LINK = $("[href='/about']"),
             CONTACTS_LINK = $("[href='/contacts']"),
             SIGN_IN_LINK = $x("//span[text()='Войти']"),
-            HEADER_ACCOUNT_TEXT= $(".one-column-header__account-text"),
+            HEADER_ACCOUNT_TEXT = $(".one-column-header__account-text"),
             USER_MENU_DROPDOWN_TEXT_PROFILE = $$(".user-menu__dropdown-text").first(),
             USER_MENU_DROPDOWN_TEXT_EXIT = $$(".user-menu__dropdown-text").last();
 
@@ -29,7 +29,7 @@ public class Header {
     }
 
     public void verifyUrlAfterFollowingNovostroykiLink() {
-        Assertions.assertEquals(baseUrl+"/novostroyki", url());
+        Assertions.assertEquals(baseUrl + "/novostroyki", url());
     }
 
 
@@ -51,7 +51,7 @@ public class Header {
     }
 
     public void verifyUrlFollowingAboutLink() {
-        Assertions.assertEquals(baseUrl+"/about", url());
+        Assertions.assertEquals(baseUrl + "/about", url());
     }
 
 
@@ -62,7 +62,7 @@ public class Header {
     }
 
     public void verifyUrlFollowingContactsLink() {
-        Assertions.assertEquals(baseUrl+"/contacts", url());
+        Assertions.assertEquals(baseUrl + "/contacts", url());
     }
 
 
@@ -73,12 +73,12 @@ public class Header {
     }
 
     public void verifyUrlFollowingSingInLink() {
-        Assertions.assertEquals(baseUrl+"/auth", url());
+        Assertions.assertEquals(baseUrl + "/auth", url());
     }
 
     public void hoverHeaderAccountIconAndCheckUserMenuDropdownText() {
-       HEADER_ACCOUNT_TEXT.hover();
-       USER_MENU_DROPDOWN_TEXT_PROFILE.shouldHave(Condition.text("Профиль"));
+        HEADER_ACCOUNT_TEXT.hover();
+        USER_MENU_DROPDOWN_TEXT_PROFILE.shouldHave(Condition.text("Профиль"));
 
     }
 
@@ -87,7 +87,8 @@ public class Header {
 
     }
 
-    public void logout () {
+    public void logout() {
+        HEADER_ACCOUNT_TEXT.hover();
         USER_MENU_DROPDOWN_TEXT_EXIT.click();
         HEADER_ACCOUNT_TEXT.shouldHave(Condition.text("Войти"));
     }

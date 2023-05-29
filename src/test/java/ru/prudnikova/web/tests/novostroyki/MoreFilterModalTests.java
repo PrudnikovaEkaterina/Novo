@@ -1,6 +1,7 @@
 package ru.prudnikova.web.tests.novostroyki;
 
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -11,6 +12,8 @@ import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.pages.components.SearchNovostroykiFilters;
 import ru.prudnikova.web.tests.TestBase;
 
+@Tag("Web")
+@Story("MoreFilterModal")
 public class MoreFilterModalTests extends TestBase {
     NovostroykiPage novostroykiPage = new NovostroykiPage();
     SearchNovostroykiFilters searchFilters = new SearchNovostroykiFilters();
@@ -22,7 +25,6 @@ public class MoreFilterModalTests extends TestBase {
 
     @Test
     @Owner("PrudnikovaEkaterina")
-    @Tag("Web")
     @DisplayName("Проверить открытие модального окна по клику на кнопку Все фильтры странице /novostroyki")
     void checkOpenMoreFiltersModal() {
         novostroykiPage.openMoreFiltersModal();
@@ -31,7 +33,6 @@ public class MoreFilterModalTests extends TestBase {
 
     @Test
     @Owner("PrudnikovaEkaterina")
-    @Tag("Web")
     @DisplayName("Проверить выдачу на странице /novostroyki  после примения фильтра Класс жилья")
     void clickCheckboxHousingClassAndVerifyResultSearch() {
         String housingClass= GenerationData.setRandomHousingClass(HousingClassEnum.values());

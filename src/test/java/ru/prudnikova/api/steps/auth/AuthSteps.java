@@ -14,6 +14,7 @@ import static ru.prudnikova.api.specifications.Specification.*;
 
 
 public class AuthSteps {
+
     static AuthConfig authConfig = ConfigCache.getOrCreate(AuthConfig.class);
 
     @Step("Авторизация пользователя")
@@ -50,11 +51,44 @@ public class AuthSteps {
 
     }
 
+    @Step("Получение access token пользователя")
     public static String getAccessToken(String phone) {
         AuthModel authModel = auth(phone);
         return authModel.getAccessToken();
     }
 
+    @Step("Получение refresh token пользователя")
+    public static String getRefreshToken(String phone) {
+        String password = authConfig.smsCode();
+        String authCookieName = authConfig.authCookieName();
+        String authCookieValue = authConfig.authCookieValue();
+        UserLoginBodyModel userLoginBodyModel = new UserLoginBodyModel();
+        userLoginBodyModel.setPhone(phone);
+        Cookie authCookie = new Cookie.Builder(authCookieName, authCookieValue).build();
+
+        given()
+                .filter(withCustomTemplates())
+                .spec(requestSpec)
+                .cookie(authCookie)
+                .body(userLoginBodyModel)
+                .when()
+                .post("/api/auth/register")
+                .then()
+                .spec(responseSpec204);
+
+        userLoginBodyModel.setPassword(password);
+        return given()
+                .filter(withCustomTemplates())
+                .spec(requestSpec)
+                .cookie(authCookie)
+                .body(userLoginBodyModel)
+                .when()
+                .post("/api/auth/login")
+                .then()
+                .spec(responseSpec200)
+                .body("user.phone", is(phone))
+                .extract().cookie("refresh_token");
+    }
 
     @Step("Логаут пользователя")
     public static void logout(String accessToken) {
@@ -68,4 +102,5 @@ public class AuthSteps {
                 .spec(responseSpec200)
                 .body("message", is("Successfully logged out"));
     }
+
 }
