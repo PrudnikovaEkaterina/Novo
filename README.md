@@ -5,7 +5,7 @@
 + [Описаниe](#Description)
 + [:trophy: Инструменты и технологии](#ToolsAndTechnologies)
 + [:computer: Запуск локально](#Launch_from_terminal)
-  - <a href="#console-ui"> WEB
+  - <a href="#console-ui"> UI
   - <a href="#console-api"> API
   + [:clipboard: Параметры сборки в Jenkins:](#Build_Parameters_in_Jenkins)
 
