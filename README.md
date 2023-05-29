@@ -1,5 +1,6 @@
 # Проект по автоматизации тестирования для компании [NOVO-DOM](https://novo-dom.ru/) — цифровое агентство недвижимости, которое предлагает услуги по продаже и подбору квартир в новостройках Москвы. 
 <img alt="GIPHY" src="design/pictures/novo.png">
+
 # <a name="TableOfContents">Содержание страницы</a>
 + [Описаниe](#Description)
 <a name="Description"><h2>Описаниe</h2></a>
