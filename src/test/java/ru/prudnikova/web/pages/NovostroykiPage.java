@@ -6,6 +6,7 @@ import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.MoreFiltersModal;
 
 import static com.codeborne.selenide.CollectionCondition.size;
+import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
 
 public class NovostroykiPage {
@@ -31,7 +32,7 @@ public class NovostroykiPage {
 
     public void openNovostroykiPage() {
 
-        open("/novostroyki");
+        open(baseUrl+"/novostroyki");
     }
 
     public void verifySearchBuildingTitleText(String title) {
