@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH: https://novo-dom.ru/api/me/profile/</code></pre>
+</div>
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>{
+    "email": "clora.corkery@hotmail.com"
+}</code></pre>
+    </div>
+
+    <h4>Headers</h4>
+    <div>
+            <div>
+                <pre><code><b>Authorization</b>: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY1NjM0LCJleHAiOjE2ODUzNjc0MzQsIm5iZiI6MTY4NTM2NTYzNCwianRpIjoibHdtcWN3R3NzeGRuekVLeiIsInN1YiI6IjQxNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.qX8qL7EFAuS8p7y_cKnTcPSUUU0GVu6tIaKNtX3lFfCKui-F_m6CDptIybx7EZyU36dxtIdFFEF5TY7SfTIW3xO4Pylo1MZ-iCMgIaYPTdSAeHf7hmHkCVpsTrfz8h4iJ67dR8HU1aPugLgwvMTCd5AkXYYb5vhHgdt_tEwpoWYOvFXvaBXWfiapW9Z-L1b5kRZYEY9WEcHcnCeWLeFIzIimFzhp44jiCEcYLyTsGorvtRjG4XLF5k_mnpQVEyoYhh9vp3NIB94Qag01vK35R9NjlIIQiiOdtnLxFuZLzMzGhI-oKRQkHv9vxqNkaSn6DtJ1p9qyQuDs0wioLH1gUdCsyzaAVQ4BMCioqzqGrqiosoVXx55IZBx02LQ0VB0Sdv4ARhXRRk9WN-5MfL--Gh5ya0MuDQCQPgrkJMFcfEaaeN4jtW05UPv6RqrUEVMRDCw7zxAFInxQqv6HjhQV1Rwsla_jp8iWkrGe5UYQ981j-IOjvETTKyknNPLqjTYCXH8hewS7Xd6Dof7xHLnleU60NWjDGKheNAMYPNiGyAo9BkxsXWYPFdK6SpznorwMnNuQmq34SdT-qSZcTGMgYaUj5bHUt5pq4DJgVY2fIM-N2cvbpakM5dDz_aLFzDEAWULhzny6s7B9c3yLhpnL7xobSV7ePD02RL9o7vTrxFc</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Accept</b>: */*</code></pre>
+            </div>
+            <div>
+                <pre><code><b>Content-Type</b>: application/json</code></pre>
+            </div>
+    </div>
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -v -X PATCH 'https://novo-dom.ru/api/me/profile/' -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJodHRwczovL25vdm8tZG9tLnJ1L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNjg1MzY1NjM0LCJleHAiOjE2ODUzNjc0MzQsIm5iZiI6MTY4NTM2NTYzNCwianRpIjoibHdtcWN3R3NzeGRuekVLeiIsInN1YiI6IjQxNiIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJyb2xlIjoxLCJ4dHlwZSI6ImF1dGgifQ.qX8qL7EFAuS8p7y_cKnTcPSUUU0GVu6tIaKNtX3lFfCKui-F_m6CDptIybx7EZyU36dxtIdFFEF5TY7SfTIW3xO4Pylo1MZ-iCMgIaYPTdSAeHf7hmHkCVpsTrfz8h4iJ67dR8HU1aPugLgwvMTCd5AkXYYb5vhHgdt_tEwpoWYOvFXvaBXWfiapW9Z-L1b5kRZYEY9WEcHcnCeWLeFIzIimFzhp44jiCEcYLyTsGorvtRjG4XLF5k_mnpQVEyoYhh9vp3NIB94Qag01vK35R9NjlIIQiiOdtnLxFuZLzMzGhI-oKRQkHv9vxqNkaSn6DtJ1p9qyQuDs0wioLH1gUdCsyzaAVQ4BMCioqzqGrqiosoVXx55IZBx02LQ0VB0Sdv4ARhXRRk9WN-5MfL--Gh5ya0MuDQCQPgrkJMFcfEaaeN4jtW05UPv6RqrUEVMRDCw7zxAFInxQqv6HjhQV1Rwsla_jp8iWkrGe5UYQ981j-IOjvETTKyknNPLqjTYCXH8hewS7Xd6Dof7xHLnleU60NWjDGKheNAMYPNiGyAo9BkxsXWYPFdK6SpznorwMnNuQmq34SdT-qSZcTGMgYaUj5bHUt5pq4DJgVY2fIM-N2cvbpakM5dDz_aLFzDEAWULhzny6s7B9c3yLhpnL7xobSV7ePD02RL9o7vTrxFc' -H 'Accept: */*' -H 'Content-Type: application/json' -d '{
+    "email": "clora.corkery@hotmail.com"
+}'</code></pre>
+    </div>
+</body>
+</html>
