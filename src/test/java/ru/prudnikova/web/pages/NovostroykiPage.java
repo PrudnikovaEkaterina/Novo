@@ -31,8 +31,7 @@ public class NovostroykiPage {
     Footer footer = new Footer();
 
     public void openNovostroykiPage() {
-
-        open("https://novo-dom.ru/novostroyki");
+        open("/novostroyki");
     }
 
     public void verifySearchBuildingTitleText(String title) {
