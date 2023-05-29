@@ -16,6 +16,8 @@ import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.SearchNovostroykiFilters;
 import ru.prudnikova.web.tests.TestBase;
 
+import static com.codeborne.selenide.Selenide.open;
+
 @Tag("Web")
 @Story("SearchFilters")
 
@@ -27,7 +29,7 @@ public class SearchNovostroykiFiltersTests extends TestBase {
 
     @BeforeEach
     void beforeEach() {
-        novostroykiPage.openNovostroykiPage();
+        open("https://novo-dom.ru/novostroyki");
     }
 
     @Test
