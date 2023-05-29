@@ -64,12 +64,12 @@ gradle clean test
 
 Сборка в Jenkins
 
+- TASK (с какими тегами запускать тесты)
+
 - BROWSER (браузер, по умолчанию chrome)
 
 - BROWSER_VERSION (версия браузера, по умолчанию 100.0)
 
 - BROWSER_SIZE (размер окна браузера, по умолчанию 2500х1080)
-
-- TASK (с какими тегами запускать тесты)
 
 ![This is an image](design/pictures/jenk_par.png)
