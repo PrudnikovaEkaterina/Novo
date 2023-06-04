@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Cookie;
-import ru.prudnikova.api.steps.auth.AuthSteps;
+import ru.prudnikova.api.steps.auth_steps.AuthSteps;
 
 import java.sql.Timestamp;
 

@@ -1,4 +1,4 @@
-package ru.prudnikova.api.steps.profile;
+package ru.prudnikova.api.steps.profile_steps;
 
 import io.qameta.allure.Step;
 import ru.prudnikova.api.models.auth.User;

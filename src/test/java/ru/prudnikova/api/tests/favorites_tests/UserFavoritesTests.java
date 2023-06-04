@@ -1,12 +1,12 @@
-package ru.prudnikova.api.tests.favorites;
+package ru.prudnikova.api.tests.favorites_tests;
 
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.prudnikova.api.models.auth.AuthModel;
-import ru.prudnikova.api.steps.auth.AuthSteps;
-import ru.prudnikova.api.steps.favorites.UserFavoritesSteps;
+import ru.prudnikova.api.steps.auth_steps.AuthSteps;
+import ru.prudnikova.api.steps.favorites_steps.UserFavoritesSteps;
 import ru.prudnikova.data_base.managers.UserFavoritesManager;
 
 import java.util.List;

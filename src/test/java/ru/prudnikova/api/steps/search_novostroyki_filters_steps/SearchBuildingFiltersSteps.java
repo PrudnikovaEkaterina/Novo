@@ -1,4 +1,4 @@
-package ru.prudnikova.api.steps.filter_building;
+package ru.prudnikova.api.steps.search_novostroyki_filters_steps;
 
 import io.qameta.allure.Step;
 import ru.prudnikova.api.models.building.*;
@@ -13,7 +13,7 @@ import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
 
 public class SearchBuildingFiltersSteps {
-    @Step("Применить фильтр Станция метро ={station} и получить список найденных ЖК")
+    @Step("В /api/buildings/ применить фильтр Станция метро ={station} и получить список найденных ЖК")
     public static DataBuilding getBuildingListWithFilterStation(int stationId) {
        return given()
                 .spec(requestSpec)
@@ -39,7 +39,7 @@ public class SearchBuildingFiltersSteps {
         }
     }
 
-    @Step("Применить фильтр Шоссе = {roadId} и получить список найденных ЖК")
+    @Step("В /api/buildings/ применить фильтр Шоссе = {roadId} и получить список найденных ЖК")
     public static DataBuilding getBuildingListWithFilterRoads(int roadId) {
         return given()
                 .spec(requestSpec)
@@ -53,7 +53,7 @@ public class SearchBuildingFiltersSteps {
                 .extract().as(DataBuilding.class);
     }
 
-    @Step("Проверить, что каждый ЖК из списка содержит дорогу с id = {roadId}")
+    @Step("Проверить, что каждый ЖК из списка содержит шоссе с id = {roadId}")
     public static void checkBuildingListContainsRoadId(DataBuilding dataBuilding, int roadId) {
         List<Near> nearList = dataBuilding.getData().stream().map(Building::getNear).collect(Collectors.toList());
         for (Near near : nearList) {

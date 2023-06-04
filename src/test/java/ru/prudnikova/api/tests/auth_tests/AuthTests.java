@@ -1,11 +1,11 @@
-package ru.prudnikova.api.tests.auth;
+package ru.prudnikova.api.tests.auth_tests;
 
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.prudnikova.api.steps.auth.AuthSteps;
+import ru.prudnikova.api.steps.auth_steps.AuthSteps;
 
 @Tag("Api")
 @Story("ApiAuth")

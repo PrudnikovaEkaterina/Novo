@@ -1,4 +1,4 @@
-package ru.prudnikova.api.steps.auth;
+package ru.prudnikova.api.steps.auth_steps;
 
 import io.qameta.allure.Step;
 import io.restassured.http.Cookie;

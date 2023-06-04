@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Building {
-    private Integer id;
-    private Near near;
-    private Integer parent_id;
-    private Flat flats;
+public class Price {
+    private Integer from;
+    public Integer to;
 }

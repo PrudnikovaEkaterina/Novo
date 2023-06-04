@@ -1,4 +1,4 @@
-package ru.prudnikova.api.steps.favorites;
+package ru.prudnikova.api.steps.favorites_steps;
 
 import io.qameta.allure.Step;
 import ru.prudnikova.api.models.building.Building;
