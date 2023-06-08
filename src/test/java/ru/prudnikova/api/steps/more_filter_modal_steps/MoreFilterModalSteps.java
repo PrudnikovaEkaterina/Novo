@@ -2,18 +2,13 @@ package ru.prudnikova.api.steps.more_filter_modal_steps;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-import ru.prudnikova.api.models.building.Offer;
+import ru.prudnikova.data_base.managers.FlatsManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static io.restassured.RestAssured.filters;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.prudnikova.api.specifications.Specification.requestSpec;
 import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
@@ -55,4 +50,21 @@ public class MoreFilterModalSteps {
         listDouble.forEach(num -> assertTrue(num > squareMin));
     }
 
+    @Step("В /api/buildings/ применить фильтр Этаж c. Проверить, что список полученных id ЖК равен выборке из БД")
+    public static void checkBuildingListWithFilterFloorMin (int floorMin) {
+        List<Integer> listBuildingIdBD = FlatsManager.selectBuildingIdFromFlatsWhereFloorGreaterOrEqualsFloorUnit(floorMin);
+        Response response= given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/")
+                .param("region_code[]", 50)
+                .param("region_code[]", 77)
+                .param("floor_min", floorMin)
+                .get();
+      List<Integer> listBuildingIdApi = response.path("data.id");
+
+      assert listBuildingIdApi.containsAll(listBuildingIdBD);
+
+    }
 }
+
+

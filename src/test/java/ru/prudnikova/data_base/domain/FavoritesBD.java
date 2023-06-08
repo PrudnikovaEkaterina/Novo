@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserFavoritesBD {
+public class FavoritesBD {
     @JsonProperty("user_id")
     private int userId;
     @JsonProperty("entity_type")
@@ -23,6 +23,4 @@ public class UserFavoritesBD {
     private Date createdAt;
     @JsonProperty("updated_at")
     private Date updatedAt;
-
-
 }

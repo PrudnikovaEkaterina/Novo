@@ -24,5 +24,12 @@ public class MoreFilterModalTests {
         double squareMin = 400;
         MoreFilterModalSteps.getBuildingListWithFilterSquareMin(squareMin);
     }
+    @Test
+    @Owner("PrudnikovaEkaterina")
+    @DisplayName("В /api/buildings/ применить фильтр Этаж c. Проверить, что полученный список building_id равен выборке из БД")
+    void searchFloorMin() {
+        int floorMin = 50;
+        MoreFilterModalSteps.checkBuildingListWithFilterFloorMin(floorMin);
+    }
 
 }

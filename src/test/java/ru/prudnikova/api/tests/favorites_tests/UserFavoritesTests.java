@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import ru.prudnikova.api.models.auth.AuthModel;
 import ru.prudnikova.api.steps.auth_steps.AuthSteps;
 import ru.prudnikova.api.steps.favorites_steps.UserFavoritesSteps;
-import ru.prudnikova.data_base.managers.UserFavoritesManager;
+import ru.prudnikova.data_base.managers.FavoritesManager;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class UserFavoritesTests {
         String accessToken = authModel.getAccessToken();
         int userId = authModel.getUser().getId();
         List<Integer> userFavoritesBuildingListActual = UserFavoritesSteps.getUserFavoritesBuilding(accessToken);
-        List<Integer> userFavoritesBuildingListExpected = UserFavoritesManager.selectEntityIdFromFavoritesForUser(userId);
+        List<Integer> userFavoritesBuildingListExpected = FavoritesManager.selectEntityIdFromFavoritesForUser(userId);
         assertIterableEquals(userFavoritesBuildingListExpected, userFavoritesBuildingListActual);
     }
 
