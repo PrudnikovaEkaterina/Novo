@@ -6,7 +6,6 @@ import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.MoreFiltersModal;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
 
 public class NovostroykiPage {
@@ -90,7 +89,8 @@ public class NovostroykiPage {
         boolean b = true;
         while (b) {
             actions().moveToElement(SEARCH_ITEM_CONTENT_LAST).build().perform();
-            Selenide.executeJavaScript("document.querySelector('.infinity-scroll__viewport').scrollBy(0,500)");
+//          Selenide.executeJavaScript("document.querySelector('.infinity-scroll__viewport').scrollBy(0,1000)"); //было так, пока не изменили скролл на сайте
+            Selenide.executeJavaScript("window.scrollBy(0,500)");
             sleep(1000);
             if (footer.footerContainerIsVisible())
                 b = false;
