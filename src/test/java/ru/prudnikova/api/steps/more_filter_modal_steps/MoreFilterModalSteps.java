@@ -3,12 +3,9 @@ package ru.prudnikova.api.steps.more_filter_modal_steps;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import ru.prudnikova.data_base.managers.FlatsManager;
-
-import java.util.ArrayList;
 import java.util.List;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static ru.prudnikova.api.specifications.Specification.requestSpec;
 import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
@@ -30,24 +27,29 @@ public class MoreFilterModalSteps {
 
     @Step("В /api/buildings/ применить фильтр Площадь от и проверить, что в каждом найденном ЖК square_m2_to больше, чем squareMin ")
     public static void getBuildingListWithFilterSquareMin(double squareMin) {
-        Response response = given()
+        given()
                 .spec(requestSpec)
                 .basePath("/api/buildings/")
                 .param("region_code[]", 50)
                 .param("region_code[]", 77)
                 .param("square_min", squareMin)
-                .get();
-        assertEquals(200, response.getStatusCode());
-        List<Object> listObject = response.path("data.flats.square_m2.to");
-        List<String> listString = new ArrayList<>();
-        for (int i = 0; i < listObject.size(); i++) {
-            listString.add(String.valueOf(listObject.get(i)));
-        }
-        List<Double> listDouble = new ArrayList<>();
-        for (int i = 0; i < listString.size(); i++) {
-            listDouble.add(Double.parseDouble(listString.get(i)));
-        }
-        listDouble.forEach(num -> assertTrue(num > squareMin));
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .body("data.flats.square_m2.to.collect { it as double }", everyItem(greaterThan(squareMin)));
+
+//       (без groovy)
+//       assertEquals(200, response.getStatusCode());
+//        List<Object> listObject = response.path("data.flats.square_m2.to");
+//        List<String> listString = new ArrayList<>();
+//        for (int i = 0; i < listObject.size(); i++) {
+//            listString.add(String.valueOf(listObject.get(i)));
+//        }
+//        List<Double> listDouble = new ArrayList<>();
+//        for (int i = 0; i < listString.size(); i++) {
+//            listDouble.add(Double.parseDouble(listString.get(i)));
+//        }
+//        listDouble.forEach(num -> assertTrue(num > squareMin));
     }
 
     @Step("В /api/buildings/ применить фильтр Этаж c. Проверить, что список полученных id ЖК равен выборке из БД")
@@ -61,9 +63,7 @@ public class MoreFilterModalSteps {
                 .param("floor_min", floorMin)
                 .get();
       List<Integer> listBuildingIdApi = response.path("data.id");
-
       assert listBuildingIdApi.containsAll(listBuildingIdBD);
-
     }
 }
 
