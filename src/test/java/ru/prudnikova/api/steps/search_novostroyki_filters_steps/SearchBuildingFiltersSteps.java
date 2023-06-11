@@ -13,9 +13,9 @@ import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
 
 public class SearchBuildingFiltersSteps {
-    @Step("В /api/buildings/ применить фильтр Станция метро ={station} и получить список найденных ЖК")
+    @Step("Получить список ЖК с фильтром Станция метро = {station}")
     public static DataBuilding getBuildingListWithFilterStation(int stationId) {
-       return given()
+        return given()
                 .spec(requestSpec)
                 .basePath("/api/buildings/")
                 .param("region_code[]", 50)
@@ -39,7 +39,7 @@ public class SearchBuildingFiltersSteps {
         }
     }
 
-    @Step("В /api/buildings/ применить фильтр Шоссе = {roadId} и получить список найденных ЖК")
+    @Step("Получить список ЖК с фильтром Шоссе = {roadId}")
     public static DataBuilding getBuildingListWithFilterRoads(int roadId) {
         return given()
                 .spec(requestSpec)

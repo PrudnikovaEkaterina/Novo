@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import ru.prudnikova.test_data.GenerationData;
 import ru.prudnikova.web.enums.BuildingEnum;
 import ru.prudnikova.web.enums.CityEnum;
@@ -15,6 +16,7 @@ import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.pages.components.Footer;
 import ru.prudnikova.web.pages.components.SearchNovostroykiFilters;
 import ru.prudnikova.web.tests.TestBase;
+
 @Tag("Web")
 @Story("SearchFilters")
 

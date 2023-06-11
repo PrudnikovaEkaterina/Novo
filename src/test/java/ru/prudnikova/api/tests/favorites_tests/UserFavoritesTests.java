@@ -18,8 +18,8 @@ public class UserFavoritesTests {
     @Test
     @Owner("PrudnikovaEkaterina")
     @Tag("Api")
-    @DisplayName("Получение списка избранных ЖК пользователя")
-    void getUserFavoritesBuilding() {
+    @DisplayName("Получение списка избранных ЖК пользователя и проверка его на соответсвие данным из БД")
+    void checkUserFavoritesBuilding() {
         String phone = "79085040794";
         AuthModel authModel = AuthSteps.auth(phone);
         String accessToken = authModel.getAccessToken();
