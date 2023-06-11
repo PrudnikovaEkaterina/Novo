@@ -3,7 +3,10 @@ package ru.prudnikova.config;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
-        "classpath:auth.properties"
+        "system:properties",
+        "classpath:${env}.properties",
+        "file:~/${env}.properties",
+        "file:./${env}.properties"
 })
 public interface AuthConfig extends Config {
     @Config.Key("authCookieName")
