@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.prudnikova.test_data.GenerationData;
+import ru.prudnikova.testData.GenerationData;
 import ru.prudnikova.web.enums.HousingClassEnum;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.pages.components.SearchNovostroykiFilters;

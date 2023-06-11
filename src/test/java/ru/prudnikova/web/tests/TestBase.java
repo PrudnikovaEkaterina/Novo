@@ -1,6 +1,7 @@
 package ru.prudnikova.web.tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.aeonbits.owner.ConfigCache;
@@ -45,4 +46,8 @@ public class TestBase {
         Attach.addVideo();
     }
 
+    @AfterEach
+    void tearDownBase() {
+        Selenide.closeWebDriver();
+    }
 }

@@ -3,7 +3,7 @@ package ru.prudnikova.web.tests.me;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import ru.prudnikova.test_data.GenerationData;
+import ru.prudnikova.testData.GenerationData;
 import ru.prudnikova.web.pages.MePage;
 import ru.prudnikova.web.pages.components.Header;
 import ru.prudnikova.web.tests.TestBase;

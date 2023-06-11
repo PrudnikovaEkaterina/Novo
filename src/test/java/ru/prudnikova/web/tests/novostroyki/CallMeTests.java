@@ -3,9 +3,9 @@ package ru.prudnikova.web.tests.novostroyki;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import ru.prudnikova.data_base.managers.CallbackPhonesManager;
-import ru.prudnikova.test_data.GenerationData;
-import ru.prudnikova.data_base.domain.CallbackPhonesBD;
+import ru.prudnikova.dataBase.managers.CallbackPhonesManager;
+import ru.prudnikova.testData.GenerationData;
+import ru.prudnikova.dataBase.domain.CallbackPhonesBD;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.tests.TestBase;
 

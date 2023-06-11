@@ -5,7 +5,7 @@ import io.qameta.allure.Story;
 import org.aeonbits.owner.ConfigCache;
 import org.junit.jupiter.api.*;
 import ru.prudnikova.config.AuthConfig;
-import ru.prudnikova.test_data.GenerationData;
+import ru.prudnikova.testData.GenerationData;
 import ru.prudnikova.web.pages.AuthPage;
 import ru.prudnikova.web.pages.components.Header;
 import ru.prudnikova.web.tests.TestBase;
