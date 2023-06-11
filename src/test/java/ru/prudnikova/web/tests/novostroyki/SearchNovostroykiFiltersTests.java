@@ -6,7 +6,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import ru.prudnikova.test_data.GenerationData;
 import ru.prudnikova.web.enums.BuildingEnum;
 import ru.prudnikova.web.enums.CityEnum;
@@ -65,7 +64,7 @@ public class SearchNovostroykiFiltersTests extends TestBase {
     @Test
     @Owner("PrudnikovaEkaterina")
     @DisplayName("Проверить результаты поиска ЖК по округу на странице /novostroyki")
-    void searchСounty() {
+    void searchCounty() {
         String searchCountyName = "Восточный административный округ";
         String verifyCountyName = "ВАО";
         searchFilters.setValueInGeoSearchFilter(searchCountyName)
