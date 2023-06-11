@@ -27,6 +27,7 @@ public interface ProjectConfig extends Config {
     String browserVersion();
 
     @Key("browserSize")
+    @DefaultValue("1920x1080")
     String browserSize();
 
     @Key("remote")
