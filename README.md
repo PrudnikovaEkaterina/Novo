@@ -52,16 +52,35 @@
 </p>
 
 <a name="Launch_from_terminal"><h2>:computer: Запуск локально</h2></a>
+Для запуска тестов локально на вашем компьютере, вам необходимо добавить файлы \
+  `auth.properties` \
+  `db.properties` \
+  в папку ресурсов (test/src/resources). 
+  
+  В файле auth.properties необходимо указать следующие свойства:
+
+```bash 
+authCookieName=?
+authCookieValue=?
+smsCode=?
+```
+ В файле db.properties необходимо указать следующие свойства:
+
+```bash 
+dataSourceUrl= ?
+dataSourceUser= ?
+dataSourcePassword = ?
+```
 ### <a id="console-ui"></a>Локальный запуск UI-тестов
 
 ```
-gradle clean novoWeb
+gradle clean web_test
 ```
 
 ### <a id="console-api"></a>Локальный запуск API-тестов
 
 ```
-gradle clean novoApi
+gradle clean api_test
 ```
 
 ### <a id="console-mobile"></a>Локальный запуск всех тестов
