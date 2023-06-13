@@ -67,14 +67,14 @@ test {
     systemProperties(System.getProperties())
 }
 
-task novoApi(type: Test) {
+task api_test(type: Test) {
     useJUnitPlatform {
         includeTags "Api"
     }
 }
 
 
-task novoWeb(type: Test) {
+task web_test(type: Test) {
     useJUnitPlatform {
         includeTags "Web"
     }
