@@ -55,13 +55,13 @@
 ### <a id="console-ui"></a>Локальный запуск UI-тестов
 
 ```
-gradle clean novoWeb
+gradle clean web_test
 ```
 
 ### <a id="console-api"></a>Локальный запуск API-тестов
 
 ```
-gradle clean novoApi
+gradle clean api_test
 ```
 
 ### <a id="console-mobile"></a>Локальный запуск всех тестов
