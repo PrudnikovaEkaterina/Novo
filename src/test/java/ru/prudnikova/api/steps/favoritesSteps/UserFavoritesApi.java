@@ -1,8 +1,8 @@
 package ru.prudnikova.api.steps.favoritesSteps;
 
 import io.qameta.allure.Step;
-import ru.prudnikova.api.models.building.Building;
-import ru.prudnikova.api.models.building.DataBuilding;
+import ru.prudnikova.api.models.building.BuildingDto;
+import ru.prudnikova.api.models.building.DataBuildingDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,10 +12,10 @@ import static ru.prudnikova.api.helpers.CustomAllureListener.withCustomTemplates
 import static ru.prudnikova.api.specifications.Specification.requestSpec;
 import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
-public class UserFavoritesSteps {
+public class UserFavoritesApi {
     @Step("Получить список избранных ЖК пользователя")
     public static List<Integer> getUserFavoritesBuilding(String accessToken) {
-        DataBuilding dataBuilding = given()
+        DataBuildingDto dataBuilding = given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)
                 .header("Authorization", "Bearer " + accessToken)
@@ -23,7 +23,7 @@ public class UserFavoritesSteps {
                 .get("/api/me/favorites/buildings/")
                 .then()
                 .spec(responseSpec200)
-                .extract().as(DataBuilding.class);
-        return dataBuilding.getData().stream().map(Building::getId).collect(Collectors.toList());
+                .extract().as(DataBuildingDto.class);
+        return dataBuilding.getData().stream().map(BuildingDto::getId).collect(Collectors.toList());
     }
 }

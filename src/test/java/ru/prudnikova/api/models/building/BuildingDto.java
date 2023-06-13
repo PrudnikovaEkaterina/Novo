@@ -1,13 +1,15 @@
 package ru.prudnikova.api.models.building;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Building {
+public class BuildingDto {
     private Integer id;
-    private Near near;
-    private Integer parent_id;
-    private Flat flats;
+    private NearDto near;
+    @JsonProperty("parent_id")
+    private Integer parentId;
+    private FlatDto flats;
 }

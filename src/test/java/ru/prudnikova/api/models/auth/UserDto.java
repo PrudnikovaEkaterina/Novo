@@ -8,18 +8,19 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class UserDto {
     private int id;
     private String phone;
     @JsonProperty("phone_verified_at")
     private Date phoneVerifiedAt;
     private String name;
     @JsonProperty("avatar_path")
-    private Object avatarPath;
+    private String avatarPath;
     private int role;
-    private Object manager_id;
+    @JsonProperty("manager_id")
+    private String managerId;
     @JsonProperty("referral_code")
-    private Object referralCode;
+    private String referralCode;
     private String email;
     @JsonProperty("gar_object_id")
     private int garObjectId;

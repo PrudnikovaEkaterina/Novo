@@ -1,14 +1,17 @@
 package ru.prudnikova.api.models.building;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Station {
+public class StationDto {
     private Integer id;
-    private Integer distance_mode;
+    @JsonProperty("distance_mode")
+    private Integer distanceMode;
     private Integer distance;
     private String duration;
-    private Integer duration_value;
+    @JsonProperty("duration_value")
+    private Integer durationValue;
 }

@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 import static ru.prudnikova.api.specifications.Specification.requestSpec;
 import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
-public class MoreFilterModalSteps {
+public class MoreFilterModalApi {
 
     @Step("Получить список ЖК с фильтром Площадь до. Проверить, что в каждом найденном ЖК square_m2_from меньше, чем {squareMax}")
     public static void getBuildingListWithFilterSquareMax(double squareMax) {

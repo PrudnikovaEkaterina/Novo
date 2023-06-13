@@ -4,15 +4,15 @@ import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.prudnikova.api.steps.authSteps.AuthSteps;
-import ru.prudnikova.api.steps.profileSteps.ProfileSteps;
+import ru.prudnikova.api.steps.authSteps.AuthApi;
+import ru.prudnikova.api.steps.profileSteps.ProfileApi;
 import ru.prudnikova.testData.GenerationData;
 
 
 public class ProfileTests {
 
     String phone= GenerationData.setRandomPhoneNumber();
-    String accessToken = AuthSteps.getAccessToken(phone);
+    String accessToken = AuthApi.getAccessToken(phone);
 
     @Test
     @Owner("PrudnikovaEkaterina")
@@ -20,7 +20,7 @@ public class ProfileTests {
     @DisplayName("Изменение имени пользователя")
     void changeUsername () {
         String userName= GenerationData.setRandomUserName();
-        ProfileSteps.changeUsername( accessToken, userName);
+        ProfileApi.changeUsername( accessToken, userName);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ProfileTests {
     @DisplayName("Изменение Email пользователя")
     void changeEmail () {
         String email=GenerationData.setRandomEmail();
-        ProfileSteps.changeEmail( accessToken, email);
+        ProfileApi.changeEmail( accessToken, email);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ProfileTests {
     void changeUsernameAndEmail () {
         String userName= GenerationData.setRandomUserName();
         String email=GenerationData.setRandomEmail();
-        ProfileSteps.changeUsernameAndEmail(accessToken, userName, email);
+        ProfileApi.changeUsernameAndEmail(accessToken, userName, email);
     }
 
 }

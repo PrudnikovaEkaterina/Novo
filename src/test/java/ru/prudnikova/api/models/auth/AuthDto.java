@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthModel {
+public class AuthDto {
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("token_type")
@@ -17,5 +17,5 @@ public class AuthModel {
     private String refreshToken;
     @JsonProperty("refresh_expires_in")
     private int refreshExpiresIn;
-    private User user;
+    private UserDto user;
 }

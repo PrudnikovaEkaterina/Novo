@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Cookie;
-import ru.prudnikova.api.steps.authSteps.AuthSteps;
+import ru.prudnikova.api.steps.authSteps.AuthApi;
 
 import java.sql.Timestamp;
 
@@ -19,7 +19,7 @@ public class MePage {
             SAVE_СHANGES = $(".me-settings__chosen-icon");
 
     public void openMePageWithApiAuth(String phoneNumber) {
-        String refreshToken = AuthSteps.getRefreshToken(phoneNumber);
+        String refreshToken = AuthApi.getRefreshToken(phoneNumber);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         long timestampTime = timestamp.getTime();
         long session = timestampTime + 2592000;

@@ -1,11 +1,11 @@
-package ru.prudnikova.api.models.building;
+package ru.prudnikova.api.models.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SquareM2 {
-    private Double from;
-    public Double to;
+public class UserLoginBodyDto {
+    private String password;
+    private String phone;
 }

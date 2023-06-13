@@ -1,7 +1,7 @@
 package ru.prudnikova.api.steps.profileSteps;
 
 import io.qameta.allure.Step;
-import ru.prudnikova.api.models.auth.User;
+import ru.prudnikova.api.models.auth.UserDto;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -9,7 +9,7 @@ import static ru.prudnikova.api.helpers.CustomAllureListener.withCustomTemplates
 import static ru.prudnikova.api.specifications.Specification.requestSpec;
 import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
-public class ProfileSteps {
+public class ProfileApi {
     @Step("Изменить имя пользователя")
     public static void changeUsername (String accessToken, String userName) {
         String body = "{\"name\":\""+userName+"\"}";
@@ -42,7 +42,7 @@ public class ProfileSteps {
 
     @Step("Изменить имя и Email пользователя")
     public static void changeUsernameAndEmail (String accessToken, String userName, String email) {
-        User user =new User();
+        UserDto user =new UserDto();
         user.setName(userName);
         user.setEmail(email);
         given()

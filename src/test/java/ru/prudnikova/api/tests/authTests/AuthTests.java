@@ -5,7 +5,7 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.prudnikova.api.steps.authSteps.AuthSteps;
+import ru.prudnikova.api.steps.authSteps.AuthApi;
 
 @Tag("Api")
 @Story("ApiAuth")
@@ -17,15 +17,16 @@ public class AuthTests {
     @Owner("PrudnikovaEkaterina")
     @DisplayName("Авторизация пользователя")
     void auth() {
-        AuthSteps.auth(phoneNumber);
+        AuthApi.auth(phoneNumber);
+
     }
 
     @Test
     @Owner("PrudnikovaEkaterina")
     @DisplayName("Логаут пользователя")
     void logout() {
-        String token = AuthSteps.getAccessToken(phoneNumber);
-        AuthSteps.logout(token);
+        String token = AuthApi.getAccessToken(phoneNumber);
+        AuthApi.logout(token);
     }
 
 }
