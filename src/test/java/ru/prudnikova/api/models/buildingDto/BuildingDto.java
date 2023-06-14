@@ -12,4 +12,6 @@ public class BuildingDto {
     @JsonProperty("parent_id")
     private Integer parentId;
     private FlatDto flats;
+    @JsonProperty("release_date")
+    private String releaseDate;
 }
