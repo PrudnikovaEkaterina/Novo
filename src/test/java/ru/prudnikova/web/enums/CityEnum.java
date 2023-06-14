@@ -1,7 +1,10 @@
 package ru.prudnikova.web.enums;
 
 public enum CityEnum {
-    LYUBERTSY("Люберцы"), HIMKI("Химки"), DMITROV("Дмитров");
+    LYUBERTSY("Люберцы"),
+    HIMKI("Химки"),
+    DMITROV("Дмитров");
+
     public final String name;
 
     CityEnum(String name) {

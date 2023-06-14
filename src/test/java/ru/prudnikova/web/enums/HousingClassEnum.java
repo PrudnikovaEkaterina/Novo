@@ -1,7 +1,10 @@
 package ru.prudnikova.web.enums;
 
 public enum HousingClassEnum {
-    ECONOMY("Эконом"), COMFORT("Комфорт"), BUSINESS("Бизнес"), Elite("Элит");
+    ECONOMY("Эконом"),
+    COMFORT("Комфорт"),
+    BUSINESS("Бизнес"),
+    Elite("Элит");
 
     public final String name;
 

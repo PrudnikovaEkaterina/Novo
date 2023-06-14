@@ -5,17 +5,18 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.prudnikova.testData.GenerationData;
 import ru.prudnikova.web.pages.MePage;
-import ru.prudnikova.web.pages.components.Header;
+import ru.prudnikova.web.pages.components.HeaderComponent;
 import ru.prudnikova.web.tests.TestBase;
 
 import static java.lang.Thread.sleep;
 
 @Tag("Web")
+@Owner("PrudnikovaEkaterina")
 @Story("UserProfile")
 public class MeTests extends TestBase {
 
     MePage mePage = new MePage();
-    Header header = new Header();
+    HeaderComponent header = new HeaderComponent();
     String phoneNumber = "79281960486";
 
     @BeforeEach
@@ -24,7 +25,6 @@ public class MeTests extends TestBase {
     }
 
     @Test
-    @Owner("PrudnikovaEkaterina")
     @DisplayName("Изменение имени пользователя в профиле")
     void changeUserName() throws InterruptedException {
         String userName = GenerationData.setRandomUserName();
@@ -34,11 +34,12 @@ public class MeTests extends TestBase {
     }
 
     @Test
-    @Owner("PrudnikovaEkaterina")
     @DisplayName("Изменение email пользователя в профиле")
     void changeUserEmail() {
         String userEmail = GenerationData.setRandomEmail();
-        mePage.changeUserEmail(userEmail).verifyChangeUserEmail(userEmail);
+        mePage
+                .changeUserEmail(userEmail)
+                .verifyChangeUserEmail(userEmail);
     }
 
     @AfterEach

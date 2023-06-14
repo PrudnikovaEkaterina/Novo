@@ -10,19 +10,19 @@ import ru.prudnikova.web.enums.HousingClassEnum;
 public class GenerationData {
     static Faker faker = new Faker();
 
-    public static String setRandomDeveloper(DeveloperEnum[] allEnumValues) {
+    public static String setRandomDeveloper() {
         return faker.options().option(DeveloperEnum.values()).name;
     }
 
-    public static String setRandomBuilding(BuildingEnum[] allEnumValues) {
+    public static String setRandomBuilding() {
         return faker.options().option(BuildingEnum.values()).name;
     }
 
-    public static String setRandomCity(CityEnum[] allEnumValues) {
+    public static String setRandomCity() {
         return faker.options().option(CityEnum.values()).name;
     }
 
-    public static String setRandomHousingClass(HousingClassEnum[] allEnumValues) {
+    public static String setRandomHousingClass() {
         return faker.options().option(HousingClassEnum.values()).name;
     }
 

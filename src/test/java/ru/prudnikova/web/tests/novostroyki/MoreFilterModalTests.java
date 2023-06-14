@@ -7,17 +7,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.prudnikova.testData.GenerationData;
-import ru.prudnikova.web.enums.HousingClassEnum;
 import ru.prudnikova.web.pages.NovostroykiPage;
-import ru.prudnikova.web.pages.components.SearchNovostroykiFilters;
 import ru.prudnikova.web.tests.TestBase;
 
 @Tag("Web")
+@Owner("PrudnikovaEkaterina")
 @Story("MoreFilterModal")
 public class MoreFilterModalTests extends TestBase {
 
     NovostroykiPage novostroykiPage = new NovostroykiPage();
-    SearchNovostroykiFilters searchFilters = new SearchNovostroykiFilters();
 
     @BeforeEach
     void beforeEach() {
@@ -25,19 +23,20 @@ public class MoreFilterModalTests extends TestBase {
     }
 
     @Test
-    @Owner("PrudnikovaEkaterina")
     @DisplayName("Проверить открытие модального окна по клику на кнопку Все фильтры странице /novostroyki")
     void checkOpenMoreFiltersModal() {
         novostroykiPage.openMoreFiltersModal();
     }
 
     @Test
-    @Owner("PrudnikovaEkaterina")
     @DisplayName("Проверить выдачу на странице /novostroyki  после примения фильтра Класс жилья")
     void clickCheckboxHousingClassAndVerifyResultSearch() {
-        String housingClass = GenerationData.setRandomHousingClass(HousingClassEnum.values());
+        String housingClass = GenerationData.setRandomHousingClass();
         String numberOfFiltersSelected = "1";
-        novostroykiPage.openMoreFiltersModal().clickCheckboxHousingClass(housingClass).clickShowButton();
+        novostroykiPage
+                .openMoreFiltersModal()
+                .clickCheckboxHousingClass(housingClass)
+                .clickShowButton();
         novostroykiPage.verifyResultSearchByFilterHousingClass(housingClass + " класс");
         novostroykiPage.verifyNotificationIndicator(numberOfFiltersSelected);
     }

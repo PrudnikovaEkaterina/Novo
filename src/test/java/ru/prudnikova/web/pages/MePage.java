@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Cookie;
-import ru.prudnikova.api.steps.authSteps.AuthApi;
+import ru.prudnikova.api.steps.authApiSteps.AuthApi;
 
 import java.sql.Timestamp;
 
@@ -16,7 +16,7 @@ public class MePage {
     private final SelenideElement
             INPUT_NAME = $x("//input[@name='name']"),
             INPUT_EMAIL = $x("//input[@name='email']"),
-            SAVE_СHANGES = $(".me-settings__chosen-icon");
+            SAVE_CHANGES = $(".me-settings__chosen-icon");
 
     public void openMePageWithApiAuth(String phoneNumber) {
         String refreshToken = AuthApi.getRefreshToken(phoneNumber);
@@ -35,12 +35,12 @@ public class MePage {
 
     public void changeUserName(String userName) {
         INPUT_NAME.setValue(userName);
-        SAVE_СHANGES.click();
+        SAVE_CHANGES.click();
     }
 
     public MePage changeUserEmail(String email) {
         INPUT_EMAIL.setValue(email);
-        SAVE_СHANGES.click();
+        SAVE_CHANGES.click();
         return this;
     }
 

@@ -1,7 +1,9 @@
 package ru.prudnikova.web.enums;
 
 public enum BuildingEnum {
-    GORODSKIE_ISTORII("ЖК «Городские истории»"), LUCHI("ЖК «Лучи»"), ILOVE("ЖК ILOVE");
+    GORODSKIE_ISTORII("ЖК «Городские истории»"),
+    LUCHI("ЖК «Лучи»"),
+    ILOVE("ЖК ILOVE");
 
     public final String name;
 

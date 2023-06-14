@@ -1,9 +1,9 @@
 package ru.prudnikova.web.pages;
 
 import com.codeborne.selenide.*;
-import ru.prudnikova.web.pages.components.CallMeWidget;
-import ru.prudnikova.web.pages.components.Footer;
-import ru.prudnikova.web.pages.components.MoreFiltersModal;
+import ru.prudnikova.web.pages.components.CallMeWidgetComponent;
+import ru.prudnikova.web.pages.components.FooterComponent;
+import ru.prudnikova.web.pages.components.MoreFiltersModalComponent;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Selenide.*;
@@ -25,9 +25,9 @@ public class NovostroykiPage {
             SEARCH_PRICE_LIST_TABLE = $$(".search-price-list__table"),
             TAG = $$(".base-round-link-button__text");
 
-    MoreFiltersModal moreFiltersModal = new MoreFiltersModal();
-    CallMeWidget callMeWidget = new CallMeWidget();
-    Footer footer = new Footer();
+    MoreFiltersModalComponent moreFiltersModal = new MoreFiltersModalComponent();
+    CallMeWidgetComponent callMeWidget = new CallMeWidgetComponent();
+    FooterComponent footer = new FooterComponent();
 
     public NovostroykiPage openNovostroykiPage() {
         open("/novostroyki");
@@ -55,7 +55,7 @@ public class NovostroykiPage {
         TAG.findBy(Condition.text(tagName)).shouldBe(Condition.visible);
     }
 
-    public MoreFiltersModal openMoreFiltersModal() {
+    public MoreFiltersModalComponent openMoreFiltersModal() {
         MORE_FILTERS_BUTTON.click();
         moreFiltersModal.verifyModalHeaderText();
         return moreFiltersModal;
@@ -80,7 +80,7 @@ public class NovostroykiPage {
         return this;
     }
 
-    public CallMeWidget openCallMeWidget() {
+    public CallMeWidgetComponent openCallMeWidget() {
         CALL_ME_WIDGET_BUTTON_ICON.shouldBe(Condition.visible).click();
         return callMeWidget;
     }
