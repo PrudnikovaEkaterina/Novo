@@ -32,7 +32,6 @@ public class ZhkApi {
 
     @Step("Получить список Дат сдачи из списка ЖК")
     public static Map<Integer, String> getReleaseDate(DataBuildingDto dataBuildingDto) {
-        Pattern pattern = Pattern.compile("\\d+");
         Map<Integer, String> mapa = dataBuildingDto.getData().stream().collect(Collectors.toMap(BuildingDto::getId, BuildingDto::getReleaseDate));
         System.out.println(mapa);
         return mapa;
