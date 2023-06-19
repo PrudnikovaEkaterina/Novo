@@ -18,9 +18,16 @@ public class FlatsDao {
        return flatsBDList.stream().map(FlatsEntity::getBuildingId).collect(Collectors.toList());
     }
 
-    public static List<Integer> selectBuildingIdFromFlatsWherePaymentMethodIsMortgage(String paymentMethod){
+    public static List<Integer> selectBuildingIdFromFlatsWithFilterPaymentMethod(String paymentMethod){
         List<FlatsEntity> flatsBDList = jdbcTemplate.query("select distinct building_id from flats where ?=1 and status=1",
                 new BeanPropertyRowMapper<>(FlatsEntity.class, false), paymentMethod);
+        return flatsBDList.stream().map(FlatsEntity::getBuildingId).collect(Collectors.toList());
+
+    }
+
+    public static List<Integer> selectBuildingIdFromFlatsWithFilterRenovation(String renovation){
+        List<FlatsEntity> flatsBDList = jdbcTemplate.query("SELECT  distinct building_id FROM flats where finishing=? and status=1",
+                new BeanPropertyRowMapper<>(FlatsEntity.class, false), renovation);
         return flatsBDList.stream().map(FlatsEntity::getBuildingId).collect(Collectors.toList());
 
     }

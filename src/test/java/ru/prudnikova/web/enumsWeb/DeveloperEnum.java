@@ -1,4 +1,4 @@
-package ru.prudnikova.web.enums;
+package ru.prudnikova.web.enumsWeb;
 
 public enum DeveloperEnum {
     GK_А101("ГК «А101»"),

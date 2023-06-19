@@ -1,4 +1,4 @@
-package ru.prudnikova.web.enums;
+package ru.prudnikova.web.enumsWeb;
 
 public enum RoomEnum {
     STUDIO("Студ"),

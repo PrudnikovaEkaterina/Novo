@@ -102,15 +102,15 @@ public class MoreFilterModalApi {
                 .param("per_page", 1)
                 .get();
         Assertions.assertEquals(200, response.statusCode());
-        int pageCountInt = (int) response.path("meta.total");
-        double pageCountDouble = Math.round((double) pageCountInt / 100);
-        for (int i = 1; i <= pageCountDouble; i++) {
+        int pageCountInt = response.path("meta.total");
+        int pageCountDouble = (int) Math.round((double) pageCountInt / 100);
+        for (int i = 1; i < pageCountDouble+2; i++) {
             List<Integer> listPage = given()
                     .spec(requestSpec)
                     .basePath("/api/buildings/")
                     .param("region_code[]", 50)
                     .param("region_code[]", 77)
-                    .param("payment_methods[]", 1)
+                    .param("payment_methods[]", paymentMethod)
                     .param("per_page", 100)
                     .param("page", i)
                     .get()
@@ -123,13 +123,45 @@ public class MoreFilterModalApi {
 
     @Step("Получить список ЖК из БД, в которых есть квартиры со способом оплаты {paymentMethod}")
     public static List<Integer> selectBuildingListWithFilterMortgage(String paymentMethod) {
-        return FlatsDao.selectBuildingIdFromFlatsWherePaymentMethodIsMortgage(paymentMethod);
+        return FlatsDao.selectBuildingIdFromFlatsWithFilterPaymentMethod(paymentMethod);
     }
 
     @Step("Проверить равенство двух списков")
     public static void checkEqualityTwoLists(List<Integer> apiList, List<Integer> dataList) {
         assert apiList.containsAll(dataList);
     }
+
+    @Step("Получить список ЖК renovation = {renovation}")
+    public static List<Integer> getBuildingListWithFilterRenovation(String renovation) {
+        List<Integer> listAll = new ArrayList<>();
+        Response response = given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/")
+                .param("region_code[]", 50)
+                .param("region_code[]", 77)
+                .param("renovation[]", renovation)
+                .param("per_page", 1)
+                .get();
+        Assertions.assertEquals(200, response.statusCode());
+        int totalItem = response.path("meta.total");
+        int pageCount = (int) Math.round((double) totalItem / 100);
+        for (int i = 1; i <pageCount+2; i++) {
+            List<Integer> listPage = given()
+                    .spec(requestSpec)
+                    .basePath("/api/buildings/")
+                    .param("region_code[]", 50)
+                    .param("region_code[]", 77)
+                    .param("renovation[]", renovation)
+                    .param("per_page", 100)
+                    .param("page", i)
+                    .get()
+                    .then()
+                    .extract().path("data.id");
+            listAll.addAll(listPage);
+        }
+        return listAll;
+    }
+
 
 }
 

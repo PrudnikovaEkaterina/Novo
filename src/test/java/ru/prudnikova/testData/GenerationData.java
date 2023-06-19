@@ -1,10 +1,10 @@
 package ru.prudnikova.testData;
 
 import com.github.javafaker.Faker;
-import ru.prudnikova.web.enums.BuildingEnum;
-import ru.prudnikova.web.enums.CityEnum;
-import ru.prudnikova.web.enums.DeveloperEnum;
-import ru.prudnikova.web.enums.HousingClassEnum;
+import ru.prudnikova.web.enumsWeb.BuildingEnum;
+import ru.prudnikova.web.enumsWeb.CityEnum;
+import ru.prudnikova.web.enumsWeb.DeveloperEnum;
+import ru.prudnikova.web.enumsWeb.HousingClassEnum;
 
 
 public class GenerationData {
@@ -36,6 +36,10 @@ public class GenerationData {
 
     public static String setRandomEmail() {
         return faker.internet().emailAddress();
+    }
+
+    public static int setRandomBuildingId() {
+        return faker.options().option(ru.prudnikova.api.enumsApi.BuildingEnum.values()).id;
     }
 
 }

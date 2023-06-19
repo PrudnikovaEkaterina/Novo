@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import ru.prudnikova.testData.GenerationData;
-import ru.prudnikova.web.enums.RoomEnum;
+import ru.prudnikova.web.enumsWeb.RoomEnum;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.pages.components.FooterComponent;
 import ru.prudnikova.web.pages.components.SearchNovostroykiFiltersComponent;
