@@ -3,7 +3,7 @@ package ru.prudnikova.dataBase.managers;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.prudnikova.dataBase.DataSourceProvider;
-import ru.prudnikova.dataBase.domain.FlatsEntity;
+import ru.prudnikova.dataBase.entities.FlatsEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 

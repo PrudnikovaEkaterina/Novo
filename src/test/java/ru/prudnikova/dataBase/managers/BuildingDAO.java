@@ -1,21 +1,11 @@
 package ru.prudnikova.dataBase.managers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import regexp.RegexpMeth;
-import ru.prudnikova.api.steps.zhkApiSteps.ZhkApi;
 import ru.prudnikova.dataBase.DataSourceProvider;
-import ru.prudnikova.dataBase.domain.*;
+import ru.prudnikova.dataBase.entities.buildingEntities.BuildingEntity;
 
-import java.io.DataInput;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class BuildingDAO {
@@ -24,9 +14,15 @@ public class BuildingDAO {
     );
 
     public static String selectBuildingDataJson(int buildingId) {
-        List<BuildingEnity> buildingEnityList = jdbcTemplate.query("select * from buildings where id=?",
-                new BeanPropertyRowMapper<>(BuildingEnity.class, false), buildingId);
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select * from buildings where id=?",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false), buildingId);
         return String.valueOf(buildingEnityList.get(0).getData_json());
+    }
+
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesSlugContainsRoom() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select  b.id from buildings b JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%nb_rooms%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
     }
 
 }

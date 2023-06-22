@@ -5,7 +5,7 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.prudnikova.dataBase.managers.CallbackPhonesDao;
 import ru.prudnikova.testData.GenerationData;
-import ru.prudnikova.dataBase.domain.CallbackPhonesEntity;
+import ru.prudnikova.dataBase.entities.CallbackPhonesEntity;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.tests.TestBase;
 

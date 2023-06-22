@@ -1,23 +1,18 @@
-package ru.prudnikova.api.steps.zhkApiSteps;
+package ru.prudnikova.api.steps.cardNovostroykiApiSteps;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
 import regexp.RegexpMeth;
-import ru.prudnikova.api.models.buildingDto.BuildingDto;
-import ru.prudnikova.api.models.buildingDto.DataBuildingDto;
-import ru.prudnikova.api.models.buildingDto.FlatDto;
-import ru.prudnikova.api.models.buildingDto.PriceDto;
+import ru.prudnikova.api.models.buildingDto.*;
+import ru.prudnikova.dataBase.entities.buildingEntities.DataJsonEntity;
+import ru.prudnikova.dataBase.entities.buildingEntities.PriceEntity;
 import ru.prudnikova.dataBase.managers.BuildingDAO;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static java.util.stream.Collectors.*;
@@ -25,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.prudnikova.api.specifications.Specification.requestSpec;
 import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
-public class ZhkApi {
+public class CardNovostroykiApi {
     @Step("Получить список Похожих ЖК")
     public static DataBuildingDto getSimilarBuildingList(int zhkId) {
         return given()
@@ -39,12 +34,21 @@ public class ZhkApi {
                 .extract().as(DataBuildingDto.class);
     }
 
-    @Step("Получить список годов сдачи для из списка Похожих ЖК")
-    public static Map<Integer, List<Integer>> getReleasesDatesFromBuildingsList(DataBuildingDto dataBuildingDto) {
+    @Step("Получить список годов сдачи для из списка Похожих ЖК из release_date")
+    public static Map<Integer, List<Integer>> getReleasesDatesLegacy(DataBuildingDto dataBuildingDto) {
         Map<Integer, String> mapa = dataBuildingDto.getData().stream().collect(toMap(BuildingDto::getId, BuildingDto::getReleaseDate));
         return mapa.entrySet()
                 .stream()
                 .collect(toMap(Entry::getKey, el -> RegexpMeth.extractYears(el.getValue())));
+    }
+
+    @Step("Получить список годов сдачи для из списка Похожих ЖК из release")
+    public static Map<Integer, Integer> getReleasesDates(DataBuildingDto dataBuildingDto) {
+        Map<Integer, ReleaseDto> mapa = dataBuildingDto.getData().stream().collect(toMap(BuildingDto::getId, BuildingDto::getRelease));
+        return mapa.entrySet()
+                .stream()
+                .collect(toMap(Entry::getKey, el->el.getValue().getYear()));
+
     }
 
 
@@ -57,12 +61,20 @@ public class ZhkApi {
         return RegexpMeth.extractYear(releaseYearStr);
     }
 
-    @Step("Проверить, что разница в годе сдачи - не более 2 лет")
-    public static void checkDifferenceBuildingReleaseYearLessOrEqual2Years(int releaseYear, Map<Integer, List<Integer>> releasesDates) {
+    @Step("Проверить, что разница в годах сдачи - не более 2 лет")
+    public static void checkDifferenceBuildingReleaseYearLessOrEqual2YearsLegacy(int releaseYear, Map<Integer, List<Integer>> releasesDates) {
         List<Integer> getDateRange = List.of(releaseYear - 2, releaseYear - 1, releaseYear, releaseYear + 1, releaseYear + 2);
         List<List<Integer>> lists = new ArrayList<>(releasesDates.values());
         for (int i = 0; i < lists.size(); i++) {
             assert lists.get(i).stream().anyMatch(getDateRange::contains);
+        }
+    }
+    @Step("Проверить, что разница в годах сдачи - не более 2 лет")
+    public static void checkDifferenceBuildingReleaseYearLessOrEqual2Years(int releaseYear, Map<Integer, Integer> releases) {
+        List<Integer> getDateRange = List.of(releaseYear - 2, releaseYear - 1, releaseYear, releaseYear + 1, releaseYear + 2);
+        List<Integer> list = new ArrayList<>(releases.values());
+        for (int i = 0; i < list.size(); i++) {
+            assert getDateRange.contains(list.get(i));
         }
     }
 
@@ -100,5 +112,24 @@ public class ZhkApi {
         for (int i = 0; i < calculatePercentageDifferenceBetweenPrices.size(); i++) {
             assert calculatePercentageDifferenceBetweenPrices.get(i)<=percent;
         }
+    }
+
+    @Step("Преобразование поля data_json в объект DataJsonEntity")
+    public static DataJsonEntity getDataJsonEntity (int buildingId) throws IOException {
+        String dataJson = BuildingDAO.selectBuildingDataJson(buildingId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(dataJson, new TypeReference<>(){});
+    }
+
+    @Step("Получение минимальной цены для ЖК без преложений от Тренд Агента из базы")
+    public static int selectPriceMin (int buildingId) throws IOException {
+        DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
+        List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
+        int price=0;
+        for (PriceEntity priceEntity : priceEntityList) {
+            if (priceEntity.getTitle().equals("Продажа"))
+                price = priceEntity.getPrice_min();
+        }
+      return price;
     }
 }

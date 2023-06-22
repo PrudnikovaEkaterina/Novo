@@ -6,6 +6,8 @@ import ru.prudnikova.web.enumsWeb.CityEnum;
 import ru.prudnikova.web.enumsWeb.DeveloperEnum;
 import ru.prudnikova.web.enumsWeb.HousingClassEnum;
 
+import java.util.List;
+
 
 public class GenerationData {
     static Faker faker = new Faker();
@@ -38,8 +40,14 @@ public class GenerationData {
         return faker.internet().emailAddress();
     }
 
-    public static int setRandomBuildingId() {
-        return faker.options().option(ru.prudnikova.api.enumsApi.BuildingEnum.values()).id;
+    public static int setRandomBuildingId(List<Integer> buildingIdList) {
+        int id=0;
+        if (buildingIdList.size()!=0){
+            id = buildingIdList.get(faker.random().nextInt(buildingIdList.size()));
+        }
+        else
+            System.out.println("List not contain id");
+        return id;
     }
 
 }

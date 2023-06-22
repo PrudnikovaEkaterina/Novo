@@ -25,4 +25,19 @@ public class RegexpMeth {
         }
         return result;
     }
+
+    public static int extractPrice (String resource){
+        int price =0;
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(resource);
+        while (m.find()) {
+            price = Integer.parseInt(m.group());
+        }
+        return price;
+    }
+
+    public static String removeSpacesFromString (String resource){
+       return  resource.replaceAll(" ", "");
+    }
+
 }

@@ -14,4 +14,5 @@ public class BuildingDto {
     private FlatDto flats;
     @JsonProperty("release_date")
     private String releaseDate;
+    private ReleaseDto release;
 }
