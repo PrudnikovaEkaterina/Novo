@@ -1,6 +1,7 @@
 package ru.prudnikova.web.pages;
 
 import com.codeborne.selenide.*;
+import regexp.RegexpMeth;
 import ru.prudnikova.web.pages.components.CallMeWidgetComponent;
 import ru.prudnikova.web.pages.components.FooterComponent;
 import ru.prudnikova.web.pages.components.MoreFiltersModalComponent;
@@ -17,7 +18,8 @@ public class NovostroykiPage {
             SEARCH_ITEM_CONTENT_FIRST = $$(".search-item__content").first(),
             SEARCH_ITEM_CONTENT_LAST = $$(".search-item__content").last(),
             CALL_ME_WIDGET_BUTTON_ICON = $x("//div[@class='call-me-widget search-item__call-me'][1]"),
-            SEARCH_NOVOSTROYKI_CONTENT_TOTAL = $(".search-novostroyki-content__total");
+            SEARCH_NOVOSTROYKI_CONTENT_TOTAL = $(".search-novostroyki-content__total"),
+            SEARCH_PRICE_LIST_PRICE = $(".search-price-list__price");
 
     private final ElementsCollection
             SEARCH_ITEM_ADDRESS_TEXT = $$(".search-item__address-text"),
@@ -33,6 +35,12 @@ public class NovostroykiPage {
         open("/novostroyki");
         return this;
     }
+
+    public NovostroykiPage openNovostroykiPageWithFilterNoFlatsAndBuildingId(int buildingId) {
+        open("/novostroyki?buildings=" + buildingId + "&no_flats=1");
+        return this;
+    }
+
 
     public void verifySearchBuildingTitleText(String title) {
         SEARCH_ITEM_TITLE_TEXT.shouldHave(Condition.text(title));
@@ -95,6 +103,11 @@ public class NovostroykiPage {
             if (footer.footerContainerIsVisible())
                 b = false;
         }
+    }
+    public double getPriceValue() {
+        sleep(1000);
+        String price = SEARCH_PRICE_LIST_PRICE.getText();
+        return RegexpMeth.extractPriceDouble(price);
     }
 
 }

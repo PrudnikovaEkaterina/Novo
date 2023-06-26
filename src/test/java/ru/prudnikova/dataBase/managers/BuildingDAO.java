@@ -25,5 +25,24 @@ public class BuildingDAO {
         return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
     }
 
+    public static List<Integer> selectBuildingIdWithoutFlats() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select  buildings.id from buildings JOIN gar_ADDRESSOBJECTS on (buildings.gar_object_id = gar_ADDRESSOBJECTS.OBJECTID) where gar_ADDRESSOBJECTS.region_code in (50,77) and not exists (select 1 from flats where flats.building_id = buildings.id and flats.status=1) and JSON_EXTRACT (buildings.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        System.out.println(buildingEnityList);
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+    }
+
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistAreaMin() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query(" select  * from buildings JOIN gar_ADDRESSOBJECTS on (buildings.gar_object_id = gar_ADDRESSOBJECTS.OBJECTID) where gar_ADDRESSOBJECTS.region_code in (50,77) and not exists (select 1 from flats where flats.building_id = buildings.id and flats.status=1) and JSON_EXTRACT (buildings.data_json, \"$.prices[].area_min\") is not null and JSON_EXTRACT (buildings.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+    }
+
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistAreaMax() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query(" select  * from buildings JOIN gar_ADDRESSOBJECTS on (buildings.gar_object_id = gar_ADDRESSOBJECTS.OBJECTID) where gar_ADDRESSOBJECTS.region_code in (50,77) and not exists (select 1 from flats where flats.building_id = buildings.id and flats.status=1) and JSON_EXTRACT (buildings.data_json, \"$.prices[].area_max\") is not null and JSON_EXTRACT (buildings.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+    }
+
 }
 

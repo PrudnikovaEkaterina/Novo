@@ -12,7 +12,7 @@ import org.hibernate.type.SqlTypes;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BuildingEntity {
-    private int id;
+    private Integer id;
     private String parent_id;
     private String title_eng;
     private Integer gar_object_id;

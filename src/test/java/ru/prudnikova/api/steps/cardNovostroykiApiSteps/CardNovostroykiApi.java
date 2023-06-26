@@ -132,4 +132,28 @@ public class CardNovostroykiApi {
         }
       return price;
     }
+
+    @Step("Получение минимальной площади для ЖК без преложений от Тренд Агента из базы")
+    public static double selectAreaMin (int buildingId) throws IOException {
+        DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
+        List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
+        int areaMin=0;
+        for (PriceEntity priceEntity : priceEntityList) {
+            if (priceEntity.getTitle().equals("Продажа"))
+                areaMin = priceEntity.getArea_min();
+        }
+        return areaMin;
+    }
+
+    @Step("Получение максимальной площади для ЖК без преложений от Тренд Агента из базы")
+    public static double selectAreaMax (int buildingId) throws IOException {
+        DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
+        List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
+        int areaMax=0;
+        for (PriceEntity priceEntity : priceEntityList) {
+            if (priceEntity.getTitle().equals("Продажа"))
+                areaMax = priceEntity.getArea_max();
+        }
+        return areaMax;
+    }
 }
