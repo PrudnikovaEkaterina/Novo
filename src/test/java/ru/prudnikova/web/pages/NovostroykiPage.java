@@ -1,6 +1,7 @@
 package ru.prudnikova.web.pages;
 
 import com.codeborne.selenide.*;
+import org.junit.jupiter.api.Assertions;
 import regexp.RegexpMeth;
 import ru.prudnikova.web.pages.components.CallMeWidgetComponent;
 import ru.prudnikova.web.pages.components.FooterComponent;
@@ -19,7 +20,9 @@ public class NovostroykiPage {
             SEARCH_ITEM_CONTENT_LAST = $$(".search-item__content").last(),
             CALL_ME_WIDGET_BUTTON_ICON = $x("//div[@class='call-me-widget search-item__call-me'][1]"),
             SEARCH_NOVOSTROYKI_CONTENT_TOTAL = $(".search-novostroyki-content__total"),
-            SEARCH_PRICE_LIST_PRICE = $(".search-price-list__price");
+            SEARCH_PRICE_LIST_PRICE = $(".search-price-list__price"),
+            SEARCH_PRICE_LIST_ROOM = $(".search-price-list__room"),
+            SEARCH_ITEM_TOTAL_AREA =$(".search-item__total-area");
 
     private final ElementsCollection
             SEARCH_ITEM_ADDRESS_TEXT = $$(".search-item__address-text"),
@@ -107,7 +110,33 @@ public class NovostroykiPage {
     public double getPriceValue() {
         sleep(1000);
         String price = SEARCH_PRICE_LIST_PRICE.getText();
-        return RegexpMeth.extractPriceDouble(price);
+        return RegexpMeth.extractPriceOrAreaDouble(price);
+    }
+    public void checkPriceValue(double expectedPrice, double actualPrice) {
+        Assertions.assertEquals(expectedPrice, actualPrice);
+    }
+
+    public void checkSearchPriceListRoomForBuildingWithoutFlatsFromTrendAgent() {
+        String value = SEARCH_PRICE_LIST_ROOM.getText();
+        Assertions.assertEquals("Квартиры",value);
+    }
+
+    public int getPricePerSquareValue() {
+        String price = SEARCH_ITEM_TOTAL_AREA.getText();
+       String priceWithoutSpase = RegexpMeth.removeSpacesFromString(price);
+       return RegexpMeth.extractPrice(priceWithoutSpase);
+    }
+
+    public double getStudioPriceValue(String room) {
+        sleep(1000);
+        String price = $x("//td[text()='"+room+"']/following-sibling::td[2]").getText();
+        return RegexpMeth.extractPriceOrAreaDouble(price);
+    }
+
+    public double getStudioAreaValue(String room) {
+        sleep(1000);
+        String area =  $x("//td[text()='"+room+"']/following-sibling::td[1]").getText();
+        return RegexpMeth.extractPriceOrAreaDouble(area);
     }
 
 }

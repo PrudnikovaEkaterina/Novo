@@ -48,7 +48,8 @@ dependencies {
             'mysql:mysql-connector-java:8.0.32',
             "org.springframework:spring-jdbc:5.3.27",
             'org.hibernate:hibernate-core:6.2.4.Final',
-            'com.jayway.jsonpath:json-path:2.8.0'
+            'com.jayway.jsonpath:json-path:2.8.0',
+            'org.decimal4j:decimal4j:1.0.3'
     )
 }
 

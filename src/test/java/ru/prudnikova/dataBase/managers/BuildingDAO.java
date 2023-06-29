@@ -19,29 +19,63 @@ public class BuildingDAO {
         return String.valueOf(buildingEnityList.get(0).getData_json());
     }
 
-    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesSlugContainsRoom() {
-        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select  b.id from buildings b JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%nb_rooms%' LIMIT 5;",
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesSlugExistStudio() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g " +
+                        "on (b.gar_object_id = g.OBJECTID) " +
+                        "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
+                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb_studio%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+    }
+
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_1() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g " +
+                        "on (b.gar_object_id = g.OBJECTID) " +
+                        "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
+                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb_rooms_1%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+    }
+
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_2() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g " +
+                        "on (b.gar_object_id = g.OBJECTID) " +
+                        "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
+                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb_rooms_2%' LIMIT 5;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+    }
+
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_3() {
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g " +
+                        "on (b.gar_object_id = g.OBJECTID) " +
+                        "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
+                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb_rooms_3%' LIMIT 5;",
                 new BeanPropertyRowMapper<>(BuildingEntity.class, false));
         return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
     }
 
     public static List<Integer> selectBuildingIdWithoutFlats() {
-        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select  buildings.id from buildings JOIN gar_ADDRESSOBJECTS on (buildings.gar_object_id = gar_ADDRESSOBJECTS.OBJECTID) where gar_ADDRESSOBJECTS.region_code in (50,77) and not exists (select 1 from flats where flats.building_id = buildings.id and flats.status=1) and JSON_EXTRACT (buildings.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select DISTINCT b.id from buildings b " +
+                        "JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) " +
+                        "and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
+                        "and JSON_VALUE (b.data_json, \"$.prices[*].slug\") like 'sell_nb' " +
+                        "and JSON_VALUE (b.data_json, \"$.prices[*].unit_price_min\") is not null LIMIT 5;",
                 new BeanPropertyRowMapper<>(BuildingEntity.class, false));
-        System.out.println(buildingEnityList);
         return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
+
     }
+
 
     public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistAreaMin() {
-        List<BuildingEntity> buildingEnityList = jdbcTemplate.query(" select  * from buildings JOIN gar_ADDRESSOBJECTS on (buildings.gar_object_id = gar_ADDRESSOBJECTS.OBJECTID) where gar_ADDRESSOBJECTS.region_code in (50,77) and not exists (select 1 from flats where flats.building_id = buildings.id and flats.status=1) and JSON_EXTRACT (buildings.data_json, \"$.prices[].area_min\") is not null and JSON_EXTRACT (buildings.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
+        List<BuildingEntity> buildingEnityList = jdbcTemplate.query("select  b.id from buildings b " +
+                        "JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) " +
+                        "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
+                        "and JSON_EXTRACT (b.data_json,\"$.prices[*].area_min\") is not null " +
+                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
                 new BeanPropertyRowMapper<>(BuildingEntity.class, false));
         return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
-    }
 
-    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistAreaMax() {
-        List<BuildingEntity> buildingEnityList = jdbcTemplate.query(" select  * from buildings JOIN gar_ADDRESSOBJECTS on (buildings.gar_object_id = gar_ADDRESSOBJECTS.OBJECTID) where gar_ADDRESSOBJECTS.region_code in (50,77) and not exists (select 1 from flats where flats.building_id = buildings.id and flats.status=1) and JSON_EXTRACT (buildings.data_json, \"$.prices[].area_max\") is not null and JSON_EXTRACT (buildings.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
-                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
-        return buildingEnityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
     }
 
 }

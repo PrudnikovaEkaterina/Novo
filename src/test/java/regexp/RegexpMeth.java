@@ -30,7 +30,7 @@ public class RegexpMeth {
         int price = 0;
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(resource);
-        while (m.find()) {
+        if(m.find()) {
             price = Integer.parseInt(m.group());
         }
         return price;
@@ -53,8 +53,8 @@ public class RegexpMeth {
         return squareList;
     }
 
-    public static double extractPriceDouble (String source) {
-        double price =0.0;
+    public static double extractPriceOrAreaDouble (String source) {
+        double price =0;
         Pattern p = Pattern.compile("[-]?[0-9]+(.[0-9]+)?");
         Matcher m = p.matcher(source);
         if (m.find()) {

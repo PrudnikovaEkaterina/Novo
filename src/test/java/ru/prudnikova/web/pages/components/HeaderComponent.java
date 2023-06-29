@@ -12,8 +12,8 @@ public class HeaderComponent {
     ApartmentQuizModalComponent apartmentQuizModal = new ApartmentQuizModalComponent();
 
     private final SelenideElement
-            NOVOSTROYKI_LINK = $x("//a[text()=' Новостройки ']"),
-            APARTMENT_QUIZ_MODAL_LINK = $x("//a[text()=' Помощь в подборе']"),
+            NOVOSTROYKI_LINK = $x("//a[text()='Новостройки']"),
+            APARTMENT_QUIZ_MODAL_LINK = $x("//a[text()='Помощь в подборе']"),
             ABOUT_LINK = $("[href='/about']"),
             CONTACTS_LINK = $("[href='/contacts']"),
             SIGN_IN_LINK = $x("//span[text()='Войти']"),

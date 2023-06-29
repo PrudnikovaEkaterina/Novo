@@ -122,38 +122,40 @@ public class CardNovostroykiApi {
     }
 
     @Step("Получение минимальной цены для ЖК без преложений от Тренд Агента из базы")
-    public static int selectPriceMin (int buildingId) throws IOException {
+    public static int selectPriceMin (int buildingId, String title) throws IOException {
         DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
         List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
         int price=0;
         for (PriceEntity priceEntity : priceEntityList) {
-            if (priceEntity.getTitle().equals("Продажа"))
+            if (priceEntity.getTitle().equals(title))
                 price = priceEntity.getPrice_min();
         }
       return price;
     }
 
-    @Step("Получение минимальной площади для ЖК без преложений от Тренд Агента из базы")
-    public static double selectAreaMin (int buildingId) throws IOException {
+    @Step("Получение минимальной цены за ква для ЖК без преложений от Тренд Агента из базы")
+    public static int selectUnitPriceMin (int buildingId) throws IOException {
         DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
         List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
-        int areaMin=0;
+        int unitPriceMin = 0;
         for (PriceEntity priceEntity : priceEntityList) {
             if (priceEntity.getTitle().equals("Продажа"))
+                unitPriceMin = priceEntity.getUnit_price_min();
+        }
+        return unitPriceMin;
+    }
+
+
+    @Step("Получение минимальной площади для ЖК без преложений от Тренд Агента из базы")
+    public static double selectAreaMin (int buildingId, String title) throws IOException {
+        DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
+        List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
+        double areaMin=0;
+        for (PriceEntity priceEntity : priceEntityList) {
+            if (priceEntity.getTitle().equals(title))
                 areaMin = priceEntity.getArea_min();
         }
         return areaMin;
     }
 
-    @Step("Получение максимальной площади для ЖК без преложений от Тренд Агента из базы")
-    public static double selectAreaMax (int buildingId) throws IOException {
-        DataJsonEntity dataJsonEntity = CardNovostroykiApi.getDataJsonEntity(buildingId);
-        List<PriceEntity> priceEntityList = dataJsonEntity.getPrices();
-        int areaMax=0;
-        for (PriceEntity priceEntity : priceEntityList) {
-            if (priceEntity.getTitle().equals("Продажа"))
-                areaMax = priceEntity.getArea_max();
-        }
-        return areaMax;
-    }
 }

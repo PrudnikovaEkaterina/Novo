@@ -27,49 +27,16 @@ public class CardNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
     @DisplayName("Проверить значение цен в карточке ЖК по объектам без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
     void checkPriceValueForCardNovostroykiWithoutFlatsFromTrendAgent() throws IOException {
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugContainsRoom();
+        String title = "Продажа";
+        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlats();
         int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        int priceMin = CardNovostroykiApi.selectPriceMin(buildingId);
+        int priceMin = CardNovostroykiApi.selectPriceMin(buildingId, title);
         if (priceMin != 0) {
             cardNovostroykiPage.openZhkPage(buildingId);
             int cardNovostroykiPriceValue = cardNovostroykiPage.getPriceValue();
             int cardNovostroykiProfilePriceValue = cardNovostroykiPage.getProfilePriceValue();
             Assertions.assertEquals(priceMin, cardNovostroykiPriceValue);
             Assertions.assertEquals(priceMin, cardNovostroykiProfilePriceValue);
-        }
-    }
-
-    @Test
-    @DisplayName("Проверить значение минимальной площади квартир в карточке ЖК по объектам без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkAreaMinValueForCardNovostroykiWithoutFlatsFromTrendAgent() throws IOException {
-        open();
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesExistAreaMin();
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        if (buildingId != 0) {
-            double areaMin = CardNovostroykiApi.selectAreaMin(buildingId);
-            if (areaMin != 0) {
-                cardNovostroykiPage.openZhkPage(buildingId);
-                double cardValueAreaMin = cardNovostroykiPage.getCardValueAreaMin();
-                Assertions.assertEquals(areaMin, cardValueAreaMin);
-            }
-        }
-    }
-
-    @Test
-    @DisplayName("Проверить значение минимальной площади квартир в карточке ЖК по объектам без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkAreaMaxValueForCardNovostroykiWithoutFlatsFromTrendAgent() throws IOException {
-        open();
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesExistAreaMax();
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        if (buildingId != 0) {
-            double areaMax = CardNovostroykiApi.selectAreaMax(buildingId);
-            if (areaMax != 0) {
-                cardNovostroykiPage.openZhkPage(buildingId);
-                double cardValueAreaMax = cardNovostroykiPage.getCardValueAreaMax();
-                Assertions.assertEquals(areaMax, cardValueAreaMax);
-            }
         }
     }
 
