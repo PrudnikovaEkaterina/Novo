@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import ru.prudnikova.api.models.authDto.AuthDto;
 import ru.prudnikova.api.steps.authApiSteps.AuthApi;
 import ru.prudnikova.api.steps.favoritesApiSteps.UserFavoritesApi;
-import ru.prudnikova.dataBase.managers.FavoritesDao;
+import ru.prudnikova.dataBase.dao.FavoritesDao;
 
 import java.util.List;
 

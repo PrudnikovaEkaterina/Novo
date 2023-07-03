@@ -7,15 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.prudnikova.api.steps.cardNovostroykiApiSteps.CardNovostroykiApi;
-import ru.prudnikova.dataBase.managers.BuildingDAO;
+import ru.prudnikova.dataBase.dao.BuildingDao;
+import ru.prudnikova.dataBase.services.BuildingService;
 import ru.prudnikova.testData.GenerationData;
 import ru.prudnikova.web.pages.CardNovostroykiPage;
 import ru.prudnikova.web.tests.TestBase;
 
 import java.io.IOException;
 import java.util.List;
-
-import static com.codeborne.selenide.Selenide.*;
 
 @Tag("Web")
 @Tag("Api")
@@ -28,9 +27,8 @@ public class CardNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
     void checkPriceValueForCardNovostroykiWithoutFlatsFromTrendAgent() throws IOException {
         String title = "Продажа";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlats();
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        int priceMin = CardNovostroykiApi.selectPriceMin(buildingId, title);
+        int buildingId =BuildingService.getBuildingIdWithoutFlatsWherePricesExistUnitPriceMin();
+        int priceMin = BuildingService.selectPriceMin(buildingId, title);
         if (priceMin != 0) {
             cardNovostroykiPage.openZhkPage(buildingId);
             int cardNovostroykiPriceValue = cardNovostroykiPage.getPriceValue();

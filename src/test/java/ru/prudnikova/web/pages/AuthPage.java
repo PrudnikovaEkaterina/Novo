@@ -7,12 +7,14 @@ import org.aeonbits.owner.ConfigCache;
 import org.openqa.selenium.Cookie;
 import ru.prudnikova.config.AuthConfig;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AuthPage {
     private final SelenideElement
-            PHONE_INPUT = $x("//input[@type='tel']"),
+            PHONE_INPUT =$x("//input[@type='tel']"),
             AUTH_USER_BY_PHONE_CONFIRM_LINK = $(".el-checkbox__inner"),
             SEND_CODE_BUTTON = $x("//span[text()='Отправить код для входа ']"),
             PASSWORD_INPUT = $x("//input[@type='text']"),
@@ -30,6 +32,7 @@ public class AuthPage {
     }
 
     public AuthPage setPhone(String phone) {
+        sleep(1000);
         PHONE_INPUT.setValue(phone);
         return this;
     }

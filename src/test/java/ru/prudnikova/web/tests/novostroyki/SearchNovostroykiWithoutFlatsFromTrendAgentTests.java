@@ -6,8 +6,12 @@ import org.decimal4j.util.DoubleRounder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.util.Assert;
 import ru.prudnikova.api.steps.cardNovostroykiApiSteps.CardNovostroykiApi;
-import ru.prudnikova.dataBase.managers.BuildingDAO;
+import ru.prudnikova.dataBase.dao.BuildingDao;
+import ru.prudnikova.dataBase.services.BuildingService;
 import ru.prudnikova.testData.GenerationData;
 import ru.prudnikova.web.pages.NovostroykiPage;
 import ru.prudnikova.web.tests.TestBase;
@@ -25,27 +29,22 @@ import static java.math.RoundingMode.DOWN;
 public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
 
     NovostroykiPage novostroykiPage = new NovostroykiPage();
-    String room;
-    String pricesTitle;
+    String pricesTitle = "Продажа";
 
     @Test
     @DisplayName("Проверить значение Цена Oт в поиске ЖК для объекта без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
     void checkSearchItemTotalPriceForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        pricesTitle = "Продажа";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlats();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double priceMin = CardNovostroykiApi.selectPriceMin(buildingId,pricesTitle)/1000000.0;
-        assert priceMin!=0;
+        int buildingId = BuildingService.getBuildingIdWithoutFlatsWherePricesExistUnitPriceMin();
+        double priceMin = BuildingService.selectPriceMin(buildingId, pricesTitle) / 1000000.0;
+        assert priceMin != 0;
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
         double searchPriceValue = novostroykiPage.getPriceValue();
-        if (String.valueOf(priceMin).split("\\.")[1].length()>1) {
+        if (String.valueOf(priceMin).split("\\.")[1].length() > 1) {
             double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
             novostroykiPage.checkPriceValue(priceMinDoubleRound, searchPriceValue);
-        }
-            else
-                novostroykiPage.checkPriceValue(priceMin, searchPriceValue);
+        } else
+            novostroykiPage.checkPriceValue(priceMin, searchPriceValue);
         novostroykiPage.checkSearchPriceListRoomForBuildingWithoutFlatsFromTrendAgent();
     }
 
@@ -53,180 +52,51 @@ public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
     @DisplayName("Проверить значение Цена от за м2 в поиске ЖК для объекта без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
     void checkSearchItemTotalPricePerSquareForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesExistAreaMin();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        int unitPriceMin = CardNovostroykiApi.selectUnitPriceMin(buildingId);
-        assert unitPriceMin!=0;
+        int buildingId = BuildingService.getBuildingIdWithoutFlatsWherePricesExistAreaMin();
+        int unitPriceMin = BuildingService.selectUnitPriceMin(buildingId, pricesTitle);
+        assert unitPriceMin != 0;
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
         int pricePerSquareValue = novostroykiPage.getPricePerSquareValue();
         novostroykiPage.checkPriceValue(unitPriceMin, pricePerSquareValue);
     }
 
-    @Test
-    @DisplayName("Проверить значение Цена Oт для Студий в поиске ЖК для объекта без предложений от ТА")
+    @CsvSource(value = {"%sell_nb_studio%, Студии, Студии",
+            "%sell_nb_rooms_1%, 1-комн., 1-комнатные",
+            "%sell_nb_rooms_2%, 2-комн., 2-комнатные",
+            "%sell_nb_rooms_3%, 3-комн., 3-комнатные",
+            "%sell_nb_rooms_4_plus%, 4 и более, 4-комнатные и более"})
+    @ParameterizedTest(name = "Проверить значение Цена Oт для типа квартир {2} в поиске ЖК для объекта без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemStudioPriceForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="Студии";
-        pricesTitle = "Студии";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistStudio();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double priceMin = CardNovostroykiApi.selectPriceMin(buildingId, pricesTitle)/1000000.0;
-        assert priceMin!=0;
+    void checkItemRoomPriceMinForBuildingWithoutFlatsFromTrendAgent(String data1, String data2, String data3) throws IOException {
+        int buildingId = BuildingService.getBuildingIdWithoutFlatsWherePricesSlugExistRoom(data1);
+        double priceMin = BuildingService.selectPriceMin(buildingId, data3) / 1000000.0;
+        assert priceMin != 0;
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double searchStudioPriceValue = novostroykiPage.getStudioPriceValue(room);
-        if (String.valueOf(priceMin).split("\\.")[1].length()>1) {
-            double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
-                novostroykiPage.checkPriceValue(priceMinDoubleRound, searchStudioPriceValue);
-        }
-        else
-                novostroykiPage.checkPriceValue(priceMin, searchStudioPriceValue);
-    }
-
-    @Test
-    @DisplayName("Проверить значение Площадь от для Студий в поиске ЖК для объекта без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemStudioAreaMinForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="Студии";
-        pricesTitle = "Студии";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistStudio();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double areaMinApi = CardNovostroykiApi.selectAreaMin(buildingId, pricesTitle);
-        assert areaMinApi!=0;
-        novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double areaMinWeb = novostroykiPage.getStudioAreaValue(room);
-        if (String.valueOf(areaMinApi).split("\\.")[1].length()>1) {
-            double areaMinWebRound = DoubleRounder.round(areaMinWeb, 1, DOWN);
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWebRound);
-        }
-        else
-                novostroykiPage.checkPriceValue(areaMinApi, areaMinWeb);
-    }
-
-    @Test
-    @DisplayName("Проверить значение Цена от для 1-комн. квартир в поиске ЖК для объекта без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemRooms_1PriceForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="1-комн.";
-        pricesTitle = "1-комнатные";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_1();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double priceMin = CardNovostroykiApi.selectPriceMin(buildingId, pricesTitle)/1000000.0;
-        assert priceMin!=0;
-        novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double searchStudioPriceValue = novostroykiPage.getStudioPriceValue(room);
-        if (String.valueOf(priceMin).split("\\.")[1].length()>1) {
+        double searchStudioPriceValue = novostroykiPage.getStudioPriceValue(data2);
+        if (String.valueOf(priceMin).split("\\.")[1].length() > 1) {
             double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
             novostroykiPage.checkPriceValue(priceMinDoubleRound, searchStudioPriceValue);
-        }
-        else
+        } else
             novostroykiPage.checkPriceValue(priceMin, searchStudioPriceValue);
     }
 
-    @Test
-    @DisplayName("Проверить значение Площадь от для 1-комн. квартир в поиске ЖК для объекта без предложений от ТА")
+    @CsvSource(value = {"%sell_nb_studio%, Студии, Студии",
+            "%sell_nb_rooms_1%, 1-комн., 1-комнатные",
+            "%sell_nb_rooms_2%, 2-комн., 2-комнатные",
+            "%sell_nb_rooms_3%, 3-комн., 3-комнатные",
+            "%sell_nb_rooms_4_plus%, 4 и более, 4-комнатные и более"})
+    @ParameterizedTest(name = "Проверить значение Площадь от для типа квартир {2} в поиске ЖК для объекта без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemRooms_1AreaMinForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-       room ="1-комн.";
-       pricesTitle = "1-комнатные";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_1();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double areaMinApi = CardNovostroykiApi.selectAreaMin(buildingId, pricesTitle);
-        assert areaMinApi!=0;
+    void checkSearchItemStudioAreaMinForBuildingWithoutFlatsFromTrendAgent(String data1, String data2, String data3) throws IOException {
+        int buildingId = BuildingService.getBuildingIdWithoutFlatsWherePricesSlugExistRoom(data1);
+        double areaMinApi = BuildingService.selectAreaMin(buildingId, data3);
+        assert areaMinApi != 0;
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double areaMinWeb = novostroykiPage.getStudioAreaValue(room);
-        if (String.valueOf(areaMinApi).split("\\.")[1].length()>1) {
+        double areaMinWeb = novostroykiPage.getStudioAreaValue(data2);
+        if (String.valueOf(areaMinApi).split("\\.")[1].length() > 1) {
             double areaMinWebRound = DoubleRounder.round(areaMinWeb, 1, DOWN);
             novostroykiPage.checkPriceValue(areaMinApi, areaMinWebRound);
-        }
-        else
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWeb);
-    }
-
-    @Test
-    @DisplayName("Проверить значение Цена от для 2-комн. квартир в поиске ЖК для объекта без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemRooms_2PriceForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="2-комн.";
-        pricesTitle = "2-комнатные";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_2();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double priceMin = CardNovostroykiApi.selectPriceMin(buildingId, pricesTitle)/1000000.0;
-        assert priceMin!=0;
-        novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double searchStudioPriceValue = novostroykiPage.getStudioPriceValue(room);
-        if (String.valueOf(priceMin).split("\\.")[1].length()>1) {
-            double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
-            novostroykiPage.checkPriceValue(priceMinDoubleRound, searchStudioPriceValue);
-        }
-        else
-            novostroykiPage.checkPriceValue(priceMin, searchStudioPriceValue);
-    }
-
-    @Test
-    @DisplayName("Проверить значение Площадь от для 2-комн. квартир в поиске ЖК для объекта без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemRooms_2AreaMinForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="2-комн.";
-        pricesTitle = "2-комнатные";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_2();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double areaMinApi = CardNovostroykiApi.selectAreaMin(buildingId, pricesTitle);
-        assert areaMinApi!=0;
-        novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double areaMinWeb = novostroykiPage.getStudioAreaValue(room);
-        if (String.valueOf(areaMinApi).split("\\.")[1].length()>1) {
-            double areaMinWebRound = DoubleRounder.round(areaMinWeb, 1, DOWN);
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWebRound);
-        }
-        else
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWeb);
-    }
-    @Test
-    @DisplayName("Проверить значение Цена от для 3-комн. квартир в поиске ЖК для объекта без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemRooms_3PriceForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="3-комн.";
-        pricesTitle = "3-комнатные";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_3();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double priceMin = CardNovostroykiApi.selectPriceMin(buildingId, pricesTitle)/1000000.0;
-        assert priceMin!=0;
-        novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double searchStudioPriceValue = novostroykiPage.getStudioPriceValue(room);
-        if (String.valueOf(priceMin).split("\\.")[1].length()>1) {
-            double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
-            novostroykiPage.checkPriceValue(priceMinDoubleRound, searchStudioPriceValue);
-        }
-        else
-            novostroykiPage.checkPriceValue(priceMin, searchStudioPriceValue);
-    }
-
-    @Test
-    @DisplayName("Проверить значение Площадь от для 3-комн. квартир в поиске ЖК для объекта без предложений от ТА")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemRooms_3AreaMinForBuildingWithoutFlatsFromTrendAgent() throws IOException {
-        room ="3-комн.";
-        pricesTitle = "3-комнатные";
-        List<Integer> buildingIdList = BuildingDAO.selectBuildingIdWithoutFlatsWherePricesSlugExistRooms_3();
-        assert buildingIdList != null;
-        int buildingId = GenerationData.setRandomBuildingId(buildingIdList);
-        double areaMinApi = CardNovostroykiApi.selectAreaMin(buildingId, pricesTitle);
-        assert areaMinApi!=0;
-        novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double areaMinWeb = novostroykiPage.getStudioAreaValue(room);
-        if (String.valueOf(areaMinApi).split("\\.")[1].length()>1) {
-            double areaMinWebRound = DoubleRounder.round(areaMinWeb, 1, DOWN);
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWebRound);
-        }
-        else
+        } else
             novostroykiPage.checkPriceValue(areaMinApi, areaMinWeb);
     }
 }

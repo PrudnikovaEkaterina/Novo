@@ -1,4 +1,4 @@
-package ru.prudnikova.dataBase.managers;
+package ru.prudnikova.dataBase.dao;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

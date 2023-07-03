@@ -3,10 +3,12 @@ package ru.prudnikova.api.steps.moreFilterModalApiSteps;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
-import ru.prudnikova.dataBase.managers.FlatsDao;
+import ru.prudnikova.dataBase.dao.FlatDao;
+import ru.prudnikova.dataBase.services.FlatService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -59,7 +61,7 @@ public class MoreFilterModalApi {
 
     @Step("Получить список ЖК из БД, в которых есть квартиры, где floor >= {floorMin}")
     public static List<Integer> selectBuildingListWithFilterFloorMin(int floorMin) {
-        return FlatsDao.selectBuildingIdFromFlatsWhereFloorGreaterOrEqualsFloorUnit(floorMin);
+        return FlatService.getBuildingIdFromFlatsWhereFloorGreaterOrEqualsFloorUnit(floorMin);
     }
 
     @Step("Получить список ЖК с фильтром Только апартаменты. Проверить, что все объекты, в полученном списке, содержат флаг apartments = 1")
@@ -123,11 +125,15 @@ public class MoreFilterModalApi {
 
     @Step("Получить список ЖК из БД, в которых есть квартиры со способом оплаты {paymentMethod}")
     public static List<Integer> selectBuildingListWithFilterMortgage(String paymentMethod) {
-        return FlatsDao.selectBuildingIdFromFlatsWithFilterPaymentMethod(paymentMethod);
+        return FlatService.getBuildingIdFromFlatsWithFilterPaymentMethod(paymentMethod);
     }
 
     @Step("Проверить равенство двух списков")
     public static void checkEqualityTwoLists(List<Integer> apiList, List<Integer> dataList) {
+        List<Integer> differences =dataList.stream()
+                .filter(element -> !apiList.contains(element))
+                .collect(Collectors.toList());
+        differences.forEach(System.out::println);
         assert apiList.containsAll(dataList);
     }
 

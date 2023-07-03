@@ -1,17 +1,17 @@
 package ru.prudnikova.api.tests.moreFilterModalApiTests;
 
 import io.qameta.allure.Owner;
+import org.hibernate.annotations.Comment;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import ru.prudnikova.api.enumsApi.BuildingEnum;
 import ru.prudnikova.api.enumsApi.RenovationEnum;
 import ru.prudnikova.api.steps.moreFilterModalApiSteps.MoreFilterModalApi;
-import ru.prudnikova.dataBase.managers.FlatsDao;
+import ru.prudnikova.dataBase.dao.FlatDao;
+import ru.prudnikova.dataBase.services.FlatService;
 
 import java.util.List;
 
@@ -67,11 +67,12 @@ public class MoreFilterModalApiTests {
 
     @EnumSource(RenovationEnum.class)
     @ParameterizedTest(name = "Применить фильтр Отделка = {0}. Проверить, что в найденных ЖК есть квартиры c соответствующим типом отделки")
+    @Comment("Тест падает для ЖК 10375, комментарий в задаче https://tracker.yandex.ru/NOVODEV-594#649997a4a7cc4e7f81697263")
     void searchRenovation(RenovationEnum renovationEnum) {
         String renovationId = renovationEnum.id;
         List<Integer> apiList = MoreFilterModalApi.getBuildingListWithFilterRenovation(renovationId);
         System.out.println(apiList.size());
-        List<Integer> dataList = FlatsDao.selectBuildingIdFromFlatsWithFilterRenovation(renovationId);
+        List<Integer> dataList = FlatService.getBuildingIdFromFlatsWithFilterRenovation(renovationId);
         System.out.println(dataList.size());
         MoreFilterModalApi.checkEqualityTwoLists(apiList, dataList);
 

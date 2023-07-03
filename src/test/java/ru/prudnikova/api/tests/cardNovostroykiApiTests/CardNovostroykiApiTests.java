@@ -2,17 +2,12 @@ package ru.prudnikova.api.tests.cardNovostroykiApiTests;
 
 import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import regexp.RegexpMeth;
 import ru.prudnikova.api.enumsApi.BuildingEnum;
 import ru.prudnikova.api.models.buildingDto.DataBuildingDto;
 import ru.prudnikova.api.steps.cardNovostroykiApiSteps.CardNovostroykiApi;
-import ru.prudnikova.dataBase.managers.BuildingDAO;
-import ru.prudnikova.testData.GenerationData;
 
 import java.io.IOException;
 import java.util.List;
