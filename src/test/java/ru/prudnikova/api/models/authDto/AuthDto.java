@@ -16,6 +16,6 @@ public class AuthDto {
     @JsonProperty("refresh_token")
     private String refreshToken;
     @JsonProperty("refresh_expires_in")
-    private int refreshExpiresIn;
+    private Integer refreshExpiresIn;
     private UserDto user;
 }

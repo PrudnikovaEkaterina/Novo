@@ -2,12 +2,11 @@ package ru.prudnikova.dataBase.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import io.qameta.allure.Step;
-import ru.prudnikova.api.steps.cardNovostroykiApiSteps.CardNovostroykiApi;
+import regexp.RegexpMeth;
 import ru.prudnikova.dataBase.dao.BuildingDao;
-import ru.prudnikova.dataBase.entities.buildingEntities.BuildingEntity;
-import ru.prudnikova.dataBase.entities.buildingEntities.DataJsonEntity;
-import ru.prudnikova.dataBase.entities.buildingEntities.PriceEntity;
+import ru.prudnikova.dataBase.entities.buildingEntities.*;
 import ru.prudnikova.testData.GenerationData;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ public class BuildingService {
         List<Integer> buildingIdList = getBuildingIdList(BuildingDao.selectBuildingIdWithoutFlatsWherePricesExistAreaMin());
         assert buildingIdList != null;
         return GenerationData.setRandomBuildingId(buildingIdList);
-
     }
 
     public static int getBuildingIdWithoutFlatsWherePricesExistUnitPriceMin() {
@@ -84,5 +82,19 @@ public class BuildingService {
         }
         return areaMin;
     }
+
+    public static List<Integer> getBuildingIdFromBuildingsWhereParentIdIs(int parentId) {
+        List<Integer> buildingIdList = getBuildingIdList(BuildingDao.selectAllFromBuildingsWhereParentIdIs(parentId));
+        assert buildingIdList != null;
+        return buildingIdList;
+    }
+//    @Step("Получить год сдачи ЖК") (устарело, для примера)
+//    public static int selectBuildingReleaseYear(int buildingId) throws IOException {
+//        String dataJson = BuildingDao.selectBuildingDataJson(buildingId);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        Object releaseYear = JsonPath.read(dataJson, "$.properties.241.values.*");
+//        String releaseYearStr = objectMapper.writeValueAsString(releaseYear);
+//        return RegexpMeth.extractYear(releaseYearStr);
+//    }
 
 }

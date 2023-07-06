@@ -15,7 +15,7 @@ import static com.codeborne.selenide.Selenide.open;
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("FollowingHeaderLinks")
-public class FollowingHeaderLinksTests extends TestBase {
+public class GoHeaderLinksTests extends TestBase {
 
     HeaderComponent header = new HeaderComponent();
 
@@ -60,6 +60,7 @@ public class FollowingHeaderLinksTests extends TestBase {
     @DisplayName("Переход по ссылке 'Войти'")
     void followingSingInLink() {
         header
+                .checkVisibleSignInLinkForUnauthorizedUser()
                 .followingSingInLink()
                 .verifyUrlFollowingSingInLink();
     }

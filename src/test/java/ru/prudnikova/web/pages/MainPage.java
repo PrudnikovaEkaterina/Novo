@@ -1,25 +1,20 @@
 package ru.prudnikova.web.pages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Cookie;
 import ru.prudnikova.api.steps.authApiSteps.AuthApi;
 
 import java.sql.Timestamp;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-public class MePage {
-
-    private final SelenideElement
-            INPUT_NAME = $x("//input[@name='name']"),
-            INPUT_EMAIL = $x("//input[@name='email']"),
-            SAVE_CHANGES = $(".me-settings__chosen-icon");
-
-    public void openMePageWithApiAuth(String phoneNumber) {
+public class MainPage {
+    public void openMainPage() {
+        open(baseUrl);
+    }
+    public void openMainPageWithApiAuth(String phoneNumber) {
         String refreshToken = AuthApi.getRefreshToken(phoneNumber);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         long timestampTime = timestamp.getTime();
@@ -31,22 +26,6 @@ public class MePage {
         getWebDriver().manage().addCookie(cookie);
         Selenide.localStorage().setItem("session_expires_at", sessionExpiresAt);
         Selenide.refresh();
-        open(baseUrl + "/me");
+        open(baseUrl);
     }
-
-    public void changeUserName(String userName) {
-        INPUT_NAME.setValue(userName);
-        SAVE_CHANGES.click();
-    }
-
-    public MePage changeUserEmail(String email) {
-        INPUT_EMAIL.setValue(email);
-        SAVE_CHANGES.click();
-        return this;
-    }
-
-    public void verifyChangeUserEmail(String email) {
-        INPUT_EMAIL.shouldHave(Condition.value(email));
-    }
-
 }

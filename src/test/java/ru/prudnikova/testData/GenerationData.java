@@ -19,6 +19,9 @@ public class GenerationData {
     public static String setRandomBuilding() {
         return faker.options().option(BuildingEnum.values()).name;
     }
+    public static int setRandomBuildingId() {
+        return faker.options().option(BuildingEnum.values()).id;
+    }
 
     public static String setRandomCity() {
         return faker.options().option(CityEnum.values()).name;

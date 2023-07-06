@@ -2,7 +2,7 @@ package ru.prudnikova.api.steps.favoritesApiSteps;
 
 import io.qameta.allure.Step;
 import ru.prudnikova.api.models.buildingDto.BuildingDto;
-import ru.prudnikova.api.models.buildingDto.DataBuildingDto;
+import ru.prudnikova.api.models.buildingDto.BuildingDataDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 public class UserFavoritesApi {
     @Step("Получить список избранных ЖК пользователя")
     public static List<Integer> getUserFavoritesBuilding(String accessToken) {
-        DataBuildingDto dataBuilding = given()
+        BuildingDataDto dataBuilding = given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)
                 .header("Authorization", "Bearer " + accessToken)
@@ -23,7 +23,7 @@ public class UserFavoritesApi {
                 .get("/api/me/favorites/buildings/")
                 .then()
                 .spec(responseSpec200)
-                .extract().as(DataBuildingDto.class);
+                .extract().as(BuildingDataDto.class);
         return dataBuilding.getData().stream().map(BuildingDto::getId).collect(Collectors.toList());
     }
 }

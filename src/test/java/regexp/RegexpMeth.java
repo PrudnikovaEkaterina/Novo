@@ -63,4 +63,10 @@ public class RegexpMeth {
         return price;
     }
 
+    public static String substring (int limit, String source){
+        String subStr = source.codePointCount(0, source.length()) > limit ?
+                source.substring(0, source.offsetByCodePoints(0, limit)) : source;
+       return subStr;
+    }
+
 }

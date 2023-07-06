@@ -34,14 +34,12 @@ public class NovostroykiPage {
     CallMeWidgetComponent callMeWidget = new CallMeWidgetComponent();
     FooterComponent footer = new FooterComponent();
 
-    public NovostroykiPage openNovostroykiPage() {
+    public void openNovostroykiPage() {
         open("/novostroyki");
-        return this;
     }
 
-    public NovostroykiPage openNovostroykiPageWithFilterNoFlatsAndBuildingId(int buildingId) {
+    public void openNovostroykiPageWithFilterNoFlatsAndBuildingId(int buildingId) {
         open("/novostroyki?buildings=" + buildingId + "&no_flats=1");
-        return this;
     }
 
 

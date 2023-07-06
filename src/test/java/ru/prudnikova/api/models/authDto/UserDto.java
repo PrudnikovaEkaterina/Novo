@@ -29,13 +29,13 @@ public class UserDto {
     @JsonProperty("updated_at")
     private Date updatedAt;
     @JsonProperty("favorites_flats_count")
-    private int favoritesFlatsCount;
+    private Integer favoritesFlatsCount;
     @JsonProperty("favorites_buildings_count")
-    private int favoritesBuildingsCount;
+    private Integer favoritesBuildingsCount;
     @JsonProperty("recommendations_flats_count")
-    private int recommendationsFlatsCount;
+    private Integer recommendationsFlatsCount;
     @JsonProperty("recommendations_buildings_count")
-    private int recommendationsBuildingsCount;
+    private Integer recommendationsBuildingsCount;
     @JsonProperty("avatar_url")
     private String avatarUrl;
     private Object manager;

@@ -50,5 +50,18 @@ public class BuildingDao {
                 new BeanPropertyRowMapper<>(BuildingEntity.class, false));
     }
 
+    public static List<BuildingEntity> selectAllFromBuildingsWhereParentIdIs(int parentId) {
+        return jdbcTemplate.query("select * from buildings where parent_id=?;",
+                new BeanPropertyRowMapper<>(BuildingEntity.class, false), parentId);
+    }
+
+    public static int selectBuildingReleaseYear(int id) {
+        String releaseYear = jdbcTemplate.queryForObject("select JSON_VALUE (data_json, \"$.properties.241.values.*\") from buildings where id=?;",
+                String.class, id);
+        if (releaseYear!=null)
+            return Integer.parseInt(releaseYear);
+        else
+            return 0;
+    }
 }
 

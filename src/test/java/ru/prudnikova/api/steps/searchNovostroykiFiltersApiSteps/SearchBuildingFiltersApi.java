@@ -14,7 +14,7 @@ import static ru.prudnikova.api.specifications.Specification.responseSpec200;
 
 public class SearchBuildingFiltersApi {
     @Step("Получить список ЖК с фильтром Станция метро = {station}")
-    public static DataBuildingDto getBuildingListWithFilterStation(int stationId) {
+    public static BuildingDataDto getBuildingListWithFilterStation(int stationId) {
         return given()
                 .spec(requestSpec)
                 .basePath("/api/buildings/")
@@ -24,11 +24,11 @@ public class SearchBuildingFiltersApi {
                 .get()
                 .then()
                 .spec(responseSpec200)
-                .extract().as(DataBuildingDto.class);
+                .extract().as(BuildingDataDto.class);
     }
 
     @Step("Проверить, что каждый ЖК из списка содержит станцию метро с id = {stationId}")
-    public static void checkBuildingListContainsStationId(DataBuildingDto dataBuilding, int stationId) {
+    public static void checkBuildingListContainsStationId(BuildingDataDto dataBuilding, int stationId) {
         List<NearDto> nearList = dataBuilding.getData().stream().map(BuildingDto::getNear).collect(Collectors.toList());
         for (NearDto near : nearList) {
             List<StationDto> stations = new ArrayList<>(near.getStations());
@@ -40,7 +40,7 @@ public class SearchBuildingFiltersApi {
     }
 
     @Step("Получить список ЖК с фильтром Шоссе = {roadId}")
-    public static DataBuildingDto getBuildingListWithFilterRoads(int roadId) {
+    public static BuildingDataDto getBuildingListWithFilterRoads(int roadId) {
         return given()
                 .spec(requestSpec)
                 .basePath("/api/buildings/")
@@ -50,11 +50,11 @@ public class SearchBuildingFiltersApi {
                 .get()
                 .then()
                 .spec(responseSpec200)
-                .extract().as(DataBuildingDto.class);
+                .extract().as(BuildingDataDto.class);
     }
 
     @Step("Проверить, что каждый ЖК из списка содержит шоссе с id = {roadId}")
-    public static void checkBuildingListContainsRoadId(DataBuildingDto dataBuilding, int roadId) {
+    public static void checkBuildingListContainsRoadId(BuildingDataDto dataBuilding, int roadId) {
         List<NearDto> nearList = dataBuilding.getData().stream().map(BuildingDto::getNear).collect(Collectors.toList());
         for (NearDto near : nearList) {
             List<RoadDto> roadList = new ArrayList<>(near.getRoads());
