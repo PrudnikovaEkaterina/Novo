@@ -1,0 +1,18 @@
+package ru.dom_novo.api.models.buildingDto;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class OfferDto {
+    private String key;
+    private ParamsDto params;
+    private Integer total;
+    private PriceDto price;
+    @JsonProperty("price_m2")
+    private PriceM2Dto priceM2;
+    @JsonProperty("square_m2")
+    private SquareM2Dto squareM2;
+}

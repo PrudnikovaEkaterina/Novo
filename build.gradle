@@ -4,7 +4,7 @@ plugins {
     id "io.freefair.lombok" version "6.0.0-m2"
 }
 
-group 'ru.prudnikova'
+group 'ru.dom_novo'
 version '1.0-SNAPSHOT'
 
 allure {
