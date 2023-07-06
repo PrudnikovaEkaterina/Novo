@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'io.qameta.allure' version '2.11.2'
     id "io.freefair.lombok" version "6.0.0-m2"
+    id 'org.gradle.test-retry' version '1.5.2'
 }
 
 group 'ru.dom_novo'
@@ -55,9 +56,8 @@ dependencies {
 }
 
 tasks.withType(Test) {//благодаря этой строчке передаются параметры в скрипт сборки
-    systemProperties(System.getProperties())
     useJUnitPlatform()
-
+    systemProperties(System.getProperties())
     testLogging {
         lifecycle {
             events "started", "skipped", "failed", "standard_error", "standard_out"
@@ -69,6 +69,11 @@ tasks.withType(Test) {//благодаря этой строчке переда�
 test {
     useJUnitPlatform()
     systemProperties(System.getProperties())
+    retry{
+        maxRetries= 1
+        maxFailures= 10
+        failOnPassedAfterRetry= true
+    }
 }
 
 task api_test(type: Test) {
