@@ -1,4 +1,4 @@
-package ru.dom_novo.api.models.authDto;
+package ru.dom_novo.api.models.authModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthDto {
+public class LoginResponseModel {
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("token_type")
@@ -17,5 +17,6 @@ public class AuthDto {
     private String refreshToken;
     @JsonProperty("refresh_expires_in")
     private Integer refreshExpiresIn;
-    private UserDto user;
+    private UserModel user;
+    private ManagerModel manager;
 }

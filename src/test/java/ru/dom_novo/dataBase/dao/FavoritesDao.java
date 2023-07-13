@@ -13,7 +13,7 @@ public class FavoritesDao {
             DataSourceProvider.INSTANCE.getDataSource()
     );
 
-    public static List<Integer> selectEntityIdFromFavoritesForUser(int userId){
+    public static List<Integer> selectFromFavoritesBuildingsIdForUser(int userId){
         List<FavoritesEntity> userFavoritesBDList = jdbcTemplate.query("SELECT entity_id FROM favorites where user_id=? and entity_type=1",
                 new BeanPropertyRowMapper<>(FavoritesEntity.class, false), userId);
         return userFavoritesBDList.stream().map(FavoritesEntity::getEntityId).collect(Collectors.toList());

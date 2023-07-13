@@ -3,7 +3,7 @@ package ru.dom_novo.web.pages;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import regexp.RegexpMeth;
+import ru.dom_novo.regexp.RegexpMeth;
 
 import java.util.List;
 
@@ -49,12 +49,6 @@ public class CardNovostroykiPage {
 
     public CardNovostroykiPage checkCardDocumentsListSize(int expectedSize) {
         CARD_DOCUMENTS.shouldBe(CollectionCondition.size(expectedSize));
-        return this;
-    }
-
-
-    public CardNovostroykiPage checkCardDocumentsShowMoreButton() {
-       CARD_DOCUMENTS_SHOW_MORE_BUTTON.shouldBe(visible);
         return this;
     }
 

@@ -1,8 +1,8 @@
 package ru.dom_novo.api.steps.meApiSteps;
 
 import io.qameta.allure.Step;
-import regexp.RegexpMeth;
-import ru.dom_novo.api.models.authDto.UserDto;
+import ru.dom_novo.regexp.RegexpMeth;
+import ru.dom_novo.api.models.authModels.UserModel;
 import ru.dom_novo.api.steps.authApiSteps.AuthApi;
 
 import static io.restassured.RestAssured.given;
@@ -11,8 +11,10 @@ import static ru.dom_novo.api.specifications.Specification.requestSpec;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 public class MeApiSteps {
+    private  static final String defaultManagerName = "Зверева Виктория";
+    private  static final String defaultManagerPhone = "79605800786";
     @Step("Получить данные пользователя")
-    public static UserDto getAuthMe (String phoneNumber) {
+    public static UserModel getAuthMe (String phoneNumber) {
         String token = AuthApi.getAccessToken(phoneNumber);
         return given()
                 .filter(withCustomTemplates())
@@ -22,18 +24,53 @@ public class MeApiSteps {
                 .post("/api/auth/me")
                 .then()
                 .spec(responseSpec200)
-                .extract().as(UserDto.class);
+                .extract().as(UserModel.class);
     }
     @Step("Получить число избранных и рекомендованных объектов пользователя")
     public static int getFavoritesCounterForAuthUser (String phoneNumber) {
-        UserDto user = getAuthMe(phoneNumber);
+        UserModel user = getAuthMe(phoneNumber);
         return user.getFavoritesBuildingsCount() + user.getFavoritesFlatsCount()
                 + user.getRecommendationsBuildingsCount() + user.getRecommendationsFlatsCount();
     }
 
     @Step("Получить имя пользователя с учетом форматирования для header")
     public static String getUserName (String phoneNumber) {
-        UserDto user = getAuthMe(phoneNumber);
+        UserModel user = getAuthMe(phoneNumber);
         return RegexpMeth.substring(10, user.getName()).split(" ")[0];
     }
+
+    @Step("Получить имя персонального менеджера пользователя")
+    public static String getUserManagerName (String phoneNumber) {
+        UserModel user = getAuthMe(phoneNumber);
+        if (user.getManager()!=null)
+            return user.getManager().getName();
+        else return defaultManagerName;
+    }
+
+    @Step("Получить номер телефона персонального менеджера пользователя")
+    public static String getUserManagerPhone (String phoneNumber) {
+        UserModel user = getAuthMe(phoneNumber);
+        if (user.getManager()!=null)
+            return user.getManager().getPhone();
+        else return defaultManagerPhone;
+    }
+
+    @Step("Получить количество избранных ЖК пользователя")
+    public static int getFavoritesBuildingsCount (String phoneNumber) {
+        UserModel user = getAuthMe(phoneNumber);
+        return user.getFavoritesBuildingsCount();
+    }
+
+    @Step("Получить количество избранных квартир пользователя")
+    public static int getFavoritesFlatsCount (String phoneNumber) {
+        UserModel user = getAuthMe(phoneNumber);
+        return user.getFavoritesFlatsCount();
+    }
+
+    @Step("Получить общее количество рекомендованных пользователю объектов")
+    public static int getRecommendationsCount (String phoneNumber) {
+        UserModel user = getAuthMe(phoneNumber);
+        return user.getRecommendationsFlatsCount()+user.getRecommendationsBuildingsCount();
+    }
+
 }

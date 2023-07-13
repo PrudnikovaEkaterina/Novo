@@ -2,7 +2,7 @@ package ru.dom_novo.web.pages;
 
 import com.codeborne.selenide.*;
 import org.junit.jupiter.api.Assertions;
-import regexp.RegexpMeth;
+import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.web.pages.components.CallMeWidgetComponent;
 import ru.dom_novo.web.pages.components.FooterComponent;
 import ru.dom_novo.web.pages.components.MoreFiltersModalComponent;

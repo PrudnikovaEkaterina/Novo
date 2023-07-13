@@ -1,10 +1,7 @@
 package ru.dom_novo.testData;
 
 import com.github.javafaker.Faker;
-import ru.dom_novo.web.enumsWeb.BuildingEnum;
-import ru.dom_novo.web.enumsWeb.CityEnum;
-import ru.dom_novo.web.enumsWeb.DeveloperEnum;
-import ru.dom_novo.web.enumsWeb.HousingClassEnum;
+import ru.dom_novo.web.enumsWeb.*;
 
 import java.util.List;
 
@@ -41,6 +38,9 @@ public class GenerationData {
 
     public static String setRandomEmail() {
         return faker.internet().emailAddress();
+    }
+    public static String setRandomUserPhone() {
+        return faker.options().option(UserPhoneEnum.values()).phone;
     }
 
     public static int setRandomBuildingId(List<Integer> buildingIdList) {

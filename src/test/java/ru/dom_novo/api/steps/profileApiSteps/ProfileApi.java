@@ -1,7 +1,7 @@
 package ru.dom_novo.api.steps.profileApiSteps;
 
 import io.qameta.allure.Step;
-import ru.dom_novo.api.models.authDto.UserDto;
+import ru.dom_novo.api.models.authModels.UserModel;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -42,7 +42,7 @@ public class ProfileApi {
 
     @Step("Изменить имя и Email пользователя")
     public static void changeUsernameAndEmail (String accessToken, String userName, String email) {
-        UserDto user =new UserDto();
+        UserModel user =new UserModel();
         user.setName(userName);
         user.setEmail(email);
         given()
