@@ -1,10 +1,10 @@
 package ru.dom_novo.api.steps.cardNovostroykiApiSteps;
 
 import io.qameta.allure.Step;
-import ru.dom_novo.api.models.buildingDto.BuildingDataDto;
-import ru.dom_novo.api.models.buildingDto.BuildingDto;
-import ru.dom_novo.api.models.buildingDto.FlatDto;
-import ru.dom_novo.api.models.buildingDto.PriceDto;
+import ru.dom_novo.api.models.buildingModels.BuildingDataDto;
+import ru.dom_novo.api.models.buildingModels.BuildingDto;
+import ru.dom_novo.api.models.buildingModels.FlatModel;
+import ru.dom_novo.api.models.buildingModels.PriceModel;
 import ru.dom_novo.dataBase.services.BuildingService;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class CardNovostroykiSimilarApiSteps {
 
     @Step("Получить минимальные цены для каждого объекта из списка похожих ЖК")
     public static List<Integer> getPricesFromSimilarBuildings(BuildingDataDto dataBuildingDto) {
-        return dataBuildingDto.getData().stream().map(BuildingDto::getFlats).map(FlatDto::getPrice).map(PriceDto::getFrom).collect(toList());
+        return dataBuildingDto.getData().stream().map(BuildingDto::getFlats).map(FlatModel::getPrice).map(PriceModel::getFrom).collect(toList());
     }
 
     @Step("Посчитать разницу в процентах между минимальной ценой ЖК и минимальными ценами похожих ЖК")

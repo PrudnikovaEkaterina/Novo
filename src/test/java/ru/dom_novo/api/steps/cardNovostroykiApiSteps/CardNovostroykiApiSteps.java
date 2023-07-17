@@ -1,7 +1,7 @@
 package ru.dom_novo.api.steps.cardNovostroykiApiSteps;
 
 import io.qameta.allure.Step;
-import ru.dom_novo.api.models.buildingDto.*;
+import ru.dom_novo.api.models.buildingModels.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -10,14 +10,14 @@ import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 public class CardNovostroykiApiSteps {
     @Step("Получить информацию о ЖК")
-    public static RootDto getBuildingData(int buildingId) {
+    public static RootModel getBuildingData(int buildingId) {
         return given()
                 .spec(requestSpec)
                 .basePath("/api/buildings/" + buildingId)
                 .get()
                 .then()
                 .spec(responseSpec200)
-                .extract().as(RootDto.class);
+                .extract().as(RootModel.class);
     }
 
     @Step("Получить минимальную цену ЖК")

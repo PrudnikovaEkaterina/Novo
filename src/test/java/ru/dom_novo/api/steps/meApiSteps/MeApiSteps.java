@@ -11,8 +11,10 @@ import static ru.dom_novo.api.specifications.Specification.requestSpec;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 public class MeApiSteps {
+
     private  static final String defaultManagerName = "Зверева Виктория";
     private  static final String defaultManagerPhone = "79605800786";
+
     @Step("Получить данные пользователя")
     public static UserModel getAuthMe (String phoneNumber) {
         String token = AuthApi.getAccessToken(phoneNumber);
@@ -39,12 +41,25 @@ public class MeApiSteps {
         return RegexpMeth.substring(10, user.getName()).split(" ")[0];
     }
 
+    @Step("Получить id пользователя")
+    public static int getUserId (String phoneNumber) {
+        UserModel user = getAuthMe(phoneNumber);
+        return user.getId();
+    }
+
     @Step("Получить имя персонального менеджера пользователя")
     public static String getUserManagerName (String phoneNumber) {
         UserModel user = getAuthMe(phoneNumber);
         if (user.getManager()!=null)
             return user.getManager().getName();
-        else return defaultManagerName;
+        else
+            return null;
+    }
+
+
+    @Step("Получить имя дефолтного менеджера")
+    public static String getDefaultManagerName () {
+        return defaultManagerName;
     }
 
     @Step("Получить номер телефона персонального менеджера пользователя")
@@ -52,7 +67,12 @@ public class MeApiSteps {
         UserModel user = getAuthMe(phoneNumber);
         if (user.getManager()!=null)
             return user.getManager().getPhone();
-        else return defaultManagerPhone;
+        else return null;
+    }
+
+    @Step("Получить номер телефона дефолтного менеджера")
+    public static String getDefaultManagerPhone () {
+        return defaultManagerPhone;
     }
 
     @Step("Получить количество избранных ЖК пользователя")

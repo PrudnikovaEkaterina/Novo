@@ -1,11 +1,12 @@
-package ru.dom_novo.api.models.buildingDto;
+package ru.dom_novo.api.models.buildingModels;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SquareM2Dto {
-    private Double from;
-    public Double to;
+public class DocumentModel {
+    private String title;
+    private String href;
 }

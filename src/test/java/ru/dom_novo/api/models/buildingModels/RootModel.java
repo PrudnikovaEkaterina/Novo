@@ -1,11 +1,10 @@
-package ru.dom_novo.api.models.buildingDto;
+package ru.dom_novo.api.models.buildingModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PriceDto {
-    private Integer from;
-    public Integer to;
+public class RootModel {
+    private BuildingDto data;
 }

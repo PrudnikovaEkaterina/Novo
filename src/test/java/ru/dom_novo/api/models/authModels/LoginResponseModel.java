@@ -18,5 +18,4 @@ public class LoginResponseModel {
     @JsonProperty("refresh_expires_in")
     private Integer refreshExpiresIn;
     private UserModel user;
-    private ManagerModel manager;
 }

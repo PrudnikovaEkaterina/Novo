@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.dom_novo.api.models.buildingDto.DocumentDto;
+import ru.dom_novo.api.models.buildingModels.DocumentModel;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiDocumentsApiSteps;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.CardNovostroykiPage;
@@ -25,7 +25,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class CardNovostroykiDocumentsTests extends TestBase {
     CardNovostroykiPage cardNovostroykiPage =new CardNovostroykiPage();
     int buildingId=GenerationData.setRandomBuildingId();
-    List<DocumentDto> documentList = CardNovostroykiDocumentsApiSteps.getDocumentsList(buildingId);
+    List<DocumentModel> documentList = CardNovostroykiDocumentsApiSteps.getDocumentsList(buildingId);
     int documentListSize = CardNovostroykiDocumentsApiSteps.getDocumentsListSize(documentList);
     List<String> documentTitleListApi = CardNovostroykiDocumentsApiSteps.getDocumentsTitleList(documentList);
 

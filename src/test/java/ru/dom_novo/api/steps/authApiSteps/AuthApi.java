@@ -26,7 +26,7 @@ public class AuthApi {
     static String authCookieValue = authConfig.authCookieValue();
     static Cookie authCookie = new Cookie.Builder(authCookieName, authCookieValue).build();
 
-    public static void authRegister(Cookie authCookie, LoginRequestModel userLoginBody ) {
+    public static void authRegister(Cookie authCookie, LoginRequestModel userLoginBody) {
         given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)
@@ -39,7 +39,7 @@ public class AuthApi {
     }
 
     public static Response authLogin(Cookie authCookie, LoginRequestModel userLoginBody) {
-        Response response =given()
+        Response response = given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)
                 .cookie(authCookie)
@@ -50,22 +50,23 @@ public class AuthApi {
         response.path("user.phone", String.valueOf(is(userLoginBody.getPhone())));
         return response;
     }
+
     public static LoginRequestModel setPhoneToLoginBody(String phone) {
-        LoginRequestModel loginBody= new LoginRequestModel();
+        LoginRequestModel loginBody = new LoginRequestModel();
         loginBody.setPhone(phone);
         return loginBody;
     }
 
-@Step("Авторизация пользователя")
-public static void auth(String phone) {
-    LoginRequestModel loginBody = setPhoneToLoginBody(phone);
-    authRegister(authCookie, loginBody);
-    loginBody.setPassword(password);
-    Response response = authLogin(authCookie, loginBody);
-    Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getAccessToken());
-    Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getRefreshToken());
-    Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getUser());
-}
+    @Step("Авторизация пользователя")
+    public static void auth(String phone) {
+        LoginRequestModel loginBody = setPhoneToLoginBody(phone);
+        authRegister(authCookie, loginBody);
+        loginBody.setPassword(password);
+        Response response = authLogin(authCookie, loginBody);
+        Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getAccessToken());
+        Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getRefreshToken());
+        Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getUser());
+    }
 
     @Step("Установка авторизационных кук в браузер")
     public static void setAuthCookiesToBrowser(String phoneNumber) {
@@ -79,7 +80,7 @@ public static void auth(String phone) {
         open("https://novo-dom.ru/build/desktop/images/header-logo.c8b95b60.svg");
         org.openqa.selenium.Cookie cookie = new org.openqa.selenium.Cookie("refresh_token", refreshToken);
         getWebDriver().manage().addCookie(cookie);
-        if (referralCode!=null){
+        if (referralCode != null) {
             org.openqa.selenium.Cookie cookie1 = new org.openqa.selenium.Cookie("ref", referralCode);
             getWebDriver().manage().addCookie(cookie1);
         }
@@ -98,23 +99,20 @@ public static void auth(String phone) {
         LoginRequestModel loginBody = setPhoneToLoginBody(phone);
         authRegister(authCookie, loginBody);
         loginBody.setPassword(password);
-       return authLogin(authCookie, loginBody);
+        return authLogin(authCookie, loginBody);
     }
 
     @Step("Получение referral code пользователя")
     public static String getReferralCode(Response loginResponse) {
-        if (loginResponse.body().as(LoginResponseModel.class).getManager()!=null)
-            return  loginResponse.body().as(LoginResponseModel.class).getManager().getReferralCode();
-        else return null;
+        if (loginResponse.body().as(LoginResponseModel.class).getUser().getManager() != null)
+            return loginResponse.body().as(LoginResponseModel.class).getUser().getManager().getReferralCode();
+        else
+            return null;
     }
+
     @Step("Получение refreshToken из loginResponse")
     public static String getRefreshTokenFromLoginResponse(Response loginResponse) {
         return loginResponse.getCookie("refresh_token");
-    }
-    @Step("Получение id пользователя")
-    public static int getUserId (String phone) {
-        Response loginResponse = getLoginResponse(phone);
-        return loginResponse.body().as(LoginResponseModel.class).getUser().getId();
     }
 
     @Step("Логаут пользователя")

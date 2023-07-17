@@ -4,7 +4,7 @@ import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.dom_novo.api.models.buildingDto.BuildingDataDto;
+import ru.dom_novo.api.models.buildingModels.BuildingDataDto;
 import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingFiltersApi;
 @Owner("PrudnikovaEkaterina")
 @Tag("Api")

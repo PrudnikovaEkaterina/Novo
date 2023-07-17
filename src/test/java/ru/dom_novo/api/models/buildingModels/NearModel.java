@@ -1,4 +1,4 @@
-package ru.dom_novo.api.models.buildingDto;
+package ru.dom_novo.api.models.buildingModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.ArrayList;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NearDto {
-    private ArrayList<StationDto> stations;
-    private ArrayList<RoadDto> roads;
+public class NearModel {
+    private ArrayList<StationModel> stations;
+    private ArrayList<RoadModel> roads;
 }

@@ -1,4 +1,4 @@
-package ru.dom_novo.api.models.buildingDto;
+package ru.dom_novo.api.models.buildingModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,12 +9,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BuildingDto {
     private Integer id;
-    private NearDto near;
+    private NearModel near;
     @JsonProperty("parent_id")
     private Integer parentId;
-    private FlatDto flats;
+    private FlatModel flats;
     @JsonProperty("release_date")
     private String releaseDate;
-    private ReleaseDto release;
-    private List<DocumentDto> documents;
+    private ReleaseModel release;
+    private List<DocumentModel> documents;
 }

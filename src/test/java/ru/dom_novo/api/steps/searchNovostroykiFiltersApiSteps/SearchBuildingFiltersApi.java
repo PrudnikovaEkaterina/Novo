@@ -1,7 +1,7 @@
 package ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps;
 
 import io.qameta.allure.Step;
-import ru.dom_novo.api.models.buildingDto.*;
+import ru.dom_novo.api.models.buildingModels.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +29,10 @@ public class SearchBuildingFiltersApi {
 
     @Step("Проверить, что каждый ЖК из списка содержит станцию метро с id = {stationId}")
     public static void checkBuildingListContainsStationId(BuildingDataDto dataBuilding, int stationId) {
-        List<NearDto> nearList = dataBuilding.getData().stream().map(BuildingDto::getNear).collect(Collectors.toList());
-        for (NearDto near : nearList) {
-            List<StationDto> stations = new ArrayList<>(near.getStations());
-            List<Integer> listStationId = stations.stream().map(StationDto::getId).collect(Collectors.toList());
+        List<NearModel> nearList = dataBuilding.getData().stream().map(BuildingDto::getNear).collect(Collectors.toList());
+        for (NearModel near : nearList) {
+            List<StationModel> stations = new ArrayList<>(near.getStations());
+            List<Integer> listStationId = stations.stream().map(StationModel::getId).collect(Collectors.toList());
             for (int y = 0; y < listStationId.size(); y++) {
                 assert listStationId.contains(stationId);
             }
@@ -55,10 +55,10 @@ public class SearchBuildingFiltersApi {
 
     @Step("Проверить, что каждый ЖК из списка содержит шоссе с id = {roadId}")
     public static void checkBuildingListContainsRoadId(BuildingDataDto dataBuilding, int roadId) {
-        List<NearDto> nearList = dataBuilding.getData().stream().map(BuildingDto::getNear).collect(Collectors.toList());
-        for (NearDto near : nearList) {
-            List<RoadDto> roadList = new ArrayList<>(near.getRoads());
-            List<Integer> listRoadId = roadList.stream().map(RoadDto::getId).collect(Collectors.toList());
+        List<NearModel> nearList = dataBuilding.getData().stream().map(BuildingDto::getNear).collect(Collectors.toList());
+        for (NearModel near : nearList) {
+            List<RoadModel> roadList = new ArrayList<>(near.getRoads());
+            List<Integer> listRoadId = roadList.stream().map(RoadModel::getId).collect(Collectors.toList());
             for (int y = 0; y < listRoadId.size(); y++) {
                 assert listRoadId.contains(roadId);
             }
