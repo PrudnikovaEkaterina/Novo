@@ -4,12 +4,10 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.dom_novo.dataBase.dao.CallbackPhonesDao;
+import ru.dom_novo.dataBase.services.CallbackPhonesService;
 import ru.dom_novo.testData.GenerationData;
-import ru.dom_novo.dataBase.entities.CallbackPhonesEntity;
 import ru.dom_novo.web.pages.NovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
-
-import java.util.List;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 
@@ -38,9 +36,8 @@ public class CallMeTests extends TestBase {
                 .setPhoneNumber(phoneNumber)
                 .clickCallMeButton()
                 .verifyPhoneThanksModalTitle(phoneThanksModalTitle);
-        List<CallbackPhonesEntity> result = callbackPhonesManager.selectLastEntryFromCallbackPhonesTables();
-        Assertions.assertEquals(phoneNumber, result.get(0).getPhone());
-        Assertions.assertEquals(baseUrl + "/novostroyki", result.get(0).getLink());
+        Assertions.assertEquals(phoneNumber, CallbackPhonesService.getPhoneNumberFromLastCallback());
+        Assertions.assertEquals(baseUrl + "/novostroyki", CallbackPhonesService.getLinkFromLastCallback());
     }
 
 }

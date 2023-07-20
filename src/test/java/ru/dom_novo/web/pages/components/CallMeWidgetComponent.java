@@ -1,5 +1,6 @@
 package ru.dom_novo.web.pages.components;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Assertions;
 
@@ -14,6 +15,7 @@ public class CallMeWidgetComponent {
             PHONE_THANKS_MODAL_TITLE = $(".phone-thanks-modal__title");
 
     public CallMeWidgetComponent verifyCallbackPhoneModalTitle(String callbackPhoneModalTitle) {
+        CALLBACK_PHONE_MODAL_TITLE.shouldBe(Condition.visible);
         Assertions.assertEquals(callbackPhoneModalTitle, CALLBACK_PHONE_MODAL_TITLE.getText());
         return this;
     }
@@ -28,9 +30,8 @@ public class CallMeWidgetComponent {
         return this;
     }
 
-    public CallMeWidgetComponent verifyPhoneThanksModalTitle(String phoneThanksModalTitle) {
+    public void verifyPhoneThanksModalTitle(String phoneThanksModalTitle) {
         Assertions.assertEquals(phoneThanksModalTitle, PHONE_THANKS_MODAL_TITLE.getText());
-        return this;
     }
 
 }

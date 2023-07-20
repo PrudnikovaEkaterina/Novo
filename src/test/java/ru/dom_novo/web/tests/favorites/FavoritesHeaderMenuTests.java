@@ -3,6 +3,7 @@ package ru.dom_novo.web.tests.favorites;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
+import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
@@ -16,7 +17,8 @@ public class FavoritesHeaderMenuTests extends TestBase {
     String phoneNumber = GenerationData.setRandomUserPhone();
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws InterruptedException {
+        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();

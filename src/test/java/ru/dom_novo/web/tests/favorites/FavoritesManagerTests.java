@@ -8,8 +8,6 @@ import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
-import java.util.Objects;
-
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("FavoritesManager")
@@ -18,7 +16,7 @@ public class FavoritesManagerTests extends TestBase {
     String phoneNumber = GenerationData.setRandomUserPhone();
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws InterruptedException {
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();

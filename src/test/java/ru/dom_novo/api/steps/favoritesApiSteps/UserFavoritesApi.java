@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import ru.dom_novo.api.models.buildingModels.BuildingDto;
 import ru.dom_novo.api.models.buildingModels.BuildingDataDto;
 import ru.dom_novo.api.steps.authApiSteps.AuthApi;
+import ru.dom_novo.testData.GenerationData;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,5 +28,18 @@ public class UserFavoritesApi {
                 .spec(responseSpec200)
                 .extract().as(BuildingDataDto.class);
         return dataBuilding.getData().stream().map(BuildingDto::getId).collect(Collectors.toList());
+    }
+    @Step("Добавить пользователю ЖК в избранное")
+    public static void addBuildingToUserFavorites(String phoneNumber) {
+        String accessToken = AuthApi.getAccessToken(phoneNumber);
+        int buildingId = GenerationData.setRandomBuildingId();
+        given()
+                .filter(withCustomTemplates())
+                .spec(requestSpec)
+                .header("Authorization", "Bearer " + accessToken)
+                .when()
+                .post("api/me/favorites/buildings/"+buildingId)
+                .then()
+                .spec(responseSpec200);
     }
 }
