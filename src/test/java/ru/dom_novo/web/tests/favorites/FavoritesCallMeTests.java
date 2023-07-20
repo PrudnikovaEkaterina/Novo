@@ -11,9 +11,6 @@ import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
-import static com.codeborne.selenide.Selenide.$$;
-import static java.lang.Thread.sleep;
-
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("FavoritesCallMe")
