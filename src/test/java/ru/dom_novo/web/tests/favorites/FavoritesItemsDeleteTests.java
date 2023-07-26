@@ -4,7 +4,6 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
@@ -12,8 +11,7 @@ import ru.dom_novo.web.tests.TestBase;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -24,7 +22,7 @@ public class FavoritesItemsDeleteTests extends TestBase {
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
-       UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
+//       UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();
@@ -47,6 +45,6 @@ public class FavoritesItemsDeleteTests extends TestBase {
         int favoritesBuildingsCountBefore = favoritesPage.getFavoritesBuildingsCount();
         favoritesPage.clickFavoriteIconForFirstSearchBuilding();
         int favoritesBuildingsCountAfter = favoritesPage.getFavoritesBuildingsCount();
-        Assertions.assertEquals(1, favoritesBuildingsCountBefore-favoritesBuildingsCountAfter);
+        assertThat(favoritesBuildingsCountBefore-favoritesBuildingsCountAfter, is(1));
     }
 }

@@ -12,6 +12,9 @@ import ru.dom_novo.web.tests.TestBase;
 
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -34,6 +37,6 @@ public class FavoritesItemsDateTests extends TestBase {
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> buildingsDateAddExpected = FavoritesDao.selectFavoritesBuildingsUpdatedAt(userId);
         List<String> buildingsDateAddActual = favoritesPage.getBuildingsDateText();
-        Assertions.assertEquals(buildingsDateAddExpected, buildingsDateAddActual);
+        assertThat(buildingsDateAddActual, is(buildingsDateAddExpected));
     }
 }

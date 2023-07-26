@@ -3,11 +3,13 @@ package ru.dom_novo.web.tests.favorites;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -18,7 +20,7 @@ public class FavoritesHeaderMenuTests extends TestBase {
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
-        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
+//        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();
@@ -35,7 +37,7 @@ public class FavoritesHeaderMenuTests extends TestBase {
     void checkFavoritesBuildingsCount () {
         int countFavoritesBuildingsExpected = MeApiSteps.getFavoritesBuildingsCount(phoneNumber);
         int countFavoritesBuildingsActual = favoritesPage.getFavoritesBuildingsCount();
-        Assertions.assertEquals(countFavoritesBuildingsExpected, countFavoritesBuildingsActual);
+        assertThat(countFavoritesBuildingsActual, is(countFavoritesBuildingsExpected));
     }
 
     @Test
@@ -43,7 +45,7 @@ public class FavoritesHeaderMenuTests extends TestBase {
     void checkFavoritesFlatsCount () {
         int countFavoritesFlatsExpected = MeApiSteps.getFavoritesFlatsCount(phoneNumber);
         int countFavoritesFlatsActual = favoritesPage.getFavoritesFlatsCount();
-        Assertions.assertEquals(countFavoritesFlatsExpected, countFavoritesFlatsActual);
+        assertThat(countFavoritesFlatsActual, is(countFavoritesFlatsExpected));
     }
 
     @Test
@@ -51,6 +53,6 @@ public class FavoritesHeaderMenuTests extends TestBase {
     void checkRecommendationsCount () {
         int countRecommendationsExpected = MeApiSteps.getRecommendationsCount(phoneNumber);
         int countRecommendationsActual = favoritesPage.getRecommendationsCount();
-        Assertions.assertEquals(countRecommendationsExpected, countRecommendationsActual);
+        assertThat(countRecommendationsActual, is(countRecommendationsExpected));
     }
 }

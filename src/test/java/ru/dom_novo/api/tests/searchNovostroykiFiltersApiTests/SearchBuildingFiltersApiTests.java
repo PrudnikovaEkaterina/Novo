@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.dom_novo.api.models.buildingModels.BuildingDataDto;
-import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingFiltersApi;
+import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFiltersApi;
 @Owner("PrudnikovaEkaterina")
 @Tag("Api")
 public class SearchBuildingFiltersApiTests {
@@ -13,16 +13,16 @@ public class SearchBuildingFiltersApiTests {
     @DisplayName("Получить список ЖК с фильтром 'Станция метро' и проверить, что найденные ЖК содержат искомый station_id")
     void searchStation() {
         int stationId = 57;
-        BuildingDataDto dataBuilding = SearchBuildingFiltersApi.getBuildingListWithFilterStation(stationId);
-        SearchBuildingFiltersApi.checkBuildingListContainsStationId(dataBuilding, stationId);
+        BuildingDataDto dataBuilding = SearchBuildingsFiltersApi.getBuildingListWithFilterStation(stationId);
+        SearchBuildingsFiltersApi.checkBuildingListContainsStationId(dataBuilding, stationId);
     }
 
     @Test
     @DisplayName("Получить список ЖК с фильтром 'Шоссе' и проверить, что найденные ЖК содержат искомый road_id")
     void searchRoad() {
         int roadId = 68;
-        BuildingDataDto dataBuilding = SearchBuildingFiltersApi.getBuildingListWithFilterRoads(roadId);
-        SearchBuildingFiltersApi.checkBuildingListContainsRoadId(dataBuilding, roadId);
+        BuildingDataDto dataBuilding = SearchBuildingsFiltersApi.getBuildingListWithFilterRoads(roadId);
+        SearchBuildingsFiltersApi.checkBuildingListContainsRoadId(dataBuilding, roadId);
     }
 
 }

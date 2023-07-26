@@ -3,7 +3,6 @@ package ru.dom_novo.web.tests.novostroyki;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.dataBase.dao.CallbackPhonesDao;
 import ru.dom_novo.dataBase.services.CallbackPhonesService;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.NovostroykiPage;
@@ -16,7 +15,6 @@ import static com.codeborne.selenide.Configuration.baseUrl;
 @Story("CallbackPhone")
 public class CallMeTests extends TestBase {
     NovostroykiPage novostroykiPage = new NovostroykiPage();
-    CallbackPhonesDao callbackPhonesManager = new CallbackPhonesDao();
 
     @BeforeEach
     void beforeEach() {

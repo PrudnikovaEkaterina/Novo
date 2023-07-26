@@ -8,6 +8,9 @@ import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("FavoritesManager")
@@ -35,9 +38,9 @@ public class FavoritesManagerTests extends TestBase {
         String managerNameDefault = MeApiSteps.getDefaultManagerName();
         String managerNameActual = favoritesPage.getFavoritesManagerName();
         if (managerNameExpected!=null)
-            Assertions.assertEquals(managerNameExpected, managerNameActual);
+            assertThat(managerNameActual, is(managerNameExpected));
         else
-            Assertions.assertEquals(managerNameDefault, managerNameActual);
+            assertThat(managerNameActual, is(managerNameDefault));
     }
 
     @Test
@@ -47,9 +50,9 @@ public class FavoritesManagerTests extends TestBase {
         String managerPhoneDefault = MeApiSteps.getDefaultManagerPhone();
         String managerPhoneActual = favoritesPage.getFavoritesManagerPhone();
         if (managerPhoneExpected!=null)
-            Assertions.assertEquals(managerPhoneExpected, managerPhoneActual);
+            assertThat(managerPhoneActual, is(managerPhoneExpected));
         else
-            Assertions.assertEquals(managerPhoneDefault, managerPhoneActual);
+            assertThat(managerPhoneActual, is(managerPhoneDefault));
     }
 
     @Test

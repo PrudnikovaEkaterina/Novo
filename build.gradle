@@ -69,11 +69,11 @@ tasks.withType(Test) {//благодаря этой строчке переда�
 test {
     useJUnitPlatform()
     systemProperties(System.getProperties())
-//    retry{
-//        maxRetries= 1
-//        maxFailures= 10
-//        failOnPassedAfterRetry= true
-//    }
+    retry{
+        maxRetries= 1
+        maxFailures= 10
+        failOnPassedAfterRetry= true
+    }
 }
 
 task api_test(type: Test) {

@@ -28,7 +28,8 @@ public class NovostroykiPage {
             SEARCH_ITEM_ADDRESS_TEXT = $$(".search-item__address-text"),
             SEARCH_ITEM_DEVELOPER_TEXT = $$(".search-item__developer-text"),
             SEARCH_PRICE_LIST_TABLE = $$(".search-price-list__table"),
-            TAG = $$(".base-round-link-button__text");
+            TAG = $$(".base-round-link-button__text"),
+            SEARCH_FILTERS_TAGS = $$(".search-filters__tags");
 
     MoreFiltersModalComponent moreFiltersModal = new MoreFiltersModalComponent();
     CallMeWidgetComponent callMeWidget = new CallMeWidgetComponent();
@@ -68,6 +69,11 @@ public class NovostroykiPage {
         MORE_FILTERS_BUTTON.click();
         moreFiltersModal.verifyModalHeaderText();
         return moreFiltersModal;
+    }
+
+    public int getSearchNovostroykiContentTotal() {
+        String[] mas = SEARCH_NOVOSTROYKI_CONTENT_TOTAL.getText().split(" ");
+        return Integer.parseInt(mas[1]);
     }
 
     public void verifyResultSearchByFilterHousingClass(String housingClass) {
@@ -135,6 +141,9 @@ public class NovostroykiPage {
         sleep(1000);
         String area =  $x("//td[text()='"+room+"']/following-sibling::td[1]").getText();
         return RegexpMeth.extractPriceOrAreaDouble(area);
+    }
+    public String getTextFromSearchFiltersTags(){
+      return   SEARCH_FILTERS_TAGS.first().getText();
     }
 
 }

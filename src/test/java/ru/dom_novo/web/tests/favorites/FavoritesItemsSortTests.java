@@ -1,9 +1,9 @@
 package ru.dom_novo.web.tests.favorites;
 
+import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.dataBase.dao.FavoritesDao;
 import ru.dom_novo.testData.GenerationData;
@@ -11,6 +11,11 @@ import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
 import java.util.List;
+
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -24,7 +29,7 @@ public class FavoritesItemsSortTests extends TestBase {
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
-        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
+//        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();
@@ -38,7 +43,7 @@ public class FavoritesItemsSortTests extends TestBase {
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceAsc(userId);
         favoritesPage.setSortFavoritesBuildings(sort);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        Assertions.assertEquals(listSortExpected, listSortActual);
+        assertThat(listSortActual, is(listSortExpected));
     }
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена по убыванию' на странице Мое избранное")
@@ -48,18 +53,21 @@ public class FavoritesItemsSortTests extends TestBase {
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceDesc(userId);
         favoritesPage.setSortFavoritesBuildings(sort);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        Assertions.assertEquals(listSortExpected, listSortActual);
+         assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Площадь по возрастанию' на странице Мое избранное")
+    @Link("Тест падает для пользователя 79085040794, сортировка немного отличается (видимо из-за округлений), спросить у Паши")
     void checkSortFavoritesAreaAsc() {
         sort = "Площадь по возрастанию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortAreaAsc(userId);
+        System.out.println(listSortExpected);
         favoritesPage.setSortFavoritesBuildings(sort);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        Assertions.assertEquals(listSortExpected, listSortActual);
+        System.out.println(listSortActual);
+        assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
@@ -70,7 +78,7 @@ public class FavoritesItemsSortTests extends TestBase {
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortAreaDesc(userId);
         favoritesPage.setSortFavoritesBuildings(sort);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        Assertions.assertEquals(listSortExpected, listSortActual);
+        assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
@@ -81,7 +89,7 @@ public class FavoritesItemsSortTests extends TestBase {
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceM2Asc(userId);
         favoritesPage.setSortFavoritesBuildings(sort);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        Assertions.assertEquals(listSortExpected, listSortActual);
+         assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
@@ -92,9 +100,6 @@ public class FavoritesItemsSortTests extends TestBase {
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceM2Desc(userId);
         favoritesPage.setSortFavoritesBuildings(sort);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        Assertions.assertEquals(listSortExpected, listSortActual);
+         assertThat(listSortActual, is(listSortExpected));
     }
-
-
-
 }

@@ -2,7 +2,6 @@ package ru.dom_novo.web.tests.cardNovostroyki;
 
 import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,6 +10,9 @@ import ru.dom_novo.web.pages.CardNovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
 
 import java.io.IOException;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @Tag("Web")
 @Tag("Api")
@@ -29,11 +31,10 @@ public class CardNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
             cardNovostroykiPage.openCard(buildingId);
             int cardNovostroykiPriceValue = cardNovostroykiPage.getPriceValue();
             int cardNovostroykiProfilePriceValue = cardNovostroykiPage.getProfilePriceValue();
-            Assertions.assertEquals(priceMin, cardNovostroykiPriceValue);
-            Assertions.assertEquals(priceMin, cardNovostroykiProfilePriceValue);
+            assertThat(cardNovostroykiPriceValue, is(priceMin));
+            assertThat(cardNovostroykiProfilePriceValue, is(priceMin));
         }
     }
-
 }
 
 

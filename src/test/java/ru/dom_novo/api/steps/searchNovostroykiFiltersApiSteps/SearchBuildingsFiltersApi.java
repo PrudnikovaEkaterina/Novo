@@ -12,7 +12,7 @@ import static ru.dom_novo.api.specifications.Specification.requestSpec;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 
-public class SearchBuildingFiltersApi {
+public class SearchBuildingsFiltersApi {
     @Step("Получить список ЖК с фильтром Станция метро = {station}")
     public static BuildingDataDto getBuildingListWithFilterStation(int stationId) {
         return given()

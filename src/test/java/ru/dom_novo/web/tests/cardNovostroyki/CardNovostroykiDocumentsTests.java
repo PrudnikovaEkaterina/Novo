@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import static com.codeborne.selenide.Selenide.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 
 @Tag("Web")
@@ -61,7 +63,7 @@ public class CardNovostroykiDocumentsTests extends TestBase {
                     .clickCardDocumentsShowMoreButton()
                     .hoverCardSectionDocumentTitle();}
         List<String> titleListWeb= cardNovostroykiPage.getCardDocumentsTitle();
-        assert documentTitleListApi.containsAll(titleListWeb);
+        assertThat(titleListWeb, is(documentTitleListApi));
     }
 
     @Test
