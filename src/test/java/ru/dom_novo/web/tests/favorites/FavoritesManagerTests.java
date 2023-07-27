@@ -1,5 +1,6 @@
 package ru.dom_novo.web.tests.favorites;
 
+import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
@@ -45,6 +46,9 @@ public class FavoritesManagerTests extends TestBase {
 
     @Test
     @DisplayName("Проверить номер телефона менеджера в блоке 'Ваш персональный менеджер'")
+    @Link("Тест падает для пользователя 74734906753, так как у него в качестве менеджера привязан админ, у админов реф код не заполняется в базе," +
+            "но автоматически генерится по номеру телефона. Для каждого админа свой реф код, который нигде не отображается, поэтому тесты для админов, " +
+            "которые привязаны в качестве менеджера клиенту - написать не могу. Уточняла этот момент у Зосимова.")
     void checkFavoritesManagerPhone () {
         String managerPhoneExpected = MeApiSteps.getUserManagerPhone(phoneNumber);
         String managerPhoneDefault = MeApiSteps.getDefaultManagerPhone();

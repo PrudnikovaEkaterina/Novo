@@ -102,7 +102,7 @@ public class AuthApi {
         return authLogin(authCookie, loginBody);
     }
 
-    @Step("Получение referral code пользователя")
+    @Step("Получение referral code из loginResponse")
     public static String getReferralCode(Response loginResponse) {
         if (loginResponse.body().as(LoginResponseModel.class).getUser().getManager() != null)
             return loginResponse.body().as(LoginResponseModel.class).getUser().getManager().getReferralCode();
