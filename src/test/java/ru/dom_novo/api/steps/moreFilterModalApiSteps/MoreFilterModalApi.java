@@ -1,6 +1,7 @@
 package ru.dom_novo.api.steps.moreFilterModalApiSteps;
 
 import io.qameta.allure.Step;
+import io.qameta.allure.TmsLink;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import ru.dom_novo.dataBase.services.FlatService;
@@ -78,6 +79,9 @@ public class MoreFilterModalApi {
     }
 
     @Step("Получить список ЖК с фильтром Без апартаментов. Проверить, что все объекты, в полученном списке, содержат флаг apartments = 0")
+    @TmsLink("Падает для https://novo-dom.ru/apart-kompleks-dvizhenietushino, так как у него флаг apartments=1, но" +
+            "после задачи https://tracker.yandex.ru/NOVODEV-627 стал учитываться тип предложений корпусов (у 1 корпуса только квартиры." +
+            "Надо переписать логику теста.")
     public static void checkBuildingListWithFilterWithoutApartments() {
         given()
                 .spec(requestSpec)

@@ -24,10 +24,10 @@ public class CardNovostroykiSimilarApiTests {
     @ParameterizedTest(name = "Проверить, что список похожих ЖК для ЖК {0} учитывает логику по цене")
     void checkPricesSimilarBuildingList(BuildingEnum buildingEnum) {
         int buildingId = buildingEnum.id;
-        int priceFrom = CardNovostroykiApiSteps.getPriceFrom(buildingId);
+        long priceFrom = CardNovostroykiApiSteps.getPriceFrom(buildingId);
         assert (priceFrom != 0);
         BuildingDataDto dataBuilding = CardNovostroykiSimilarApiSteps.getSimilarBuildingDataList(buildingId);
-        List<Integer> pricesFromSimilarBuildingsList = CardNovostroykiSimilarApiSteps.getPricesFromSimilarBuildings(dataBuilding);
+        List<Long> pricesFromSimilarBuildingsList = CardNovostroykiSimilarApiSteps.getPricesFromSimilarBuildings(dataBuilding);
         List<Long> calculatePercentageDifferenceBetweenPricesList = CardNovostroykiSimilarApiSteps.calculatePercentageDifferenceBetweenPrices(priceFrom, pricesFromSimilarBuildingsList);
         CardNovostroykiSimilarApiSteps.checkPercentageDifferenceLessOrEqual30(30, calculatePercentageDifferenceBetweenPricesList);
     }

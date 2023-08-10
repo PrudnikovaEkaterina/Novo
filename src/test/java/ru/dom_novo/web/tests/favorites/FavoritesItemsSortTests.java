@@ -1,5 +1,6 @@
 package ru.dom_novo.web.tests.favorites;
 
+import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
@@ -29,6 +30,7 @@ public class FavoritesItemsSortTests extends TestBase {
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
+        Selenide.sleep(5000);
 //        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
@@ -58,7 +60,7 @@ public class FavoritesItemsSortTests extends TestBase {
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Площадь по возрастанию' на странице Мое избранное")
-    @Link("Тест падает для пользователя 79085040794, сортировка немного отличается (видимо из-за округлений), спросить у Паши")
+    @Link("Тест падает для пользователя 79085040794, 79994817999 так как некоторые ЖК имеют одинаковую min(fl.area_total, в итоге выводятся в разной последовательности")
     void checkSortFavoritesAreaAsc() {
         sort = "Площадь по возрастанию";
         int userId = MeApiSteps.getUserId(phoneNumber);

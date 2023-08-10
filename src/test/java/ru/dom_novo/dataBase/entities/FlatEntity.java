@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class FlatsEntity {
+public class FlatEntity {
     private int id;
     @JsonProperty("building_id")
     private int buildingId;

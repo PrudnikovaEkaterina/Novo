@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PriceModel {
-    private Integer from;
-    public Integer to;
+    private Long from;
+    public Long to;
 }

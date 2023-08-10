@@ -68,14 +68,14 @@ public class CardNovostroykiSimilarApiSteps {
 //                .collect(toMap(Entry::getKey, el -> RegexpMeth.extractYears(el.getValue())));}
 
     @Step("Получить минимальные цены для каждого объекта из списка похожих ЖК")
-    public static List<Integer> getPricesFromSimilarBuildings(BuildingDataDto dataBuildingDto) {
+    public static List<Long> getPricesFromSimilarBuildings(BuildingDataDto dataBuildingDto) {
         return dataBuildingDto.getData().stream().map(BuildingDto::getFlats).map(FlatModel::getPrice).map(PriceModel::getFrom).collect(toList());
     }
 
     @Step("Посчитать разницу в процентах между минимальной ценой ЖК и минимальными ценами похожих ЖК")
-    public static List<Long> calculatePercentageDifferenceBetweenPrices(int priceFrom, List<Integer> pricesFrom) {
+    public static List<Long> calculatePercentageDifferenceBetweenPrices(long priceFrom, List<Long> pricesFrom) {
         List<Long> listPercentageDifferenceBetweenPrices = new ArrayList<>();
-        for (Integer integer : pricesFrom) {
+        for (Long integer : pricesFrom) {
             if (priceFrom < integer) {
                 listPercentageDifferenceBetweenPrices.add(Math.round((((double) (integer - priceFrom) / priceFrom) * 100)));
             } else

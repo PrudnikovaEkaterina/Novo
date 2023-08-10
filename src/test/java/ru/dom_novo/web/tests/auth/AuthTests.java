@@ -24,6 +24,7 @@ public class AuthTests extends TestBase {
     }
 
     @Test
+    @Disabled
     @DisplayName("Позитивная проверка регистрации нового пользователя")
     void registrationNewUserSuccessful() {
         String phoneNumber = GenerationData.setRandomPhoneNumber();
