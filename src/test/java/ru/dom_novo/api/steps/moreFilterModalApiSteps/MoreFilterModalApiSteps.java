@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static ru.dom_novo.api.specifications.Specification.requestSpec;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
-public class MoreFilterModalApi {
+public class MoreFilterModalApiSteps {
 
     @Step("Получить список ЖК с фильтром Площадь до. Проверить, что в каждом найденном ЖК square_m2_from меньше, чем {squareMax}")
     public static void getBuildingListWithFilterSquareMax(double squareMax) {
@@ -169,6 +171,106 @@ public class MoreFilterModalApi {
             listAll.addAll(listPage);
         }
         return listAll;
+    }
+
+    @Step("Получить список id ЖК со сроком сдачи = {releaseDate}")
+    public static List<Integer> getBuildingListWithFilterReleaseDate(String releaseDate) {
+        List<Integer> listAll = new ArrayList<>();
+        Response response = given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/")
+                .param("region_code[]", 50)
+                .param("region_code[]", 77)
+                .param("release_date", releaseDate)
+                .param("per_page", 1)
+                .get();
+        Assertions.assertEquals(200, response.statusCode());
+        int totalItem = response.path("meta.total");
+        int pageCount = (int) Math.round((double) totalItem / 100);
+        for (int i = 1; i <pageCount+2; i++) {
+            List<Integer> listPage = given()
+                    .spec(requestSpec)
+                    .basePath("/api/buildings/")
+                    .param("region_code[]", 50)
+                    .param("region_code[]", 77)
+                    .param("release_date", releaseDate)
+                    .param("per_page", 100)
+                    .param("page", i)
+                    .get()
+                    .then()
+                    .extract().path("data.id");
+            listAll.addAll(listPage);
+        }
+        return listAll;
+    }
+
+    @Step("Получить срок сдачи для ЖК с id = {buildingId}")
+    public static String getReleaseDate(int buildingId) {
+        return given()
+                            .spec(requestSpec)
+                            .basePath("/api/buildings/" + buildingId)
+                            .get()
+                            .then()
+                            .extract().path("data.release_date");
+    }
+    @Step("Получить список сроков сдачи корпусов")
+    public static void getAndVerifyReleaseDateList(List<Integer> listDistinctHouseId, String expectedReleaseDate ) {
+        List<String> listReleaseDate = new ArrayList<>();
+        for (Integer value : listDistinctHouseId) {
+            String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
+            listReleaseDate.add(releaseDateValue);
+        }
+        verifyAnyMatch(listReleaseDate, expectedReleaseDate);
+    }
+    @Step("Проверить, что хотя бы одно значение из списка содержит {expectedValue}")
+    public static void verifyAnyMatch(List<String> listValue, String expectedValue) {
+        if (!listValue.contains(null)){
+            Assertions.assertTrue(listValue.stream().anyMatch(el -> el.contains(expectedValue)));
+        }
+    }
+
+    @Step("Проверить, что актуальное значение содержит {expectedValue}")
+    public static void verifyActualContainsExpected(String actualValue, String expectedValue) {
+        if (actualValue!=null){
+            Assertions.assertTrue(actualValue.contains(expectedValue));}
+    }
+
+    @Step("Получить стадию строительства для ЖК с id = {buildingId}")
+    public static String getReleaseState(int buildingId) {
+        return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .extract().path("data.release_state");
+    }
+
+    @Step("Получить список стадий строительства корпусов")
+    public static void getAndVerifyReleaseStateList(List<Integer> listDistinctHouseId, String valueFirst, String valueSecond, String valueThird) {
+        List<String> listReleaseState = new ArrayList<>();
+        for (Integer value : listDistinctHouseId) {
+            String releaseStateValue = MoreFilterModalApiSteps.getReleaseState(value);
+            listReleaseState.add(releaseStateValue);
+        }
+        for (String s : listReleaseState) {
+            assertThat(s, notNullValue());
+        }
+        verifyNoneMatch(listReleaseState, valueFirst, valueSecond, valueThird);
+    }
+
+    @Step("Проверить, что хотя бы одно значение из списка не содержит {valueFirst}, {valueSecond}, {valueThird}")
+    public static void verifyNoneMatch(List<String> listValue, String valueFirst, String valueSecond, String valueThird) {
+        Assertions.assertTrue(listValue.stream().noneMatch(el -> el.contains(valueFirst)&&el.contains(valueSecond)&&el.contains(valueThird)));
+       }
+
+
+    @Step("Проверить, что актуальное значение не равно {expectedValue}")
+    public static void verifyActualNotEqualsExpected(String actualValue, String valueFirst, String valueSecond, String valueThird) {
+        if (actualValue!=null){
+           assertThat(actualValue, not(valueFirst));
+           assertThat(actualValue, not(valueSecond));
+           assertThat(actualValue, not(valueThird));
+        }
     }
 
 

@@ -2,13 +2,26 @@ package ru.dom_novo.web.tests.novostroyki;
 
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import ru.dom_novo.api.enumsApi.ReleaseDateEnum;
+import ru.dom_novo.api.steps.moreFilterModalApiSteps.MoreFilterModalApiSteps;
+import ru.dom_novo.dataBase.dao.BuildingDao;
+import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.testData.GenerationData;
+import ru.dom_novo.web.enumsWeb.RoomEnum;
 import ru.dom_novo.web.pages.NovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static io.qameta.allure.Allure.step;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.dom_novo.api.specifications.Specification.requestSpec;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -40,5 +53,6 @@ public class MoreFilterModalTests extends TestBase {
         novostroykiPage.verifyResultSearchByFilterHousingClass(housingClass + " класс");
         novostroykiPage.verifyNotificationIndicator(numberOfFiltersSelected);
     }
-
 }
+
+

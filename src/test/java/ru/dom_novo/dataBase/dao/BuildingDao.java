@@ -57,5 +57,15 @@ public class BuildingDao {
         else
             return 0;
     }
+    public static List<Integer> selectDistinctHouseId(int building_id){
+        return jdbcTemplate.queryForList("select  distinct house_id from flats where building_id=? and status=1", Integer.class, building_id);
+    }
+    public static String selectRealiseDate(int building_id){
+        return jdbcTemplate.queryForObject("select  JSON_VALUE (data_json, \"$.properties.204.values.*\") from buildings where id=?", String.class, building_id);
+    }
+
+    public static List<Integer> selectHouseId (int building_id){
+        return jdbcTemplate.queryForList("select id from buildings where parent_id=?", Integer.class, building_id);
+    }
 }
 
