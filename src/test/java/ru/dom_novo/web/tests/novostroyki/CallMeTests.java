@@ -1,5 +1,6 @@
 package ru.dom_novo.web.tests.novostroyki;
 
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
@@ -9,7 +10,6 @@ import ru.dom_novo.web.pages.NovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
-
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("CallbackPhone")
