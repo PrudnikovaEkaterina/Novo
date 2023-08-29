@@ -3,6 +3,9 @@ package ru.dom_novo.api.steps.cardNovostroykiApiSteps;
 import io.qameta.allure.Step;
 import ru.dom_novo.api.models.buildingModels.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 
 import static ru.dom_novo.api.specifications.Specification.requestSpec;
@@ -42,4 +45,12 @@ public class CardNovostroykiApiSteps {
                 .extract().path("data.release.year");
     }
 
+    @Step("Получить год сдачи ЖК")
+    public static List<StationModel> getStationList (RootModel data) {
+        List<StationModel> list = new ArrayList<>();
+        if (data.getData().getNear() != null) {
+           list = data.getData().getNear().getStations();
+        }
+        return list;
+    }
 }

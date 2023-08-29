@@ -11,16 +11,22 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import ru.dom_novo.api.enumsApi.ReleaseDateEnum;
 import ru.dom_novo.api.enumsApi.RenovationEnum;
+import ru.dom_novo.api.models.buildingModels.*;
+import ru.dom_novo.api.models.sitemap.geo.RootSitemapGeoModel;
 import ru.dom_novo.api.steps.moreFilterModalApiSteps.MoreFilterModalApiSteps;
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.FlatService;
 import ru.dom_novo.regexp.RegexpMeth;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.qameta.allure.Allure.step;
+import static io.restassured.RestAssured.given;
+import static ru.dom_novo.api.specifications.Specification.requestSpec;
 
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
@@ -120,8 +126,7 @@ public class MoreFilterModalApiTests {
             if (!listDistinctHouseId.contains(null)) {
                 MoreFilterModalApiSteps.getAndVerifyReleaseStateList(listDistinctHouseId, releaseStateFirst, releaseStateSecond, releaseStateThird);
                 MoreFilterModalApiSteps.getAndVerifyReleaseDateList(listDistinctHouseId, expectedReleaseDate);
-            }
-            else {
+            } else {
                 String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(integer);
                 System.out.println(releaseDateValue);
                 String releaseStateValue = MoreFilterModalApiSteps.getReleaseState(integer);
@@ -136,13 +141,13 @@ public class MoreFilterModalApiTests {
     @EnumSource(ReleaseDateEnum.class)
     void searchWithFilterReleaseDateAndVerifyResult(ReleaseDateEnum releaseDateEnum) {
         String releaseDate = releaseDateEnum.name;
-        int year = Integer.parseInt(releaseDate.substring(0,4));
+        int year = Integer.parseInt(releaseDate.substring(0, 4));
         int quarter = Integer.parseInt(releaseDate.substring(4));
         String expectedValue = "Сдан";
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
         for (Integer integer : listBuildingId) {
             List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(integer);
-            if (!listDistinctHouseId.contains(null)){
+            if (!listDistinctHouseId.contains(null)) {
                 List<String> listReleaseDate = new ArrayList<>();
                 for (Integer value : listDistinctHouseId) {
                     String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
@@ -152,20 +157,20 @@ public class MoreFilterModalApiTests {
                     if (listReleaseDate.stream().noneMatch(el -> el.contains(expectedValue))) {
                         List<List<Integer>> collect = listReleaseDate.stream().map(RegexpMeth::getListNumbersFromString).collect(Collectors.toList());
                         System.out.println(collect);
-                        if(collect.stream().noneMatch(el ->el.get(1) < year)){
-                            Assertions.assertTrue(collect.stream().filter(el->el.get(1)==year).anyMatch(el->el.get(0)<=quarter));
+                        if (collect.stream().noneMatch(el -> el.get(1) < year)) {
+                            Assertions.assertTrue(collect.stream().filter(el -> el.get(1) == year).anyMatch(el -> el.get(0) <= quarter));
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(integer);
-                if (!releaseDateValue.contains(expectedValue)){
+                if (!releaseDateValue.contains(expectedValue)) {
                     List<Integer> numbers = RegexpMeth.getListNumbersFromString(releaseDateValue);
-                    Assertions.assertTrue(numbers.get(0)<=quarter&&numbers.get(1)<=year);
+                    Assertions.assertTrue(numbers.get(0) <= quarter && numbers.get(1) <= year);
                 }
             }
         }
 
     }
+
 }

@@ -6,6 +6,7 @@ import ru.dom_novo.dataBase.DataSourceProvider;
 import ru.dom_novo.dataBase.entities.buildingEntities.BuildingEntity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BuildingDao {
 
@@ -67,5 +68,13 @@ public class BuildingDao {
     public static List<Integer> selectHouseId (int building_id){
         return jdbcTemplate.queryForList("select id from buildings where parent_id=?", Integer.class, building_id);
     }
+
+    public static List<Integer> selectDistinctBuildingIdFromFlats() {
+    return jdbcTemplate.queryForList("SELECT DISTINCT f.building_id from flats f JOIN buildings b ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
+
+
+
+    }
+
 }
 
