@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class CallMeWidgetComponent {
     private final SelenideElement
-            PHONE_INPUT = $x("//input[@name='phone']"),
+            PHONE_INPUT = $("[placeholder='+7']"),
             CALLBACK_PHONE_MODAL_TITLE = $(".callback-phone-modal__title"),
             CALL_ME_BUTTON = $(".call-me__text"),
             PHONE_THANKS_MODAL_TITLE = $(".phone-thanks-modal__title");
@@ -32,6 +32,10 @@ public class CallMeWidgetComponent {
 
     public void verifyPhoneThanksModalTitle(String phoneThanksModalTitle) {
         Assertions.assertEquals(phoneThanksModalTitle, PHONE_THANKS_MODAL_TITLE.getText());
+    }
+
+    public String getPhoneInputValue() {
+       return PHONE_INPUT.getValue();
     }
 
 }

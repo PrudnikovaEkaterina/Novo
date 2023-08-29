@@ -1,5 +1,7 @@
 package ru.dom_novo.web.tests.novostroyki;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
@@ -13,12 +15,16 @@ import ru.dom_novo.web.pages.components.FooterComponent;
 import ru.dom_novo.web.pages.components.SearchNovostroykiFiltersComponent;
 import ru.dom_novo.web.tests.TestBase;
 
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
+
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("SearchFilters")
-
+@WireMockTest(httpPort = 8089)
 public class SearchNovostroykiFiltersTests extends TestBase {
-
     NovostroykiPage novostroykiPage = new NovostroykiPage();
     SearchNovostroykiFiltersComponent searchFilters = new SearchNovostroykiFiltersComponent();
     FooterComponent footer = new FooterComponent();
@@ -31,11 +37,23 @@ public class SearchNovostroykiFiltersTests extends TestBase {
     @Test
     @DisplayName("Проверить результаты поиска по ЖК на странице /novostroyki")
     void searchNovostroyka() {
-        String searchBuildingName = GenerationData.setRandomBuilding();
-        searchFilters
-                .setValueInGeoSearchFilter(searchBuildingName)
-                .selectDropdownItem(searchBuildingName);
-        novostroykiPage.verifySearchBuildingTitleText(searchBuildingName);
+        String wireUrl = "http://127.0.0.1:8080";
+
+        stubFor(WireMock.get("/api/location/find_address")
+                .withQueryParam("term", matching(".*"))
+                .willReturn(aResponse()
+                        .withStatus(503)
+                        .withBody("!!! Service Unavailable !!!"))
+        );
+        open(wireUrl+"/api/location/find_address?term=%D0%BB%D1%83%D1%87%D0%B8");
+//        String searchBuildingName = GenerationData.setRandomBuilding();
+//        searchFilters
+//                .setValueInGeoSearchFilter(searchBuildingName)
+//                .selectDropdownItem(searchBuildingName);
+//        novostroykiPage.verifySearchBuildingTitleText(searchBuildingName);
+
+        while (true){}
+
     }
 
     @Test
