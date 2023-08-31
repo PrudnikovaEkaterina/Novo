@@ -10,6 +10,8 @@ import ru.dom_novo.web.pages.AuthPage;
 import ru.dom_novo.web.pages.components.HeaderComponent;
 import ru.dom_novo.web.tests.TestBase;
 
+import static com.codeborne.selenide.Selenide.open;
+
 @Tag("Web")
 @Story("Auth")
 @Owner("PrudnikovaEkaterina")
