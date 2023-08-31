@@ -17,4 +17,5 @@ public class BuildingDto {
     private String releaseDate;
     private ReleaseModel release;
     private List<DocumentModel> documents;
+    private LocationModel location;
 }

@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Datum {
-    public String type;
-    public int id;
-    public String title;
+public class DatumSitemapGeoModel {
+    private String type;
+    private int id;
+    private String title;
     @JsonProperty("title_eng")
-    public String titleEng;
+    private String titleEng;
 }

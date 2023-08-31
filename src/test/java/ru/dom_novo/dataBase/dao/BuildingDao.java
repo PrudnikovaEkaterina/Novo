@@ -1,12 +1,11 @@
 package ru.dom_novo.dataBase.dao;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.dom_novo.dataBase.DataSourceProvider;
 import ru.dom_novo.dataBase.entities.buildingEntities.BuildingEntity;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class BuildingDao {
 
@@ -61,20 +60,32 @@ public class BuildingDao {
     public static List<Integer> selectDistinctHouseId(int building_id){
         return jdbcTemplate.queryForList("select  distinct house_id from flats where building_id=? and status=1", Integer.class, building_id);
     }
-    public static String selectRealiseDate(int building_id){
-        return jdbcTemplate.queryForObject("select  JSON_VALUE (data_json, \"$.properties.204.values.*\") from buildings where id=?", String.class, building_id);
-    }
-
-    public static List<Integer> selectHouseId (int building_id){
-        return jdbcTemplate.queryForList("select id from buildings where parent_id=?", Integer.class, building_id);
-    }
 
     public static List<Integer> selectDistinctBuildingIdFromFlats() {
     return jdbcTemplate.queryForList("SELECT DISTINCT f.building_id from flats f JOIN buildings b ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
-
-
-
     }
+
+    public static List<String> selectDistinctBuildingTitleEng() {
+        return jdbcTemplate.queryForList("SELECT DISTINCT b.title_eng from buildings b JOIN flats f ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", String.class);
+    }
+
+    public static List<Integer> selectDistinctBuildingGarObjectId() {
+        return jdbcTemplate.queryForList("SELECT DISTINCT b.gar_object_id from buildings b JOIN flats f ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
+    }
+    public static List<String> selectPathFromGarMunHierarchy(int garObjectId) {
+        return jdbcTemplate.queryForList("select  PATH from gar_MUN_HIERARCHY where OBJECTID=?", String.class, garObjectId);
+    }
+    public static String selectTitleEngFromGarAddressObjects(String garObjectId) {
+//        обернула в блок try/catch так как запрос может не возвращать title_eng (не выполнится условие level<=5),
+//        чтобы избежать EmptyResultDataAccessException и возвращать null
+        try {
+            return jdbcTemplate.queryForObject("select  title_eng from gar_ADDRESSOBJECTS where OBJECTID=? and level<=5", String.class, garObjectId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+
 
 }
 
