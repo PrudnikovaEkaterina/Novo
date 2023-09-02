@@ -84,6 +84,9 @@ public class BuildingDao {
             return null;
         }
     }
+    public static int selectCountFromFlatsWhereHouseIdIsNull (int buildingId) {
+       return jdbcTemplate.queryForObject("select count(*) from flats where building_id = ? and status=1 and house_id is null;", Integer.class, buildingId);
+    }
 
 
 

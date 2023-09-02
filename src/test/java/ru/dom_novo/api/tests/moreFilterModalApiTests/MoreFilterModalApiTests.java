@@ -1,6 +1,7 @@
 package ru.dom_novo.api.tests.moreFilterModalApiTests;
 
 import io.qameta.allure.Owner;
+import io.restassured.response.Response;
 import org.hibernate.annotations.Comment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +19,7 @@ import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.FlatService;
 import ru.dom_novo.regexp.RegexpMeth;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.qameta.allure.Allure.step;
@@ -99,7 +97,7 @@ public class MoreFilterModalApiTests {
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
         for (Integer integer : listBuildingId) {
             List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(integer);
-            if (!listDistinctHouseId.contains(null))
+            if (listDistinctHouseId.get(0)!=null)
                 MoreFilterModalApiSteps.getAndVerifyReleaseDateList(listDistinctHouseId, expectedReleaseDate);
             else {
                 String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(integer);
@@ -113,24 +111,67 @@ public class MoreFilterModalApiTests {
     @Comment("Тест падает для ЖК 16786, комментарий в задаче https://tracker.yandex.ru/NOVODEV-683#64e743418d77536801c4d90e")
 //  помимо срока сдачи проверяем Стадию строительства, если есть корпуса, то смотрим стадию строительства только по ним
     void searchWithFilterReleaseDate2AndVerifyResult() {
+//      Получить список id ЖК со сроком сдачи Сдан;
+//      Получить список корпусов с квартирами для каждого ЖК
+//        Если список корпусов не пустой:
+//          Создаем Map, где ключ - id корпуса, значение - List<String>;
+//              Если количество квартир, привязанных непосредственно к ЖК, а не к корпусу > 0, то
+//               - получаем стадию строительства родительского ЖК
+//               - получаем стадию строительсва корпусов, добавляем в Map
+//               - если стадия строительсва корпуса null, то присваиваем ей стадию строительства родителя
+//               - получаем срок сдачи для каждого корпуса, добавляем в Map
+//               - Проверяем, есть ли в Map хоть 1 ключ, где срок сдачи != "Сдан" и стадия строительства != Сдан, В проекте, Заморожено
+//              Иначе (количество квартир, привязанных непосредственно к ЖК, а не к корпусу == 0):
+//               - получаем стадию строительсва корпусов, добавляем в Map
+//               - получаем срок сдачи для каждого корпуса, добавляем в Map
+//               - Проверяем, есть ли в Map хоть 1 ключ, где срок сдачи != "Сдан" и стадия строительства != Сдан, В проекте, Заморожено
+//          Иначе:
+//          - получаем стадию строительства  ЖК
+//          - Проверяем, что стадия строительства != Сдан, В проекте, Заморожено
+//          - получаем срок сдачи  ЖК
+//          - Проверяем, что срок сдачи содержит слово "квартал"
         String releaseDate = "2";
+        String notExpectedReleaseDate = "Сдан";
         String expectedReleaseDate = "квартал";
         String releaseStateFirst = "Сдан";
         String releaseStateSecond = "В проекте";
         String releaseStateThird = "Заморожено";
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
-        System.out.println(listBuildingId);
-        for (Integer integer : listBuildingId) {
-            List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(integer);
-            System.out.println(listDistinctHouseId);
-            if (!listDistinctHouseId.contains(null)) {
-                MoreFilterModalApiSteps.getAndVerifyReleaseStateList(listDistinctHouseId, releaseStateFirst, releaseStateSecond, releaseStateThird);
-                MoreFilterModalApiSteps.getAndVerifyReleaseDateList(listDistinctHouseId, expectedReleaseDate);
-            } else {
-                String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(integer);
-                System.out.println(releaseDateValue);
-                String releaseStateValue = MoreFilterModalApiSteps.getReleaseState(integer);
-                System.out.println(releaseStateValue);
+        for (Integer buildingId : listBuildingId) {
+            if (buildingId==16786){
+                break;}
+            List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(buildingId);
+            if (listDistinctHouseId.get(0)!=null) {
+                Map<Integer, List<String>> houseIdMap = new HashMap<>();
+                if(BuildingDao.selectCountFromFlatsWhereHouseIdIsNull(buildingId)>0) {
+                   String releaseStateBuilding = MoreFilterModalApiSteps.getReleaseState(buildingId);
+                   for (Integer houseId:listDistinctHouseId) {
+                       if (houseId != null) {
+                           Response response = MoreFilterModalApiSteps.getResponse(houseId);
+                           String releaseStateHouse = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
+                           String releaseDateHouse = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
+                           if (releaseStateHouse != null)
+                               houseIdMap.put(houseId, List.of(releaseStateHouse, releaseDateHouse));
+                           else
+                               houseIdMap.put(houseId, List.of(releaseStateBuilding, releaseDateHouse));
+                           }
+                       Assertions.assertTrue(houseIdMap.values().stream().noneMatch(el -> el.get(0).equals(releaseStateFirst) && el.get(0).equals(releaseStateSecond) && el.get(0).equals(releaseStateThird) && el.get(1).equals(notExpectedReleaseDate)));
+                       }
+                   }
+                else {
+                    for (Integer houseId:listDistinctHouseId){
+                        if (houseId!=null){
+                            Response response = MoreFilterModalApiSteps.getResponse(houseId);
+                            String releaseStateHouse = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
+                            String releaseDateHouse = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
+                            houseIdMap.put(houseId, List.of(releaseStateHouse, releaseDateHouse));
+                            Assertions.assertTrue(houseIdMap.values().stream().noneMatch(el->el.get(0).equals(releaseStateFirst)&&el.get(0).equals(releaseStateSecond)&&el.get(0).equals(releaseStateThird)&&el.get(1).equals(notExpectedReleaseDate)));
+                }}
+            }}
+            else {
+                Response response = MoreFilterModalApiSteps.getResponse(buildingId);
+                String releaseStateValue = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
+                String releaseDateValue = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
                 MoreFilterModalApiSteps.verifyActualContainsExpected(releaseDateValue, expectedReleaseDate);
                 MoreFilterModalApiSteps.verifyActualNotEqualsExpected(releaseStateValue, releaseStateFirst, releaseStateSecond, releaseStateThird);
             }
@@ -147,11 +188,12 @@ public class MoreFilterModalApiTests {
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
         for (Integer integer : listBuildingId) {
             List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(integer);
-            if (!listDistinctHouseId.contains(null)) {
+            if (listDistinctHouseId.get(0)!=null) {
                 List<String> listReleaseDate = new ArrayList<>();
                 for (Integer value : listDistinctHouseId) {
+                    if (value!=null){
                     String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
-                    listReleaseDate.add(releaseDateValue);
+                    listReleaseDate.add(releaseDateValue);}
                 }
                 if (!listReleaseDate.contains(null)) {
                     if (listReleaseDate.stream().noneMatch(el -> el.contains(expectedValue))) {

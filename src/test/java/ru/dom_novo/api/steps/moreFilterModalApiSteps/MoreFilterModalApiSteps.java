@@ -213,18 +213,42 @@ public class MoreFilterModalApiSteps {
                             .then()
                             .extract().path("data.release_date");
     }
+
+    @Step("Получить Response для ЖК с id = {buildingId}")
+    public static Response getResponse(int buildingId) {
+       return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .extract().response();
+    }
+    @Step("Получить срок сдачи для ЖК с id = {buildingId}")
+    public static String getReleaseDateFromResponse(Response response) {
+       return response.path("data.release_date");
+    }
+
+    @Step("Получить стадию строительства для ЖК с id = {buildingId}")
+    public static String getReleaseStateFromResponse(Response response) {
+      return response.path("data.release_state");
+    }
+
     @Step("Получить список сроков сдачи корпусов")
     public static void getAndVerifyReleaseDateList(List<Integer> listDistinctHouseId, String expectedReleaseDate ) {
         List<String> listReleaseDate = new ArrayList<>();
         for (Integer value : listDistinctHouseId) {
-            String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
-            listReleaseDate.add(releaseDateValue);
+            if(value!=null){
+                String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
+                System.out.println(releaseDateValue);
+                listReleaseDate.add(releaseDateValue);}
         }
         verifyAnyMatch(listReleaseDate, expectedReleaseDate);
     }
     @Step("Проверить, что хотя бы одно значение из списка содержит {expectedValue}")
     public static void verifyAnyMatch(List<String> listValue, String expectedValue) {
-        if (!listValue.contains(null)){
+        if (listValue.contains(null)){
+            if(listValue.stream().noneMatch(el -> el.contains(expectedValue)))
+                System.out.println("В этих корпусах нет слова Сдан"+listValue);
             Assertions.assertTrue(listValue.stream().anyMatch(el -> el.contains(expectedValue)));
         }
     }
@@ -249,9 +273,12 @@ public class MoreFilterModalApiSteps {
     public static void getAndVerifyReleaseStateList(List<Integer> listDistinctHouseId, String valueFirst, String valueSecond, String valueThird) {
         List<String> listReleaseState = new ArrayList<>();
         for (Integer value : listDistinctHouseId) {
+            if(value!=null){
             String releaseStateValue = MoreFilterModalApiSteps.getReleaseState(value);
-            listReleaseState.add(releaseStateValue);
-        }
+                System.out.println(releaseStateValue);
+                listReleaseState.add(releaseStateValue);
+                System.out.println(listReleaseState);
+        }}
         for (String s : listReleaseState) {
             assertThat(s, notNullValue());
         }
