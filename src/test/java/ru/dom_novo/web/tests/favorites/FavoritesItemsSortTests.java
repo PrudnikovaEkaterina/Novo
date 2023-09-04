@@ -24,22 +24,15 @@ import static org.hamcrest.Matchers.is;
 public class FavoritesItemsSortTests extends TestBase {
 
     FavoritesPage favoritesPage = new FavoritesPage();
-
-    String phoneNumber = GenerationData.setRandomUserPhone();
     String sort;
-
-    @BeforeEach
-    void beforeEach() throws InterruptedException {
-        Selenide.sleep(5000);
-//        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
-        favoritesPage
-                .openMePageWithApiAuth(phoneNumber)
-                .checkFavoritesHeaderTitle();
-    }
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена по возрастанию на странице Мое избранное")
-    void checkSortFavoritesPriceAsc() {
+    void checkSortFavoritesPriceAsc() throws InterruptedException {
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        favoritesPage
+                .openMePageWithApiAuth(phoneNumber)
+                .checkFavoritesHeaderTitle();
         sort = "Цена по возрастанию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceAsc(userId);
@@ -49,7 +42,11 @@ public class FavoritesItemsSortTests extends TestBase {
     }
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена по убыванию' на странице Мое избранное")
-    void checkSortFavoritesPriceDesc() {
+    void checkSortFavoritesPriceDesc() throws InterruptedException {
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        favoritesPage
+                .openMePageWithApiAuth(phoneNumber)
+                .checkFavoritesHeaderTitle();
         sort = "Цена по убыванию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceDesc(userId);
@@ -61,7 +58,11 @@ public class FavoritesItemsSortTests extends TestBase {
     @Test
     @DisplayName("Проверить сортировку ЖК 'Площадь по возрастанию' на странице Мое избранное")
     @Link("Тест падает для пользователя 79085040794, 79994817999 так как некоторые ЖК имеют одинаковую min(fl.area_total, в итоге выводятся в разной последовательности")
-    void checkSortFavoritesAreaAsc() {
+    void checkSortFavoritesAreaAsc() throws InterruptedException {
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        favoritesPage
+                .openMePageWithApiAuth(phoneNumber)
+                .checkFavoritesHeaderTitle();
         sort = "Площадь по возрастанию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortAreaAsc(userId);
@@ -74,7 +75,11 @@ public class FavoritesItemsSortTests extends TestBase {
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Площадь по убыванию' на странице Мое избранное")
-    void checkSortFavoritesAreaDesc() {
+    void checkSortFavoritesAreaDesc() throws InterruptedException {
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        favoritesPage
+                .openMePageWithApiAuth(phoneNumber)
+                .checkFavoritesHeaderTitle();
         sort = "Площадь по убыванию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortAreaDesc(userId);
@@ -85,7 +90,11 @@ public class FavoritesItemsSortTests extends TestBase {
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена за м2 - по возрастанию' на странице Мое избранное")
-    void checkSortFavoritesPriceM2Asc() {
+    void checkSortFavoritesPriceM2Asc() throws InterruptedException {
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        favoritesPage
+                .openMePageWithApiAuth(phoneNumber)
+                .checkFavoritesHeaderTitle();
         sort = "Цена за м2 - по возрастанию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceM2Asc(userId);
@@ -96,7 +105,11 @@ public class FavoritesItemsSortTests extends TestBase {
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена за м2 - по убыванию' на странице Мое избранное")
-    void checkSortFavoritesPriceM2Desc() {
+    void checkSortFavoritesPriceM2Desc() throws InterruptedException {
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        favoritesPage
+                .openMePageWithApiAuth(phoneNumber)
+                .checkFavoritesHeaderTitle();
         sort = "Цена за м2 - по убыванию";
         int userId = MeApiSteps.getUserId(phoneNumber);
         List<String> listSortExpected = FavoritesDao.selectFavoritesBuildingsSortPriceM2Desc(userId);

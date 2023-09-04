@@ -3,6 +3,7 @@ package ru.dom_novo.web.tests.header;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
+import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.MainPage;
 import ru.dom_novo.web.pages.components.HeaderComponent;
 import ru.dom_novo.web.tests.TestBase;
@@ -14,7 +15,7 @@ public class HeaderFavoriteTests extends TestBase {
     @Test
     @DisplayName("Отображение в header иконки Избранное для авторизованного пользователя")
     void checkVisibleFavoritesIconForAuthorizedUser () {
-        String phoneNumber = "72342123122";
+        String phoneNumber = GenerationData.setRandomPhoneNumber();
         mainPage.openMainPageWithApiAuth(phoneNumber);
         headerComponent.checkVisibleFavoritesIconForAuthorizedUser();
     }
@@ -22,7 +23,7 @@ public class HeaderFavoriteTests extends TestBase {
     @Test
     @DisplayName("Отображение в header текста Избранное для авторизованного пользователя")
     void checkVisibleFavoritesTextForAuthorizedUser () {
-        String phoneNumber = "79295690868";
+        String phoneNumber = GenerationData.setRandomPhoneNumber();
         mainPage.openMainPageWithApiAuth(phoneNumber);
         headerComponent.checkFavoritesText();
     }
@@ -30,7 +31,7 @@ public class HeaderFavoriteTests extends TestBase {
     @Test
     @DisplayName("Проверка отображения в header счетчика Избранного и его значения для авторизованного пользователя")
     void checkVisibleFavoritesCounterForAuthorizedUser () {
-        String phoneNumber = "79085040794";
+        String phoneNumber = GenerationData.setRandomPhoneNumber();
         int favoritesCounter = MeApiSteps.getFavoritesCounterForAuthUser(phoneNumber);
         if (favoritesCounter!=0){
             mainPage.openMainPageWithApiAuth(phoneNumber);

@@ -13,6 +13,8 @@ import ru.dom_novo.web.pages.components.FooterComponent;
 import ru.dom_novo.web.pages.components.SearchNovostroykiFiltersComponent;
 import ru.dom_novo.web.tests.TestBase;
 
+import static com.codeborne.selenide.Selenide.sleep;
+
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("SearchFilters")
@@ -84,6 +86,7 @@ public class SearchNovostroykiFiltersTests extends TestBase {
     void setFilterRoomsAndVerifyResultSearch(RoomEnum roomEnum) {
         String rooms = roomEnum.name;
         searchFilters.clickCheckboxFilterRooms(rooms);
+        sleep(1000);
         novostroykiPage.verifyResultSearchByFilterRooms(rooms);
     }
 

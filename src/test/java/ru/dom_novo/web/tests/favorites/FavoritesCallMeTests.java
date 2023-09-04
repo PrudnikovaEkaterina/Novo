@@ -19,7 +19,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class FavoritesCallMeTests extends TestBase {
     FavoritesPage favoritesPage = new FavoritesPage();
     CallMeWidgetComponent callMeWidgetComponent = new CallMeWidgetComponent();
-    String phoneNumber = GenerationData.setRandomUserPhone();
+    String phoneNumber = GenerationData.setRandomPhoneNumber();
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
