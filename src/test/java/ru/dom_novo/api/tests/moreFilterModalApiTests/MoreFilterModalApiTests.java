@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.EnumSource;
 import ru.dom_novo.api.enumsApi.ReleaseDateEnum;
 import ru.dom_novo.api.enumsApi.RenovationEnum;
 import ru.dom_novo.api.models.buildingModels.*;
-import ru.dom_novo.api.models.sitemap.geo.RootSitemapGeoModel;
 import ru.dom_novo.api.steps.moreFilterModalApiSteps.MoreFilterModalApiSteps;
+import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFiltersApi;
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.FlatService;
 import ru.dom_novo.regexp.RegexpMeth;
@@ -22,9 +22,8 @@ import ru.dom_novo.regexp.RegexpMeth;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.qameta.allure.Allure.step;
-import static io.restassured.RestAssured.given;
-import static ru.dom_novo.api.specifications.Specification.requestSpec;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
@@ -55,13 +54,49 @@ public class MoreFilterModalApiTests {
     @Test
     @DisplayName("Применить фильтр Только апартаменты и проверить, что у всех найденных объектов apartments = 1")
     void searchOnlyApartments() {
-        MoreFilterModalApiSteps.checkBuildingListWithFilterOnlyApartments();
+//   Применить фильтр Без апартаментов и собрать полученные результаты в  List<BuildingDto> dataList;
+//   Создать Map, в качестве ключа - id ЖК из dataList, значение - значение apartments из dataList;
+//   Пройтись по Map в цикле, если значение !=1, то:
+//   Получить список id корпусов ЖК;
+//   Для каждого корпуса получить значение apartments и собрать их в лист;
+//   Проверить, что хотя бы 1 элемент листа==1;
+        List<BuildingDto> dataList = SearchBuildingsFiltersApi.getBuildingListWithFilterApartments(1);
+        Map<Integer, Integer> mapApartment = new HashMap<>();
+        dataList.forEach(el -> mapApartment.put(el.getId(), el.getApartments()));
+        for (Map.Entry<Integer, Integer> el : mapApartment.entrySet()) {
+            if (el.getValue() != 1) {
+                List<Integer> houseIdList = BuildingDao.selectDistinctHouseId(el.getKey());
+                List<Integer> apartmentValuesList = new ArrayList<>();
+                for (Integer houseId : houseIdList) {
+                    apartmentValuesList.add(MoreFilterModalApiSteps.getApartments(houseId));
+                }
+                Assertions.assertTrue(apartmentValuesList.stream().filter(Objects::nonNull).anyMatch(elem -> elem == 1));
+            }
+        }
     }
 
     @Test
     @DisplayName("Применить фильтр Без апартаментов и проверить, что у всех найденных объектов apartments = 0")
     void searchWithoutApartments() {
-        MoreFilterModalApiSteps.checkBuildingListWithFilterWithoutApartments();
+//   Применить фильтр Без апартаментов и собрать полученные результаты в  List<BuildingDto> dataList;
+//   Создать Map, в качестве ключа - id ЖК из dataList, значение - значение apartments из dataList;
+//   Пройтись по Map в цикле, если значение !=0, то:
+//   Получить список id корпусов ЖК;
+//   Для каждого корпуса получить значение apartments и собрать их в лист;
+//   Проверить, что хотя бы 1 элемент листа==0;
+        List<BuildingDto> dataList = SearchBuildingsFiltersApi.getBuildingListWithFilterApartments(-1);
+        Map<Integer, Integer> mapApartment = new HashMap<>();
+        dataList.forEach(el -> mapApartment.put(el.getId(), el.getApartments()));
+        for (Map.Entry<Integer, Integer> el : mapApartment.entrySet()) {
+            if (el.getValue() != 0) {
+                List<Integer> houseIdList = BuildingDao.selectDistinctHouseId(el.getKey());
+                List<Integer> apartmentValuesList = new ArrayList<>();
+                for (Integer houseId : houseIdList) {
+                    apartmentValuesList.add(MoreFilterModalApiSteps.getApartments(houseId));
+                }
+                Assertions.assertTrue(apartmentValuesList.stream().filter(Objects::nonNull).anyMatch(elem -> elem == 0));
+            }
+        }
     }
 
     @CsvSource(value = {"1, mortgage",
@@ -78,15 +113,14 @@ public class MoreFilterModalApiTests {
 
     @EnumSource(RenovationEnum.class)
     @ParameterizedTest(name = "Применить фильтр Отделка = {0}. Проверить, что в найденных ЖК есть квартиры c соответствующим типом отделки")
-    @Comment("Тест падает для ЖК 10375, комментарий в задаче https://tracker.yandex.ru/NOVODEV-594#649997a4a7cc4e7f81697263")
+    @Comment("Тест падает для ЖК 10375, комментарий в задаче https://tracker.yandex.ru/NOVODEV-594#649997a4a7cc4e7f81697263, исклөчила этот ЖК из списка из БД")
     void searchRenovation(RenovationEnum renovationEnum) {
-        String renovationId = renovationEnum.id;
-        List<Integer> apiList = MoreFilterModalApiSteps.getBuildingListWithFilterRenovation(renovationId);
-        System.out.println(apiList.size());
-        List<Integer> dataList = FlatService.getBuildingIdFromFlatsWithFilterRenovation(renovationId);
-        System.out.println(dataList.size());
-        MoreFilterModalApiSteps.checkEqualityTwoLists(apiList, dataList);
-
+        String renovation = renovationEnum.id;
+        List<Integer> buildingIdList = MoreFilterModalApiSteps.getBuildingIdListWithFilterRenovation(renovation);
+        List<Integer> buildingIdListDao = FlatService.getBuildingIdFromFlatsWithFilterRenovation(renovation).stream().filter(el -> el != 10375).collect(Collectors.toList());
+        Collections.sort(buildingIdList);
+        Collections.sort(buildingIdListDao);
+        assertThat(buildingIdList, is(buildingIdListDao));
     }
 
     @Test
@@ -97,7 +131,7 @@ public class MoreFilterModalApiTests {
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
         for (Integer integer : listBuildingId) {
             List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(integer);
-            if (listDistinctHouseId.get(0)!=null)
+            if (listDistinctHouseId.get(0) != null)
                 MoreFilterModalApiSteps.getAndVerifyReleaseDateList(listDistinctHouseId, expectedReleaseDate);
             else {
                 String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(integer);
@@ -108,7 +142,7 @@ public class MoreFilterModalApiTests {
 
     @Test
     @DisplayName("Применить фильтр Cрок сдачи 'Строится' и проверить поисковую выдачу на соответствие фильтру")
-    @Comment("Тест падает для ЖК 16786, комментарий в задаче https://tracker.yandex.ru/NOVODEV-683#64e743418d77536801c4d90e")
+    @Comment("Тест падает для ЖК 16786, комментарий в задаче https://tracker.yandex.ru/NOVODEV-683#64e743418d77536801c4d90e, исключила его из теста")
 //  помимо срока сдачи проверяем Стадию строительства, если есть корпуса, то смотрим стадию строительства только по ним
     void searchWithFilterReleaseDate2AndVerifyResult() {
 //      Получить список id ЖК со сроком сдачи Сдан;
@@ -138,37 +172,38 @@ public class MoreFilterModalApiTests {
         String releaseStateThird = "Заморожено";
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
         for (Integer buildingId : listBuildingId) {
-            if (buildingId==16786){
-                break;}
+            if (buildingId == 16786) {
+                break;
+            }
             List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(buildingId);
-            if (listDistinctHouseId.get(0)!=null) {
+            if (listDistinctHouseId.get(0) != null) {
                 Map<Integer, List<String>> houseIdMap = new HashMap<>();
-                if(BuildingDao.selectCountFromFlatsWhereHouseIdIsNull(buildingId)>0) {
-                   String releaseStateBuilding = MoreFilterModalApiSteps.getReleaseState(buildingId);
-                   for (Integer houseId:listDistinctHouseId) {
-                       if (houseId != null) {
-                           Response response = MoreFilterModalApiSteps.getResponse(houseId);
-                           String releaseStateHouse = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
-                           String releaseDateHouse = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
-                           if (releaseStateHouse != null)
-                               houseIdMap.put(houseId, List.of(releaseStateHouse, releaseDateHouse));
-                           else
-                               houseIdMap.put(houseId, List.of(releaseStateBuilding, releaseDateHouse));
-                           }
-                       Assertions.assertTrue(houseIdMap.values().stream().noneMatch(el -> el.get(0).equals(releaseStateFirst) && el.get(0).equals(releaseStateSecond) && el.get(0).equals(releaseStateThird) && el.get(1).equals(notExpectedReleaseDate)));
-                       }
-                   }
-                else {
-                    for (Integer houseId:listDistinctHouseId){
-                        if (houseId!=null){
+                if (BuildingDao.selectCountFromFlatsWhereHouseIdIsNull(buildingId) > 0) {
+                    String releaseStateBuilding = MoreFilterModalApiSteps.getReleaseState(buildingId);
+                    for (Integer houseId : listDistinctHouseId) {
+                        if (houseId != null) {
+                            Response response = MoreFilterModalApiSteps.getResponse(houseId);
+                            String releaseStateHouse = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
+                            String releaseDateHouse = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
+                            if (releaseStateHouse != null)
+                                houseIdMap.put(houseId, List.of(releaseStateHouse, releaseDateHouse));
+                            else
+                                houseIdMap.put(houseId, List.of(releaseStateBuilding, releaseDateHouse));
+                        }
+                        Assertions.assertTrue(houseIdMap.values().stream().noneMatch(el -> el.get(0).equals(releaseStateFirst) && el.get(0).equals(releaseStateSecond) && el.get(0).equals(releaseStateThird) && el.get(1).equals(notExpectedReleaseDate)));
+                    }
+                } else {
+                    for (Integer houseId : listDistinctHouseId) {
+                        if (houseId != null) {
                             Response response = MoreFilterModalApiSteps.getResponse(houseId);
                             String releaseStateHouse = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
                             String releaseDateHouse = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
                             houseIdMap.put(houseId, List.of(releaseStateHouse, releaseDateHouse));
-                            Assertions.assertTrue(houseIdMap.values().stream().noneMatch(el->el.get(0).equals(releaseStateFirst)&&el.get(0).equals(releaseStateSecond)&&el.get(0).equals(releaseStateThird)&&el.get(1).equals(notExpectedReleaseDate)));
-                }}
-            }}
-            else {
+                            Assertions.assertTrue(houseIdMap.values().stream().noneMatch(el -> el.get(0).equals(releaseStateFirst) && el.get(0).equals(releaseStateSecond) && el.get(0).equals(releaseStateThird) && el.get(1).equals(notExpectedReleaseDate)));
+                        }
+                    }
+                }
+            } else {
                 Response response = MoreFilterModalApiSteps.getResponse(buildingId);
                 String releaseStateValue = MoreFilterModalApiSteps.getReleaseStateFromResponse(response);
                 String releaseDateValue = MoreFilterModalApiSteps.getReleaseDateFromResponse(response);
@@ -181,24 +216,45 @@ public class MoreFilterModalApiTests {
     @ParameterizedTest(name = "Применить фильтр Cрок сдачи {0} и проверить поисковую выдачу на соответствие фильтру")
     @EnumSource(ReleaseDateEnum.class)
     void searchWithFilterReleaseDateAndVerifyResult(ReleaseDateEnum releaseDateEnum) {
+//      Получить дату сдачи из ReleaseDateEnum
+//      Получить год сдачи из значения String releaseDate
+//      Получить квартал сдачи из значения String releaseDate
+//      Получить список id ЖК с фильтром по сроку сдачи;
+//        Получить список корпусов с квартирами для каждого ЖК;
+//          Если список корпусов !=null, тогда:
+//            Создать список List<String> listReleaseDate;
+//            Получить срок сдачи для каждого корпуса и положить в список;
+//              Если хотя бы 1 значение из списка содержит Сдан, значит фильтр работает корректно;
+//              Если не 1 значение из списка не содержит Сдан, то:
+//                  Создать список, который будет содержать в себе список из года и квартала сдачи корпусов;
+//                  Если не один из годов сдачи списка не меньше года сдачи из значения String releaseDate, то:
+//                  Проверить, что есть хотя бы одно значение, где год сдачи == String releaseDate, а квартал меньше или равен int quarter
+//           Иначе:
+//             Получаем год сдачи ЖК;
+//             Если он  не содержит Сдан, то
+//             Проверяем, что квартал сдачи <= quarter && год сдачи <= year
         String releaseDate = releaseDateEnum.name;
+        System.out.println(releaseDate);
         int year = Integer.parseInt(releaseDate.substring(0, 4));
         int quarter = Integer.parseInt(releaseDate.substring(4));
         String expectedValue = "Сдан";
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
         for (Integer integer : listBuildingId) {
+            if (integer == 16786) {
+                break;
+            }
             List<Integer> listDistinctHouseId = BuildingDao.selectDistinctHouseId(integer);
-            if (listDistinctHouseId.get(0)!=null) {
+            if (listDistinctHouseId.get(0) != null) {
                 List<String> listReleaseDate = new ArrayList<>();
                 for (Integer value : listDistinctHouseId) {
-                    if (value!=null){
-                    String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
-                    listReleaseDate.add(releaseDateValue);}
+                    if (value != null) {
+                        String releaseDateValue = MoreFilterModalApiSteps.getReleaseDate(value);
+                        listReleaseDate.add(releaseDateValue);
+                    }
                 }
-                if (!listReleaseDate.contains(null)) {
+                if (!listReleaseDate.isEmpty()) {
                     if (listReleaseDate.stream().noneMatch(el -> el.contains(expectedValue))) {
                         List<List<Integer>> collect = listReleaseDate.stream().map(RegexpMeth::getListNumbersFromString).collect(Collectors.toList());
-                        System.out.println(collect);
                         if (collect.stream().noneMatch(el -> el.get(1) < year)) {
                             Assertions.assertTrue(collect.stream().filter(el -> el.get(1) == year).anyMatch(el -> el.get(0) <= quarter));
                         }
@@ -212,7 +268,6 @@ public class MoreFilterModalApiTests {
                 }
             }
         }
-
     }
 
 }

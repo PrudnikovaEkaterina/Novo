@@ -18,4 +18,5 @@ public class BuildingDto {
     private ReleaseModel release;
     private List<DocumentModel> documents;
     private LocationModel location;
+    private Integer apartments;
 }

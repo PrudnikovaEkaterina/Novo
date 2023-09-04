@@ -80,23 +80,6 @@ public class MoreFilterModalApiSteps {
                 .body("data.apartments", everyItem(equalTo(1)));
     }
 
-    @Step("Получить список ЖК с фильтром Без апартаментов. Проверить, что все объекты, в полученном списке, содержат флаг apartments = 0")
-    @TmsLink("Падает для https://novo-dom.ru/apart-kompleks-dvizhenietushino, так как у него флаг apartments=1, но" +
-            "после задачи https://tracker.yandex.ru/NOVODEV-627 стал учитываться тип предложений корпусов (у 1 корпуса только квартиры." +
-            "Надо переписать логику теста.")
-    public static void checkBuildingListWithFilterWithoutApartments() {
-        given()
-                .spec(requestSpec)
-                .basePath("/api/buildings/")
-                .param("region_code[]", 50)
-                .param("region_code[]", 77)
-                .param("apartments", -1)
-                .get()
-                .then()
-                .spec(responseSpec200)
-                .body("data.apartments", everyItem(equalTo(0)));
-    }
-
     @Step("Получить список ЖК со способом оплаты {paymentMethod}")
     public static List<Integer> getBuildingListWithFilterMortgage(String paymentMethod) {
         List<Integer> listAll = new ArrayList<>();
@@ -143,7 +126,7 @@ public class MoreFilterModalApiSteps {
     }
 
     @Step("Получить список ЖК renovation = {renovation}")
-    public static List<Integer> getBuildingListWithFilterRenovation(String renovation) {
+    public static List<Integer> getBuildingIdListWithFilterRenovation(String renovation) {
         List<Integer> listAll = new ArrayList<>();
         Response response = given()
                 .spec(requestSpec)
@@ -213,6 +196,15 @@ public class MoreFilterModalApiSteps {
                             .then()
                             .extract().path("data.release_date");
     }
+    @Step("Получить значение apartments ЖК с id = {buildingId}")
+    public static Integer getApartments(int buildingId) {
+        return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .extract().path("data.apartments");
+    }
 
     @Step("Получить Response для ЖК с id = {buildingId}")
     public static Response getResponse(int buildingId) {
@@ -268,28 +260,6 @@ public class MoreFilterModalApiSteps {
                 .then()
                 .extract().path("data.release_state");
     }
-
-    @Step("Получить список стадий строительства корпусов")
-    public static void getAndVerifyReleaseStateList(List<Integer> listDistinctHouseId, String valueFirst, String valueSecond, String valueThird) {
-        List<String> listReleaseState = new ArrayList<>();
-        for (Integer value : listDistinctHouseId) {
-            if(value!=null){
-            String releaseStateValue = MoreFilterModalApiSteps.getReleaseState(value);
-                System.out.println(releaseStateValue);
-                listReleaseState.add(releaseStateValue);
-                System.out.println(listReleaseState);
-        }}
-        for (String s : listReleaseState) {
-            assertThat(s, notNullValue());
-        }
-        verifyNoneMatch(listReleaseState, valueFirst, valueSecond, valueThird);
-    }
-
-    @Step("Проверить, что хотя бы одно значение из списка не содержит {valueFirst}, {valueSecond}, {valueThird}")
-    public static void verifyNoneMatch(List<String> listValue, String valueFirst, String valueSecond, String valueThird) {
-        Assertions.assertTrue(listValue.stream().noneMatch(el -> el.contains(valueFirst)&&el.contains(valueSecond)&&el.contains(valueThird)));
-       }
-
 
     @Step("Проверить, что актуальное значение не равно {expectedValue}")
     public static void verifyActualNotEqualsExpected(String actualValue, String valueFirst, String valueSecond, String valueThird) {
