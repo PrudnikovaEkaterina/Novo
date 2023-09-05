@@ -1,5 +1,9 @@
 package ru.dom_novo.dataBase.dao;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -86,6 +90,18 @@ public class BuildingDao {
     }
     public static int selectCountFromFlatsWhereHouseIdIsNull (int buildingId) {
        return jdbcTemplate.queryForObject("select count(*) from flats where building_id = ? and status=1 and house_id is null;", Integer.class, buildingId);
+    }
+    public static List<Integer> selectDistinctBuildingIdWithFlats() {
+        return jdbcTemplate.queryForList("select distinct b.id from buildings b JOIN flats f ON(b.id=f.building_id) JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
+    }
+    public static List<Integer> selectDistinctBuildingIdWithPrices(){
+        return jdbcTemplate.queryForList("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where not exists (select 1 from flats f where f.building_id = b.id and f.status=1) and JSON_VALUE(data_json, \"$.prices[*].*\") is not null and g.region_code in (50,77) and b.parent_id is null;", Integer.class);
+    }
+    public static String selectProperties202Values(int building_id) throws JsonProcessingException {
+            String json = jdbcTemplate.queryForObject("SELECT JSON_EXTRACT (data_json, \"$.properties.202.values\") from buildings where id = ?", String.class, building_id);
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(json, new TypeReference<>() {});
+
     }
 
 

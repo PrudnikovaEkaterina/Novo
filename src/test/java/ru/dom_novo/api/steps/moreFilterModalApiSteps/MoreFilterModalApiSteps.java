@@ -1,7 +1,6 @@
 package ru.dom_novo.api.steps.moreFilterModalApiSteps;
 
 import io.qameta.allure.Step;
-import io.qameta.allure.TmsLink;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import ru.dom_novo.dataBase.services.FlatService;
@@ -64,20 +63,6 @@ public class MoreFilterModalApiSteps {
     @Step("Получить список ЖК из БД, в которых есть квартиры, где floor >= {floorMin}")
     public static List<Integer> selectBuildingListWithFilterFloorMin(int floorMin) {
         return FlatService.getBuildingIdFromFlatsWhereFloorGreaterOrEqualsFloorUnit(floorMin);
-    }
-
-    @Step("Получить список ЖК с фильтром Только апартаменты. Проверить, что все объекты, в полученном списке, содержат флаг apartments = 1")
-    public static void checkBuildingListWithFilterOnlyApartments() {
-        given()
-                .spec(requestSpec)
-                .basePath("/api/buildings/")
-                .param("region_code[]", 50)
-                .param("region_code[]", 77)
-                .param("apartments", 1)
-                .get()
-                .then()
-                .spec(responseSpec200)
-                .body("data.apartments", everyItem(equalTo(1)));
     }
 
     @Step("Получить список ЖК со способом оплаты {paymentMethod}")
@@ -269,8 +254,6 @@ public class MoreFilterModalApiSteps {
            assertThat(actualValue, not(valueThird));
         }
     }
-
-
 }
 
 

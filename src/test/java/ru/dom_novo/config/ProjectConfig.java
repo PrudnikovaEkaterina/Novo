@@ -16,7 +16,7 @@ public interface ProjectConfig extends Config {
     String baseUrl();
 
     @Key("baseUri")
-    @DefaultValue("https://novo-dom.ru")
+    @DefaultValue("http://novo646.dev.novo-dom.ru")
     String baseUri();
 
     @Key("browser")

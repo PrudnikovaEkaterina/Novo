@@ -15,7 +15,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DataJsonEntity {
     private int id;
-//    @JdbcTypeCode(SqlTypes.JSON)
     private PropertiesEntity properties;
     private List <PriceEntity> prices;
 }
