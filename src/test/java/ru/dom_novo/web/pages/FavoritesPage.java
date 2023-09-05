@@ -48,8 +48,9 @@ public class FavoritesPage {
         return this;
     }
 
-    public void checkFavoritesHeaderTitle() {
+    public FavoritesPage checkFavoritesHeaderTitle() {
         FAVORITES_HEADER_TITLE.shouldBe(Condition.visible);
+        return this;
     }
 
     public void checkFavoritesManagerBlock() {

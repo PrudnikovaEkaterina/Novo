@@ -23,7 +23,7 @@ public class UserFavoritesApiTests {
         String phone = "79085040794";
         int userId = MeApiSteps.getUserId(phone);
         List<Integer> userFavoritesBuildingListActual = UserFavoritesApi.getUserFavoritesBuilding(phone);
-        List<Integer> userFavoritesBuildingListExpected = FavoritesDao.selectFromFavoritesBuildingsIdForUser(userId);
+        List<Integer> userFavoritesBuildingListExpected = FavoritesDao.selectBuildingIdFromFavorites(userId);
         assertThat(userFavoritesBuildingListActual, is(userFavoritesBuildingListExpected));
 //        assertIterableEquals(userFavoritesBuildingListExpected, userFavoritesBuildingListActual);
     }

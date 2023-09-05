@@ -9,6 +9,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BuildingDto {
     private Integer id;
+    @JsonProperty("title_eng")
+    private String titleEng;
     private NearModel near;
     @JsonProperty("parent_id")
     private Integer parentId;
