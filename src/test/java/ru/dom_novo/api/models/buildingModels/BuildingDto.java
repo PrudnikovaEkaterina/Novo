@@ -21,4 +21,5 @@ public class BuildingDto {
     private List<DocumentModel> documents;
     private LocationModel location;
     private Integer apartments;
+    public List<String> square;
 }

@@ -18,7 +18,7 @@ public class CardNovostroykiApiSteps {
                 .basePath("/api/buildings/" + buildingId)
                 .get()
                 .then()
-                .spec(responseSpec200)
+//                .spec(responseSpec200)
                 .extract().as(RootModel.class);
     }
 

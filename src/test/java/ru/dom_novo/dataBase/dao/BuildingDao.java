@@ -105,5 +105,9 @@ public class BuildingDao {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and price_total >= ? and price_total <= ?", Integer.class, buildingId, priceMin, priceMax);
     }
 
+    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterArea (int buildingId, int areaMin, int areaMax){
+        return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and area_total >= ? and area_total <= ?", Integer.class, buildingId, areaMin, areaMax);
+    }
+
 }
 

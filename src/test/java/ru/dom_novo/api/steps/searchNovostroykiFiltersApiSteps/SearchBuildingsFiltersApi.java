@@ -178,6 +178,41 @@ public class SearchBuildingsFiltersApi {
         return listAll;
     }
 
+    @Step("Получить список ЖК c гет параметром no_flats = {noFlats} и фильтром Площадь от = {priceMin} и Площадь До {priceMax}")
+    public static List<Integer> getBuildingIdListWithFilterNoFlatsAndFilterSquare(int noFlats, int squareMin, int squareMax) {
+        List<Integer> listAll = new ArrayList<>();
+        Response response = given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/")
+                .param("region_code[]", 50)
+                .param("region_code[]", 77)
+                .param("no_flats", noFlats)
+                .param("square_min", squareMin )
+                .param("square_max", squareMax )
+                .param("per_page", 1)
+                .get();
+        Assertions.assertEquals(200, response.statusCode());
+        int totalItem = response.path("meta.total");
+        int pageCount = (int) Math.round((double) totalItem / 100);
+        for (int i = 1; i <pageCount+2; i++) {
+            List<Integer> listPage = given()
+                    .spec(requestSpec)
+                    .basePath("/api/buildings/")
+                    .param("region_code[]", 50)
+                    .param("region_code[]", 77)
+                    .param("no_flats", noFlats)
+                    .param("square_min", squareMin )
+                    .param("square_max", squareMax )
+                    .param("per_page", 100)
+                    .param("page", i)
+                    .get()
+                    .then()
+                    .extract().path("data.id");
+            listAll.addAll(listPage);
+        }
+        return listAll;
+    }
+
 
 
 }
