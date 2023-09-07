@@ -1,8 +1,12 @@
 package ru.dom_novo.dataBase.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import io.qameta.allure.Step;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.entities.buildingEntities.*;
 import ru.dom_novo.testData.GenerationData;
@@ -85,6 +89,32 @@ public class BuildingService {
         List<Integer> buildingIdList = getBuildingIdList(BuildingDao.selectAllFromBuildingsWhereParentIdIs(parentId));
         assert buildingIdList != null;
         return buildingIdList;
+    }
+    public static String selectProperties202Values(int buildingId) throws JsonProcessingException {
+        String dataJson = BuildingDao.selectBuildingDataJson(buildingId);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Object roomType = JsonPath.read(dataJson, "$.properties.202.values.*");
+            String roomTypeStr = objectMapper.writeValueAsString(roomType);
+            return roomTypeStr;
+        } catch (PathNotFoundException e) {
+            return null;
+        }
+    }
+
+        public static String selectPricesTitle(int buildingId) throws JsonProcessingException {
+            String dataJson = BuildingDao.selectBuildingDataJson(buildingId);
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                Object roomType = JsonPath.read(dataJson, "$.prices[*].title");
+                String roomTypeStr = objectMapper.writeValueAsString(roomType);
+                return roomTypeStr;
+            }
+            catch (PathNotFoundException e){
+                return null;
+            }
+
+
     }
 //    @Step("Получить год сдачи ЖК") (устарело, для примера)
 //    public static int selectBuildingReleaseYear(int buildingId) throws IOException {

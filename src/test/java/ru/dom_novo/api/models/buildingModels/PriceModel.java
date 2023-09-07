@@ -7,5 +7,5 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PriceModel {
     private Long from;
-    public Long to;
+    private Long to;
 }
