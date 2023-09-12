@@ -8,9 +8,6 @@ import org.aeonbits.owner.ConfigCache;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.dom_novo.config.ProjectConfig;
 import ru.dom_novo.web.helpers.Attach;
@@ -34,6 +31,7 @@ public class TestBase {
                 "enableVNC", true,
                 "enableVideo", true));
         Configuration.browserCapabilities = capabilities;
+        System.setProperty("webdriver.chrome.driver", "/home/user/chromedriver");
     }
 
     @BeforeEach

@@ -29,6 +29,25 @@ public class MarketcallBundleTests extends TestBase {
         for (Integer integer : idList) {
             open("/novostroyki?bundle_ids=" + integer + "&no_flats=1");
             sleep(1000);
+//            для проверки, если тест падает
+//            List<Integer> list = MarketcallBundleBuildingsDao.selectBuildingIdFromMarketcallBundles(integer);
+//            List<Integer> list1 = given()
+//                    .spec(requestSpec)
+//                    .basePath("/api/buildings/")
+//                    .param("per_page", 50)
+//                    .param("page", 1)
+//                    .param("region_code[]", 77)
+//                    .param("region_code[]", 50)
+//                    .param("bundle_ids[]", integer)
+//                    .param("no_flats", 1)
+//                    .get()
+//                    .then()
+//                    .extract().path("data.id");
+//            for (Integer id : list) {
+//                if (!list1.contains(id)) {
+//                    System.out.println(id);
+//                }
+//            }
             int countBuildingsActual = novostroykiPage.getSearchNovostroykiContentTotal();
             int countBuildingsExpected = MarketcallBundleBuildingsDao.selectCountDistinctBuildingsFromMarketcallBundleBuildingsWhereExternalId(integer);
             assertThat(countBuildingsActual, is(countBuildingsExpected));

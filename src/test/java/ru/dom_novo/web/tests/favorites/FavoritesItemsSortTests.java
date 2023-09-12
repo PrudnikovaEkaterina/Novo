@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -52,6 +53,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
+        sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
         assertThat(listSortActual, is(listSortExpected));
     }
@@ -82,6 +84,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
+        sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
         assertThat(listSortActual, is(listSortExpected));
     }
@@ -97,7 +100,7 @@ public class FavoritesItemsSortTests extends TestBase {
         Map<String, Double> map = new HashMap<>();
         for(Integer buildingId:favoritesBuildingId){
             RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom=0;
+            double priceFrom;
             if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
                  priceFrom = root.getData().getFlats().getSquareM2().getFrom();}
             else priceFrom = 0;
@@ -110,6 +113,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
+        sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
         System.out.println(listSortExpected);
         assertThat(listSortActual, is(listSortExpected));
@@ -125,7 +129,7 @@ public class FavoritesItemsSortTests extends TestBase {
         Map<String, Double> map = new HashMap<>();
         for(Integer buildingId:favoritesBuildingId){
             RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom=0;
+            double priceFrom;
             if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
                 priceFrom = root.getData().getFlats().getSquareM2().getFrom();}
             else priceFrom = 0;
@@ -138,6 +142,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
+        sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
         System.out.println(listSortExpected);
         assertThat(listSortActual, is(listSortExpected));
@@ -153,7 +158,7 @@ public class FavoritesItemsSortTests extends TestBase {
         Map<String, Double> map = new HashMap<>();
         for(Integer buildingId:favoritesBuildingId){
             RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom=0;
+            double priceFrom;
             if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
                 priceFrom = root.getData().getFlats().getPriceM2().getFrom();}
             else priceFrom = 0;
@@ -166,6 +171,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
+        sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
         System.out.println(listSortExpected);
         assertThat(listSortActual, is(listSortExpected));
@@ -181,7 +187,7 @@ public class FavoritesItemsSortTests extends TestBase {
         Map<String, Double> map = new HashMap<>();
         for(Integer buildingId:favoritesBuildingId){
             RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom=0;
+            double priceFrom;
             if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
                 priceFrom = root.getData().getFlats().getPriceM2().getFrom();}
             else priceFrom = 0;
@@ -194,6 +200,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
+        sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
         System.out.println(listSortExpected);
         assertThat(listSortActual, is(listSortExpected));

@@ -4,7 +4,6 @@ import io.qameta.allure.Step;
 import ru.dom_novo.api.models.buildingModels.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import static io.restassured.RestAssured.given;
@@ -101,6 +100,51 @@ public class CardNovostroykiApiSteps {
             }
         }
         return totalFloorHouseList;
+    }
+
+    @Step("Получить список ")
+    public static  List<List<Long>> getOffersPriceList (RootModel root, int priceMax ) {
+            List<PriceModel> priceModelList = root.getData().getFlats().getOffers().stream().map(OfferModel::getPrice).collect(Collectors.toList());
+            List<List<Long>> totalList = new ArrayList<>();
+            for (PriceModel el : priceModelList) {
+                List<Long> priceList = new ArrayList<>();
+                if (el.getFrom() == null && el.getTo() != null) {
+                    priceList.add(0L);
+                    priceList.add(el.getTo());
+                } else if (el.getFrom() != null && el.getTo() == null) {
+                    priceList.add(el.getFrom());
+                    priceList.add((long) priceMax);
+                } else {
+                    priceList.add(el.getFrom());
+                    priceList.add(el.getTo());
+                }
+                totalList.add(priceList);
+            }
+            return totalList;
+        }
+
+    @Step("Получить список")
+    public static List<Long> getFlatsPriceList (RootModel root, int priceMax ) {
+        List<Long> priceList = new ArrayList<>();
+        Long priceFrom = null;
+        Long priceTo = null;
+        try {
+            priceFrom = root.getData().getFlats().getPrice().getFrom();
+            priceTo = root.getData().getFlats().getPrice().getTo();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        if (priceFrom == null && priceTo != null) {
+            priceList.add(0L);
+            priceList.add(priceTo);
+        } else if (priceFrom != null && priceTo == null) {
+            priceList.add(priceFrom);
+            priceList.add((long) priceMax);
+        } else {
+            priceList.add(priceFrom);
+            priceList.add(priceTo);
+        }
+        return priceList;
     }
 
 }

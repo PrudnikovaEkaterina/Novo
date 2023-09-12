@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.dom_novo.api.models.buildingModels.OfferModel;
-import ru.dom_novo.api.models.buildingModels.PriceModel;
 import ru.dom_novo.api.models.buildingModels.RootModel;
 import ru.dom_novo.api.models.buildingModels.SquareM2Model;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
@@ -176,69 +175,18 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
                 Assertions.assertTrue(BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterPrice(id, priceMin, priceMax) > 0);
             } else {
                 RootModel root = CardNovostroykiApiSteps.getBuildingData(id);
-                if (!root.getData().getFlats().getOffers().isEmpty()) {
-                    List<PriceModel> priceModelList = root.getData().getFlats().getOffers().stream().map(OfferModel::getPrice).collect(Collectors.toList());
-                    List<List<Long>> totalList = new ArrayList<>();
-                    for (PriceModel el : priceModelList) {
-                        List<Long> priceList = new ArrayList<>();
-                        if (el.getFrom() == null && el.getTo() != null) {
-                            priceList.add(0L);
-                            priceList.add(el.getTo());
-                        } else if (el.getFrom() != null && el.getTo() == null) {
-                            priceList.add(el.getFrom());
-                            priceList.add((long) priceMax);
-                        } else {
-                            priceList.add(el.getFrom());
-                            priceList.add(el.getTo());
-                        }
-                        totalList.add(priceList);
-                    }
-                    Assertions.assertTrue(totalList.stream().filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
-                } else {
-                    List<Long> priceList = new ArrayList<>();
-                    Long priceFrom = null;
-                    Long priceTo = null;
-                    try {
-                        priceFrom = root.getData().getFlats().getPrice().getFrom();
-                        priceTo = root.getData().getFlats().getPrice().getTo();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                    if (priceFrom == null && priceTo != null) {
-                        priceList.add(0L);
-                        priceList.add(priceTo);
-                    } else if (priceFrom != null && priceTo == null) {
-                        priceList.add(priceFrom);
-                        priceList.add((long) priceMax);
-                    } else {
-                        priceList.add(priceFrom);
-                        priceList.add(priceTo);
-                    }
+                if (!root.getData().getFlats().getOffers().isEmpty())
+                    Assertions.assertTrue(CardNovostroykiApiSteps.getOffersPriceList(root, priceMax).stream()
+                            .filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
+                 else {
+                    List<Long> priceList = CardNovostroykiApiSteps.getFlatsPriceList(root, priceMax);
                     if (!priceList.contains(null)) {
                         if (priceList.get(0) > priceMax || priceList.get(1) < priceMin) {
                             List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
                             List<List<Long>> totalPriceHouseList = new ArrayList<>();
                             for (Integer houseId : houseIdList) {
-                                List<Long> priceHouseList = new ArrayList<>();
                                 RootModel rootHouse = CardNovostroykiApiSteps.getBuildingData(houseId);
-                                Long priceFromHouse = null;
-                                Long priceToHouse = null;
-                                try {
-                                    priceFromHouse = rootHouse.getData().getFlats().getPrice().getFrom();
-                                    priceToHouse = rootHouse.getData().getFlats().getPrice().getTo();
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
-                                }
-                                if (priceFromHouse == null && priceToHouse != null) {
-                                    priceHouseList.add(0L);
-                                    priceHouseList.add(priceToHouse);
-                                } else if (priceFromHouse != null && priceToHouse == null) {
-                                    priceHouseList.add(priceFromHouse);
-                                    priceHouseList.add((long) priceMax);
-                                } else {
-                                    priceHouseList.add(priceFromHouse);
-                                    priceHouseList.add(priceToHouse);
-                                }
+                                List<Long> priceHouseList = CardNovostroykiApiSteps.getFlatsPriceList(rootHouse, priceMax);
                                 totalPriceHouseList.add(priceHouseList);
                             }
                             Assertions.assertTrue(totalPriceHouseList.stream().filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));

@@ -34,4 +34,8 @@ public class MarketcallBundleBuildingsDao {
         return jdbcTemplate.queryForObject("SELECT count(distinct bb.building_id) from marketcall_bundle_buildings bb JOIN buildings b ON (bb.building_id=b.id) JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) JOIN  marketcall_bundles mb ON (bb.bundle_id=mb.id) where g.region_code in (50,77) and bb.deleted_at is null and mb.external_id = ?",
                 Integer.class, external_id);
     }
+    public static List<Integer> selectBuildingIdFromMarketcallBundles (int id){
+        return jdbcTemplate.queryForList("SELECT distinct bb.building_id from marketcall_bundle_buildings bb JOIN buildings b ON (bb.building_id=b.id) JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) JOIN  marketcall_bundles mb ON (bb.bundle_id=mb.id) where g.region_code in (50,77) and bb.deleted_at is null and mb.external_id = ?", Integer.class, id);
+    }
+
 }
