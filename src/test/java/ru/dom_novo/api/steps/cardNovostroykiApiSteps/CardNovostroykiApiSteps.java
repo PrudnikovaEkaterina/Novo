@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import ru.dom_novo.api.models.buildingModels.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import static io.restassured.RestAssured.given;
@@ -70,6 +71,36 @@ public class CardNovostroykiApiSteps {
             list = data.getData().getNear().getRoads().stream().map(RoadModel::getId).collect(Collectors.toList());
         }
         return list;
+    }
+
+    @Step("Получить список floor_range")
+    public static List<Integer> floorRangeList (int buildingId) {
+        try {
+           return CardNovostroykiApiSteps.getBuildingData(buildingId).getData().getFloorRange().stream().map(Integer::parseInt). sorted().collect(Collectors.toList());
+        }
+        catch (NullPointerException e) {
+            return null;
+        }
+    }
+    @Step("Получить список floor_range для каждого корпуса ЖК")
+    public static List<List<Integer>> getTotalFloorHouseList(List<Integer> houseIdList ) {
+        List<List<Integer>> totalFloorHouseList = new ArrayList<>();
+        for (Integer houseId : houseIdList) {
+            List<Integer> floorRangeHouseList = CardNovostroykiApiSteps.floorRangeList(houseId);
+            if (floorRangeHouseList != null) {
+                List<Integer> floorHouseList = new ArrayList<>();
+                switch (floorRangeHouseList.size()) {
+                    case 1:
+                        floorHouseList = List.of(1,floorRangeHouseList.get(0));
+                        break;
+                    case 2:
+                        floorHouseList = List.of(1, floorRangeHouseList.get(1));
+                        break;
+                }
+                totalFloorHouseList.add(floorHouseList);
+            }
+        }
+        return totalFloorHouseList;
     }
 
 }

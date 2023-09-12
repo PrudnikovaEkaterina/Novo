@@ -1,18 +1,11 @@
 package ru.dom_novo.web.tests.novostroyki;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
-import ru.dom_novo.api.models.buildingModels.RootModel;
-import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
-import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFiltersApi;
-import ru.dom_novo.dataBase.dao.BuildingDao;
-import ru.dom_novo.dataBase.services.BuildingService;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.enumsWeb.RoomEnum;
 import ru.dom_novo.web.pages.NovostroykiPage;
@@ -20,9 +13,6 @@ import ru.dom_novo.web.pages.components.FooterComponent;
 import ru.dom_novo.web.pages.components.SearchNovostroykiFiltersComponent;
 import ru.dom_novo.web.tests.TestBase;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import static com.codeborne.selenide.Selenide.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

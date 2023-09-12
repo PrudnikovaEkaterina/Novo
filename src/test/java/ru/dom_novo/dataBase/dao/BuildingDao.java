@@ -1,11 +1,9 @@
 package ru.dom_novo.dataBase.dao;
-
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.dom_novo.dataBase.DataSourceProvider;
 import ru.dom_novo.dataBase.entities.buildingEntities.BuildingEntity;
-
 import java.util.List;
 
 public class BuildingDao {
@@ -66,7 +64,7 @@ public class BuildingDao {
     }
 
     public static List<Integer> selectDistinctBuildingIdFromFlats() {
-    return jdbcTemplate.queryForList("SELECT DISTINCT f.building_id from flats f JOIN buildings b ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
+        return jdbcTemplate.queryForList("SELECT DISTINCT f.building_id from flats f JOIN buildings b ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
     }
 
     public static List<String> selectDistinctBuildingTitleEng() {
@@ -89,7 +87,7 @@ public class BuildingDao {
         }
     }
     public static int selectCountFromFlatsWhereHouseIdIsNull (int buildingId) {
-       return jdbcTemplate.queryForObject("select count(*) from flats where building_id = ? and status=1 and house_id is null;", Integer.class, buildingId);
+        return jdbcTemplate.queryForObject("select count(*) from flats where building_id = ? and status=1 and house_id is null;", Integer.class, buildingId);
     }
     public static List<Integer> selectDistinctBuildingIdWithFlats() {
         return jdbcTemplate.queryForList("select distinct b.id from buildings b JOIN flats f ON(b.id=f.building_id) JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
@@ -107,6 +105,10 @@ public class BuildingDao {
 
     public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterArea (int buildingId, int areaMin, int areaMax){
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and area_total >= ? and area_total <= ?", Integer.class, buildingId, areaMin, areaMax);
+    }
+
+    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterFloor (int buildingId, int floorMin, int floorMax){
+        return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and floor >= ? and floor <= ?", Integer.class, buildingId, floorMin, floorMax);
     }
 
 }

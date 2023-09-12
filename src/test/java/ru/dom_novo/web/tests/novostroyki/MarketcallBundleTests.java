@@ -4,7 +4,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.MarketcallBundleApi;
+import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.MarketcallBundleApiSteps;
 import ru.dom_novo.dataBase.dao.MarketcallBundleBuildingsDao;
 import ru.dom_novo.web.pages.NovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
@@ -25,7 +25,7 @@ public class MarketcallBundleTests extends TestBase {
     @Test
     @DisplayName("Проверить, что количество ЖК на странице /novostroyki с фильтром bundle_ids соответсвует количеству ЖК из marketcall bundle с учетом региона")
     void checkSearchBuildingsFromMarketcallBundles() {
-        List<Integer> idList = MarketcallBundleApi.getIdBundles();
+        List<Integer> idList = MarketcallBundleApiSteps.getIdBundles();
         for (Integer integer : idList) {
             open("/novostroyki?bundle_ids=" + integer + "&no_flats=1");
             sleep(1000);
@@ -38,7 +38,7 @@ public class MarketcallBundleTests extends TestBase {
     @Test
     @DisplayName("Проверить тег на странице /novostroyki с фильтром bundle_ids")
     void checkSearchFiltersTagWithFilterBundleIds() {
-        List<Integer> idList = MarketcallBundleApi.getIdBundles();
+        List<Integer> idList = MarketcallBundleApiSteps.getIdBundles();
         for (Integer integer : idList) {
             open("/novostroyki?bundle_ids=" + integer + "&no_flats=1");
             sleep(1000);

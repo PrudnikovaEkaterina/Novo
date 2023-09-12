@@ -14,7 +14,7 @@ import static ru.dom_novo.api.specifications.Specification.requestSpec;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 
-public class SearchBuildingsFiltersApi {
+public class SearchBuildingsFiltersApiSteps {
     @Step("Получить список id ЖК с фильтром stations")
     public static BuildingDataDto getBuildingListWithFilterStation(int stationId) {
         return given()
@@ -81,7 +81,7 @@ public class SearchBuildingsFiltersApi {
     }
 
     @Step("Получить список ЖК c гет параметром no_flats = {noFlats} и фильтром Комнатность = {}")
-    public static List<Integer> getBuildingIdListWithFilterNoFlatsAndFilterRoom(int noFlats, String room) {
+    public static List<Integer> getBuildingIdListWithParameterNoFlatsAndFilterRoom(int noFlats, String room) {
         List<Integer> listAll = new ArrayList<>();
         Response response = given()
                 .spec(requestSpec)
@@ -114,7 +114,7 @@ public class SearchBuildingsFiltersApi {
     }
 
     @Step("Получить список ЖК c гет параметром no_flats = {noFlats}")
-    public static List<Integer> getBuildingIdListWithFilterNoFlats(int noFlats) {
+    public static List<Integer> getBuildingIdListWithParameterNoFlats(int noFlats) {
         List<Integer> listAll = new ArrayList<>();
         Response response = given()
                 .spec(requestSpec)
@@ -144,7 +144,7 @@ public class SearchBuildingsFiltersApi {
         return listAll;
     }
     @Step("Получить список ЖК c гет параметром no_flats = {noFlats} и фильтром Цена от = {priceMin} и цена По {priceMax}")
-    public static List<Integer> getBuildingIdListWithFilterNoFlatsAndFilterPrice(int noFlats, int priceMin, int priceMax) {
+    public static List<Integer> getBuildingIdListWithParameterNoFlatsAndFilterPrice(int noFlats, int priceMin, int priceMax) {
         List<Integer> listAll = new ArrayList<>();
         Response response = given()
                 .spec(requestSpec)
@@ -179,7 +179,7 @@ public class SearchBuildingsFiltersApi {
     }
 
     @Step("Получить список ЖК c гет параметром no_flats = {noFlats} и фильтром Площадь от = {priceMin} и Площадь До {priceMax}")
-    public static List<Integer> getBuildingIdListWithFilterNoFlatsAndFilterSquare(int noFlats, int squareMin, int squareMax) {
+    public static List<Integer> getBuildingIdListWithParameterNoFlatsAndFilterSquare(int noFlats, int squareMin, int squareMax) {
         List<Integer> listAll = new ArrayList<>();
         Response response = given()
                 .spec(requestSpec)
@@ -213,6 +213,39 @@ public class SearchBuildingsFiltersApi {
         return listAll;
     }
 
-
+    @Step("Получить список ЖК c гет параметром no_flats = {noFlats} и фильтром Этаж от = {floorMin} и Этаж По {floorMax}")
+    public static List<Integer> getBuildingIdListWithParameterNoFlatsAndFilterFloor(int noFlats, int floorMin, int floorMax) {
+        List<Integer> listAll = new ArrayList<>();
+        Response response = given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/")
+                .param("region_code[]", 50)
+                .param("region_code[]", 77)
+                .param("no_flats", noFlats)
+                .param("floor_min", floorMin )
+                .param("floor_max", floorMax )
+                .param("per_page", 1)
+                .get();
+        Assertions.assertEquals(200, response.statusCode());
+        int totalItem = response.path("meta.total");
+        int pageCount = (int) Math.round((double) totalItem / 100);
+        for (int i = 1; i <pageCount+2; i++) {
+            List<Integer> listPage = given()
+                    .spec(requestSpec)
+                    .basePath("/api/buildings/")
+                    .param("region_code[]", 50)
+                    .param("region_code[]", 77)
+                    .param("no_flats", noFlats)
+                    .param("floor_min", floorMin )
+                    .param("floor_max", floorMax )
+                    .param("per_page", 100)
+                    .param("page", i)
+                    .get()
+                    .then()
+                    .extract().path("data.id");
+            listAll.addAll(listPage);
+        }
+        return listAll;
+    }
 
 }

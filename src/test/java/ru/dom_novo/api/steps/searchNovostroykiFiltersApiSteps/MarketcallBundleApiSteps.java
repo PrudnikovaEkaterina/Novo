@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import static io.restassured.RestAssured.given;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
-public class MarketcallBundleApi {
+public class MarketcallBundleApiSteps {
     @Step("Получить данные из https://www.marketcall.ru/api/v1/newbuilding-bundles")
     public static DataModel getMarketcallBundles() {
         return given()

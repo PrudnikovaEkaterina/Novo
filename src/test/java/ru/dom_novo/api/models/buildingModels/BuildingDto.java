@@ -22,4 +22,6 @@ public class BuildingDto {
     private LocationModel location;
     private Integer apartments;
     public List<String> square;
+    @JsonProperty("floor_range")
+    public List<String> floorRange;
 }

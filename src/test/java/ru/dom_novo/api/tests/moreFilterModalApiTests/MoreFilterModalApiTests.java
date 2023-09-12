@@ -14,7 +14,7 @@ import ru.dom_novo.api.enumsApi.ReleaseDateEnum;
 import ru.dom_novo.api.enumsApi.RenovationEnum;
 import ru.dom_novo.api.models.buildingModels.*;
 import ru.dom_novo.api.steps.moreFilterModalApiSteps.MoreFilterModalApiSteps;
-import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFiltersApi;
+import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFiltersApiSteps;
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.FlatService;
 import ru.dom_novo.regexp.RegexpMeth;
@@ -60,7 +60,7 @@ public class MoreFilterModalApiTests {
 //   Получить список id корпусов ЖК;
 //   Для каждого корпуса получить значение apartments и собрать их в лист;
 //   Проверить, что хотя бы 1 элемент листа==1;
-        List<BuildingDto> dataList = SearchBuildingsFiltersApi.getBuildingListWithFilterApartments(1);
+        List<BuildingDto> dataList = SearchBuildingsFiltersApiSteps.getBuildingListWithFilterApartments(1);
         Map<Integer, Integer> mapApartment = new HashMap<>();
         dataList.forEach(el -> mapApartment.put(el.getId(), el.getApartments()));
         for (Map.Entry<Integer, Integer> el : mapApartment.entrySet()) {
@@ -84,7 +84,7 @@ public class MoreFilterModalApiTests {
 //   Получить список id корпусов ЖК;
 //   Для каждого корпуса получить значение apartments и собрать их в лист;
 //   Проверить, что хотя бы 1 элемент листа==0;
-        List<BuildingDto> dataList = SearchBuildingsFiltersApi.getBuildingListWithFilterApartments(-1);
+        List<BuildingDto> dataList = SearchBuildingsFiltersApiSteps.getBuildingListWithFilterApartments(-1);
         Map<Integer, Integer> mapApartment = new HashMap<>();
         dataList.forEach(el -> mapApartment.put(el.getId(), el.getApartments()));
         for (Map.Entry<Integer, Integer> el : mapApartment.entrySet()) {
