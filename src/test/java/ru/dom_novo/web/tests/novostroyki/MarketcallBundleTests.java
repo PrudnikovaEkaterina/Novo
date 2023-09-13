@@ -27,7 +27,7 @@ public class MarketcallBundleTests extends TestBase {
     void checkSearchBuildingsFromMarketcallBundles() {
         List<Integer> idList = MarketcallBundleApiSteps.getIdBundles();
         for (Integer integer : idList) {
-            open("/novostroyki?bundle_ids=" + integer + "&no_flats=1");
+            open("/novostroyki?bundle_ids=" + integer + "&no_flats=3");
             sleep(1000);
 //            для проверки, если тест падает
 //            List<Integer> list = MarketcallBundleBuildingsDao.selectBuildingIdFromMarketcallBundles(integer);
