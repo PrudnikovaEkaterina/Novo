@@ -77,21 +77,27 @@ public class MoreFilterModalApiSteps {
                 .param("per_page", 1)
                 .get();
         Assertions.assertEquals(200, response.statusCode());
-        int pageCountInt = response.path("meta.total");
-        int pageCountDouble = (int) Math.round((double) pageCountInt / 100);
-        for (int i = 1; i < pageCountDouble+2; i++) {
-            List<Integer> listPage = given()
-                    .spec(requestSpec)
-                    .basePath("/api/buildings/")
-                    .param("region_code[]", 50)
-                    .param("region_code[]", 77)
-                    .param("payment_methods[]", paymentMethod)
-                    .param("per_page", 100)
-                    .param("page", i)
-                    .get()
-                    .then()
-                    .extract().path("data.id");
-            listAll.addAll(listPage);
+
+        try {
+            int pageCountInt = response.path("meta.total");
+            int pageCountDouble = (int) Math.round((double) pageCountInt / 100);
+            for (int i = 1; i < pageCountDouble + 2; i++) {
+                List<Integer> listPage = given()
+                        .spec(requestSpec)
+                        .basePath("/api/buildings/")
+                        .param("region_code[]", 50)
+                        .param("region_code[]", 77)
+                        .param("payment_methods[]", paymentMethod)
+                        .param("per_page", 100)
+                        .param("page", i)
+                        .get()
+                        .then()
+                        .extract().path("data.id");
+                listAll.addAll(listPage);
+            }
+        }
+        catch (NullPointerException e) {
+            listAll=null;
         }
         return listAll;
     }

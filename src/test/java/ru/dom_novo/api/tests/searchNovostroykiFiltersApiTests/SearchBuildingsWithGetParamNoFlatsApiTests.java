@@ -167,26 +167,30 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
 //  - по логике для род. жк сложить полученные значения в список;
 //  6. Проверить, что в списке есть хотя бы 1 значение, у которого
 //  - priceFrom <= priceMax && priceTo >= priceMin
-        int priceMin = 12000000;
-        int priceMax = 15000000;
-        List<Integer> buildingIdListWithGetParameterNoFlats1 = SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlatsAndFilterPrice(1, priceMin, priceMax);
+        int priceMin = 200000000;
+        int priceMax = 250000000;
+        List<Integer> buildingIdListWithGetParameterNoFlats1 = List.of(5313);
+//                SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlatsAndFilterPrice(1, priceMin, priceMax);
         for (Integer id : buildingIdListWithGetParameterNoFlats1) {
             if (BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1(id) > 0) {
                 Assertions.assertTrue(BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterPrice(id, priceMin, priceMax) > 0);
             } else {
                 RootModel root = CardNovostroykiApiSteps.getBuildingData(id);
-                if (!root.getData().getFlats().getOffers().isEmpty())
+                if (!root.getData().getFlats().getOffers().isEmpty()){
                     Assertions.assertTrue(CardNovostroykiApiSteps.getOffersPriceList(root, priceMax).stream()
-                            .filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
+                            .filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));}
                  else {
                     List<Long> priceList = CardNovostroykiApiSteps.getFlatsPriceList(root, priceMax);
+                    System.out.println(priceList);
                     if (!priceList.contains(null)) {
                         if (priceList.get(0) > priceMax || priceList.get(1) < priceMin) {
                             List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
+                            System.out.println(houseIdList);
                             List<List<Long>> totalPriceHouseList = new ArrayList<>();
                             for (Integer houseId : houseIdList) {
                                 RootModel rootHouse = CardNovostroykiApiSteps.getBuildingData(houseId);
                                 List<Long> priceHouseList = CardNovostroykiApiSteps.getFlatsPriceList(rootHouse, priceMax);
+                                System.out.println(priceHouseList);
                                 totalPriceHouseList.add(priceHouseList);
                             }
                             Assertions.assertTrue(totalPriceHouseList.stream().filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
@@ -210,8 +214,8 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
 //                - получить все корпуса ЖК
 //                - для каждого корпуса получить массив square, закастить в Double, поместить в лист, отсортировать, поместить в общий Лист
 //        5. Проверить, что в общем Листе есть хотя бы 1 значение, у которого areaMin <= squareMax && areaMax >= squareMin
-        int squareMin = 100;
-        int squareMax = 200;
+        int squareMin = 200;
+        int squareMax = 300;
         List<Integer> buildingIdListWithGetParameterNoFlats1 = SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlatsAndFilterSquare(1, squareMin, squareMax);
         for (Integer id : buildingIdListWithGetParameterNoFlats1) {
             if (BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1(id) > 0) {

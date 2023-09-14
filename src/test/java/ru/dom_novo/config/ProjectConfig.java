@@ -12,11 +12,11 @@ import org.aeonbits.owner.Config;
 
 public interface ProjectConfig extends Config {
     @Key("baseUrl")
-    @DefaultValue("https://yadoma-realty.ru/")
+    @DefaultValue("https://yadoma-realty.ru")
     String baseUrl();
 
     @Key("baseUri")
-    @DefaultValue("https://yadoma-realty.ru/")
+    @DefaultValue("https://yadoma-realty.ru")
     String baseUri();
 
     @Key("browser")

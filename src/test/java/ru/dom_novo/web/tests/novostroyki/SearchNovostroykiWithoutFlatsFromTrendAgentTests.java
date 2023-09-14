@@ -19,7 +19,6 @@ import static com.codeborne.selenide.Selenide.open;
 import static java.math.RoundingMode.DOWN;
 
 @Tag("Web")
-@Tag("Api")
 @Owner("PrudnikovaEkaterina")
 public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
 

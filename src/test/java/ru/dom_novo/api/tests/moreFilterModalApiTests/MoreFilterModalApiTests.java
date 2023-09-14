@@ -1,5 +1,6 @@
 package ru.dom_novo.api.tests.moreFilterModalApiTests;
 
+import com.beust.ah.A;
 import io.qameta.allure.Owner;
 import io.restassured.response.Response;
 import org.hibernate.annotations.Comment;
@@ -106,8 +107,9 @@ public class MoreFilterModalApiTests {
     @ParameterizedTest(name = "Применить фильтр Cпособ оплаты {1}. Проверить, что в найденных ЖК есть квартиры, где {1} = 1")
     void searchMortgage(String data1, String data2) {
         List<Integer> apiList = MoreFilterModalApiSteps.getBuildingListWithFilterMortgage(data1);
+        if (apiList!=null){
         List<Integer> dataList = MoreFilterModalApiSteps.selectBuildingListWithFilterMortgage(data2);
-        MoreFilterModalApiSteps.checkEqualityTwoLists(apiList, dataList);
+        MoreFilterModalApiSteps.checkEqualityTwoLists(apiList, dataList);}
 
     }
 

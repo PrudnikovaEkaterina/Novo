@@ -15,7 +15,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @Tag("Web")
-@Tag("Api")
 @Owner("PrudnikovaEkaterina")
 public class CardNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
     CardNovostroykiPage cardNovostroykiPage = new CardNovostroykiPage();
