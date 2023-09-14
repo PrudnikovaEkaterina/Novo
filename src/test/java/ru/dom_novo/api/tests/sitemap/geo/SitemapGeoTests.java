@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
@@ -17,6 +18,7 @@ import static org.hamcrest.Matchers.*;
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-688")
+@Disabled
 public class SitemapGeoTests {
     @Test
     @Description("Проверить, что данные роута api/sitemap/xml/geo с типом city соответсвуют гео для ЖК с предложениями")

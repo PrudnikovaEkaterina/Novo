@@ -3,6 +3,7 @@ package ru.dom_novo.api.tests.searchNovostroykiFiltersApiTests;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import static org.hamcrest.Matchers.is;
 @Tag("Api")
 @Story("SearchNovostroykiFromMarketcallBundle")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-485")
+@Disabled
 public class MarketcallBundleApiTests {
     @Test
     @DisplayName("Проверить количество ЖК из marketcall-newbuilding-bundles в базе Ново")

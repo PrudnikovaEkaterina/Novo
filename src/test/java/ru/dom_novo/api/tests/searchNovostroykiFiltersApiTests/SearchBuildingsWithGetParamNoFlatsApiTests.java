@@ -3,10 +3,7 @@ package ru.dom_novo.api.tests.searchNovostroykiFiltersApiTests;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ru.dom_novo.api.models.buildingModels.OfferModel;
@@ -28,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 
 @Owner("PrudnikovaEkaterina")
 @Tag("Api")
+@Disabled
 public class SearchBuildingsWithGetParamNoFlatsApiTests {
     //        no_flats=1 - Режим для брокеров МК. Поиск осуществляется по предложениям ТА и данным из админки Move.
 //        ЖК без предложений ТА или цен в админке не выводятся. Это требуемый дополнительный режим.

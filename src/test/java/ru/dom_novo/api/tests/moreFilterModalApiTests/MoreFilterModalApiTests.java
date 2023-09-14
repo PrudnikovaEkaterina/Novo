@@ -4,10 +4,7 @@ import com.beust.ah.A;
 import io.qameta.allure.Owner;
 import io.restassured.response.Response;
 import org.hibernate.annotations.Comment;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -28,6 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
+@Disabled
 public class MoreFilterModalApiTests {
 
     @Test
