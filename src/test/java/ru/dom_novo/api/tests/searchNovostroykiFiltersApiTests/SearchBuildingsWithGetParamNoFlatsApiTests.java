@@ -169,8 +169,7 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
 //  - priceFrom <= priceMax && priceTo >= priceMin
         int priceMin = 200000000;
         int priceMax = 250000000;
-        List<Integer> buildingIdListWithGetParameterNoFlats1 = List.of(5313);
-//                SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlatsAndFilterPrice(1, priceMin, priceMax);
+        List<Integer> buildingIdListWithGetParameterNoFlats1 = SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlatsAndFilterPrice(1, priceMin, priceMax);
         for (Integer id : buildingIdListWithGetParameterNoFlats1) {
             if (BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1(id) > 0) {
                 Assertions.assertTrue(BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterPrice(id, priceMin, priceMax) > 0);
