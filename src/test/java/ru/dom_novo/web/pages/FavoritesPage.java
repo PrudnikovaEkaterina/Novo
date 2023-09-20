@@ -66,9 +66,8 @@ public class FavoritesPage {
         return RegexpMeth.getAllNumbersFromString(FAVORITES_MANAGER_PHONE.getText());
     }
 
-    public FavoritesPage clickFavoritesManagerChatText() {
+    public void clickFavoritesManagerChatText() {
         FAVORITES_MANAGER_CHAT_TEXT.click();
-        return this;
     }
 
     public void checkUrlAfterClickFavoritesManagerChatText(String managerPhoneExpected) {
@@ -101,7 +100,7 @@ public class FavoritesPage {
     }
 
     public List<String> getBuildingsTitleEng() {
-        String delete = "https://novo-dom.ru/";
+        String delete = baseUrl+"/";
         List<String> list = new ArrayList<>();
         for (SelenideElement selenideElement : SEARCH_ITEM_CLICK_AREA) {
             list.add(selenideElement.getAttribute("href").replace (delete, ""));

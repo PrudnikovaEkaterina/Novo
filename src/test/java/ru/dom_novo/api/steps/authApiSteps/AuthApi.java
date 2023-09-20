@@ -12,6 +12,7 @@ import ru.dom_novo.config.AuthConfig;
 
 import java.sql.Timestamp;
 
+import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
@@ -77,7 +78,7 @@ public class AuthApi {
         long session = timestampTime + 2592000;
         String sessionExpiresAt = String.valueOf(session).substring(0, 10);
         String referralCode = getReferralCode(loginResponse);
-        open("https://novo-dom.ru/build/desktop/images/header-logo.c8b95b60.svg");
+        open(baseUrl+"/build/desktop/images/header-logo.12b80bc1.svg");
         org.openqa.selenium.Cookie cookie = new org.openqa.selenium.Cookie("refresh_token", refreshToken);
         getWebDriver().manage().addCookie(cookie);
         if (referralCode != null) {
