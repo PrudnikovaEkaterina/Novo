@@ -18,7 +18,6 @@ import static org.hamcrest.Matchers.*;
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-688")
-@Disabled
 public class SitemapGeoTests {
     @Test
     @Description("Проверить, что данные роута api/sitemap/xml/geo с типом city соответсвуют гео для ЖК с предложениями")

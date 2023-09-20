@@ -19,7 +19,6 @@ import static org.hamcrest.Matchers.is;
 @Tag("Api")
 @Story("SearchNovostroykiFromMarketcallBundle")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-485")
-@Disabled
 public class MarketcallBundleApiTests {
     @Test
     @DisplayName("Проверить количество ЖК из marketcall-newbuilding-bundles в базе Ново")

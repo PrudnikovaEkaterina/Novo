@@ -16,7 +16,6 @@ import static org.hamcrest.Matchers.*;
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-686")
-@Disabled
 public class SitemapBuildingsTests {
     @Test
     @Description("Проверить, что роут api/sitemap/xml/buildings отдает корректный список ЖК")

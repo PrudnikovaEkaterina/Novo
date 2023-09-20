@@ -25,7 +25,6 @@ import static org.hamcrest.Matchers.is;
 
 @Owner("PrudnikovaEkaterina")
 @Tag("Api")
-@Disabled
 public class SearchBuildingsWithGetParamNoFlatsApiTests {
     //        no_flats=1 - Режим для брокеров МК. Поиск осуществляется по предложениям ТА и данным из админки Move.
 //        ЖК без предложений ТА или цен в админке не выводятся. Это требуемый дополнительный режим.

@@ -25,7 +25,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
-@Disabled
 public class MoreFilterModalApiTests {
 
     @Test

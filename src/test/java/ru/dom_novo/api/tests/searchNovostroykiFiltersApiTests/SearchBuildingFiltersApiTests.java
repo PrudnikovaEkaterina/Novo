@@ -9,7 +9,6 @@ import ru.dom_novo.api.models.buildingModels.BuildingDataDto;
 import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFiltersApiSteps;
 @Owner("PrudnikovaEkaterina")
 @Tag("Api")
-@Disabled
 public class SearchBuildingFiltersApiTests {
     @Test
     @DisplayName("Получить список ЖК с фильтром 'Станция метро' и проверить, что найденные ЖК содержат искомый station_id")
