@@ -114,7 +114,7 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
         }
     }
 
-    @CsvSource(value = {"1, 1k, 1-комнатные", "2, 2k, 2-х комнатные", "3, 3k, 3-х комнатные"})
+    @CsvSource(value = {"1, 1k, 1-комнатные", "2, 2k, 2-комнатные", "3, 3k, 3-комнатные"})
     @ParameterizedTest(name = "Проверить коррекность выдачи после применения фильтра {2} и гет параметра no_flats=1")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-646")
     void checkSearchWithGetParameterNoFlats1AndFilterRoom(String dataf, String data2, String data3) throws JsonProcessingException {
