@@ -10,6 +10,7 @@ import ru.dom_novo.web.tests.TestBase;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -34,6 +35,7 @@ public class FavoritesItemsDeleteTests extends TestBase {
         List<String> listBuildingsTitleBefore = favoritesPage.getBuildingsTitleEng();
         String firstSearchBuildingsTitleEng = listBuildingsTitleBefore.get(0);
         favoritesPage.clickFavoriteIconForFirstSearchBuilding();
+        sleep(1000);
         List<String> listBuildingsTitleEngAfter = favoritesPage.getBuildingsTitleEng();
         assertThat(listBuildingsTitleEngAfter, not(hasItem(firstSearchBuildingsTitleEng)));
     }
