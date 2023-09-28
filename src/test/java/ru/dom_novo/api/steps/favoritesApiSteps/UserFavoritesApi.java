@@ -3,7 +3,7 @@ package ru.dom_novo.api.steps.favoritesApiSteps;
 import io.qameta.allure.Step;
 import ru.dom_novo.api.models.buildingModels.BuildingDto;
 import ru.dom_novo.api.models.buildingModels.BuildingDataDto;
-import ru.dom_novo.api.steps.authApiSteps.AuthApi;
+import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
 import ru.dom_novo.testData.GenerationData;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 public class UserFavoritesApi {
     @Step("Получить список избранных ЖК пользователя")
     public static List<Integer> getUserFavoritesBuilding(String phoneNumber) {
-        String accessToken = AuthApi.getAccessToken(phoneNumber);
+        String accessToken = AuthApiSteps.getAccessToken(phoneNumber);
         BuildingDataDto dataBuilding = given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)
@@ -31,7 +31,7 @@ public class UserFavoritesApi {
     }
     @Step("Добавить пользователю ЖК в избранное")
     public static void addBuildingToUserFavorites(String phoneNumber) {
-        String accessToken = AuthApi.getAccessToken(phoneNumber);
+        String accessToken = AuthApiSteps.getAccessToken(phoneNumber);
         int buildingId = GenerationData.setRandomBuildingId();
         given()
                 .filter(withCustomTemplates())

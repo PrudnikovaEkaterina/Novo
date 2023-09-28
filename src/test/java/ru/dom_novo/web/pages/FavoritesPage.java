@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Assertions;
-import ru.dom_novo.api.steps.authApiSteps.AuthApi;
+import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
 import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.web.pages.components.CallMeWidgetComponent;
 
@@ -42,7 +42,7 @@ public class FavoritesPage {
             CALL_ME_WIDGET_BUTTON = $$(".call-me-widget__button");
 
     public FavoritesPage openMePageWithApiAuth(String phoneNumber) throws InterruptedException {
-        AuthApi.setAuthCookiesToBrowser(phoneNumber);
+        AuthApiSteps.setAuthCookiesToBrowser(phoneNumber);
         open(baseUrl + "/favorites");
         sleep(1000);
         return this;

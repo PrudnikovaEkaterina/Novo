@@ -16,11 +16,12 @@ import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static ru.dom_novo.api.helpers.CustomAllureListener.withCustomTemplates;
 import static ru.dom_novo.api.specifications.Specification.*;
 
-public class AuthApi {
+public class AuthApiSteps {
     static AuthConfig authConfig = ConfigCache.getOrCreate(AuthConfig.class);
     static String password = authConfig.smsCode();
     static String authCookieName = authConfig.authCookieName();
@@ -48,7 +49,7 @@ public class AuthApi {
                 .when()
                 .post("/api/auth/login");
         Assertions.assertEquals(200, response.getStatusCode());
-        response.path("user.phone", String.valueOf(is(userLoginBody.getPhone())));
+        assertThat( response.path("user.phone"), is(userLoginBody.getPhone()));
         return response;
     }
 

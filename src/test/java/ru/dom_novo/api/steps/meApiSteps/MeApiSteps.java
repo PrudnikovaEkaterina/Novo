@@ -3,7 +3,7 @@ package ru.dom_novo.api.steps.meApiSteps;
 import io.qameta.allure.Step;
 import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.api.models.authModels.UserModel;
-import ru.dom_novo.api.steps.authApiSteps.AuthApi;
+import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
 
 import static io.restassured.RestAssured.given;
 import static ru.dom_novo.api.helpers.CustomAllureListener.withCustomTemplates;
@@ -17,7 +17,7 @@ public class MeApiSteps {
 
     @Step("Получить данные пользователя")
     public static UserModel getAuthMe (String phoneNumber) {
-        String token = AuthApi.getAccessToken(phoneNumber);
+        String token = AuthApiSteps.getAccessToken(phoneNumber);
         return given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)

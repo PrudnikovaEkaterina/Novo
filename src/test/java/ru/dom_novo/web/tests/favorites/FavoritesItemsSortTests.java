@@ -3,8 +3,10 @@ package ru.dom_novo.web.tests.favorites;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
+import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.*;
 import ru.dom_novo.api.models.buildingModels.RootModel;
+import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
 import ru.dom_novo.dataBase.dao.FavoritesDao;
 import ru.dom_novo.dataBase.dao.UsersDao;
@@ -12,13 +14,18 @@ import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 import static com.codeborne.selenide.Selenide.sleep;
+import static io.restassured.RestAssured.given;
+import static net.javacrumbs.jsonunit.core.ConfigurationWhen.path;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static ru.dom_novo.api.specifications.Specification.requestSpec;
+import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 
 @Tag("Web")
@@ -39,16 +46,34 @@ public class FavoritesItemsSortTests extends TestBase {
 //      Сранить 2 списка на равенство;
         sort = "Цена по возрастанию";
         String phoneNumber = GenerationData.setRandomUserPhone();
-        int userId = UsersDao.selectUserId(phoneNumber);
-        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-        Map<Long, String> map = new TreeMap<>();
-        for(Integer buildingId:favoritesBuildingId){
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            long priceFrom = root.getData().getFlats().getPrice().getFrom();
-            String titleEng = root.getData().getTitleEng();
-            map.put(priceFrom,titleEng);
-        }
-        List<String> listSortExpected = new ArrayList<>(map.values());
+        String accessToken = AuthApiSteps.getAccessToken(phoneNumber);
+//        given()
+//                .spec(requestSpec)
+//                .basePath("/api/buildings/list_on_map/")
+//                 .header("Authorization", "Bearer " + accessToken)
+//                .param("region_code[]", 50)
+//                .param("region_code[]", 77)
+//                .param("favorites", 1)
+//                .get()
+//                .then()
+//                .spec(responseSpec200)
+//                .extract().path("..")
+//
+//        Map<String,Integer> ages = JsonPath.from(json).param("map", new HashMap<String,Integer>()).
+//                getMap("class.each {map[it.surname]=it.age.toInteger()}; return map");
+//        System.out.println(ages);
+//                  .as(Map<path("data.min_price"),path("data.min_price")>);
+
+//        int userId = UsersDao.selectUserId(phoneNumber);
+//        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
+//        Map<Long, String> map = new TreeMap<>();
+//        for(Integer buildingId:favoritesBuildingId){
+//            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
+//            long priceFrom = root.getData().getFlats().getPrice().getFrom();
+//            String titleEng = root.getData().getTitleEng();
+//            map.put(priceFrom,titleEng);
+//        }
+//        List<String> listSortExpected = new ArrayList<>(map.values());
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()

@@ -50,22 +50,14 @@ public class CardNovostroykiSimilarApiSteps {
         for (Map.Entry<Integer, List<Integer>> el: mapKeyIsBuildingIdValuesIsHousingId.entrySet()) {
             List<Integer> list=new ArrayList<>();
             for (int i=0; i<el.getValue().size(); i++){
-//                list.add(BuildingDao.selectBuildingReleaseYear(el.getValue().get(i)));
                 list.add(CardNovostroykiApiSteps.getReleaseYear(el.getValue().get(i)));
             }
-//            list.add(BuildingDao.selectBuildingReleaseYear(el.getKey()));
             list.add(CardNovostroykiApiSteps.getReleaseYear(el.getKey()));
             for (int y=0; y<list.size(); y++){
                 assert list.get(y) == 0 || list.stream().anyMatch(getDateRange::contains);
             }
         }
     }
-//    (Устарело, для примера)
-//     public static Map<Integer, List<Integer>> getReleasesDatesLegacy(DataBuildingDto dataBuildingDto){
-//        Map<Integer, String> mapa = dataBuildingDto.getData().stream().collect(toMap(BuildingDto::getId, BuildingDto::getReleaseDate));
-//        return mapa.entrySet()
-//                .stream()
-//                .collect(toMap(Entry::getKey, el -> RegexpMeth.extractYears(el.getValue())));}
 
     @Step("Получить минимальные цены для каждого объекта из списка похожих ЖК")
     public static List<Long> getPricesFromSimilarBuildings(BuildingDataDto dataBuildingDto) {

@@ -1,9 +1,13 @@
 package ru.dom_novo.api.models.buildingModels;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,7 +25,8 @@ public class BuildingDto {
     private List<DocumentModel> documents;
     private LocationModel location;
     private Integer apartments;
-    public List<String> square;
+    private List<String> square;
     @JsonProperty("floor_range")
-    public List<String> floorRange;
+    private List<String> floorRange;
+    private Map<String, ChildModel> children = new HashMap<>();
 }

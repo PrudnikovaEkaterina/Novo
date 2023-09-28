@@ -50,7 +50,7 @@ public class MoreFilterModalApiSteps {
     public static List<Integer> getBuildingListWithFilterFloorMin(int floorMin) {
         return given()
                 .spec(requestSpec)
-                .basePath("/api/buildings/")
+                .basePath("/api/buildings/list_on_map/")
                 .param("region_code[]", 50)
                 .param("region_code[]", 77)
                 .param("floor_min", floorMin)
@@ -67,39 +67,21 @@ public class MoreFilterModalApiSteps {
 
     @Step("Получить список ЖК со способом оплаты {paymentMethod}")
     public static List<Integer> getBuildingListWithFilterMortgage(String paymentMethod) {
-        List<Integer> listAll = new ArrayList<>();
-        Response response = given()
-                .spec(requestSpec)
-                .basePath("/api/buildings/")
-                .param("region_code[]", 50)
-                .param("region_code[]", 77)
-                .param("payment_methods[]", paymentMethod)
-                .param("per_page", 1)
-                .get();
-        Assertions.assertEquals(200, response.statusCode());
-
         try {
-            int pageCountInt = response.path("meta.total");
-            int pageCountDouble = (int) Math.round((double) pageCountInt / 100);
-            for (int i = 1; i < pageCountDouble + 2; i++) {
-                List<Integer> listPage = given()
-                        .spec(requestSpec)
-                        .basePath("/api/buildings/")
-                        .param("region_code[]", 50)
-                        .param("region_code[]", 77)
-                        .param("payment_methods[]", paymentMethod)
-                        .param("per_page", 100)
-                        .param("page", i)
-                        .get()
-                        .then()
-                        .extract().path("data.id");
-                listAll.addAll(listPage);
-            }
+         return given()
+                 .spec(requestSpec)
+                 .basePath("/api/buildings/list_on_map/")
+                 .param("region_code[]", 50)
+                 .param("region_code[]", 77)
+                 .param("payment_methods[]", paymentMethod)
+                 .get()
+                 .then()
+                 .spec(responseSpec200)
+                 .extract().path("data.id");
         }
         catch (NullPointerException e) {
-            listAll=null;
+          return null;
         }
-        return listAll;
     }
 
     @Step("Получить список ЖК из БД, в которых есть квартиры со способом оплаты {paymentMethod}")
@@ -118,74 +100,41 @@ public class MoreFilterModalApiSteps {
 
     @Step("Получить список ЖК renovation = {renovation}")
     public static List<Integer> getBuildingIdListWithFilterRenovation(String renovation) {
-        List<Integer> listAll = new ArrayList<>();
-        Response response = given()
+        return given()
                 .spec(requestSpec)
-                .basePath("/api/buildings/")
+                .basePath("/api/buildings/list_on_map/")
                 .param("region_code[]", 50)
                 .param("region_code[]", 77)
                 .param("renovation[]", renovation)
-                .param("per_page", 1)
-                .get();
-        Assertions.assertEquals(200, response.statusCode());
-        int totalItem = response.path("meta.total");
-        int pageCount = (int) Math.round((double) totalItem / 100);
-        for (int i = 1; i <pageCount+2; i++) {
-            List<Integer> listPage = given()
-                    .spec(requestSpec)
-                    .basePath("/api/buildings/")
-                    .param("region_code[]", 50)
-                    .param("region_code[]", 77)
-                    .param("renovation[]", renovation)
-                    .param("per_page", 100)
-                    .param("page", i)
-                    .get()
-                    .then()
-                    .extract().path("data.id");
-            listAll.addAll(listPage);
-        }
-        return listAll;
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .extract().path("data.id");
     }
 
     @Step("Получить список id ЖК со сроком сдачи = {releaseDate}")
     public static List<Integer> getBuildingListWithFilterReleaseDate(String releaseDate) {
-        List<Integer> listAll = new ArrayList<>();
-        Response response = given()
+        return given()
                 .spec(requestSpec)
-                .basePath("/api/buildings/")
+                .basePath("/api/buildings/list_on_map/")
                 .param("region_code[]", 50)
                 .param("region_code[]", 77)
                 .param("release_date", releaseDate)
-                .param("per_page", 1)
-                .get();
-        Assertions.assertEquals(200, response.statusCode());
-        int totalItem = response.path("meta.total");
-        int pageCount = (int) Math.round((double) totalItem / 100);
-        for (int i = 1; i <pageCount+2; i++) {
-            List<Integer> listPage = given()
-                    .spec(requestSpec)
-                    .basePath("/api/buildings/")
-                    .param("region_code[]", 50)
-                    .param("region_code[]", 77)
-                    .param("release_date", releaseDate)
-                    .param("per_page", 100)
-                    .param("page", i)
-                    .get()
-                    .then()
-                    .extract().path("data.id");
-            listAll.addAll(listPage);
-        }
-        return listAll;
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .extract().path("data.id");
     }
 
     @Step("Получить срок сдачи для ЖК с id = {buildingId}")
     public static String getReleaseDate(int buildingId) {
         return given()
-                            .spec(requestSpec)
-                            .basePath("/api/buildings/" + buildingId)
-                            .get()
-                            .then()
-                            .extract().path("data.release_date");
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .extract().path("data.release_date");
     }
     @Step("Получить значение apartments ЖК с id = {buildingId}")
     public static Integer getApartments(int buildingId) {
@@ -194,17 +143,19 @@ public class MoreFilterModalApiSteps {
                 .basePath("/api/buildings/" + buildingId)
                 .get()
                 .then()
+                .spec(responseSpec200)
                 .extract().path("data.apartments");
     }
 
     @Step("Получить Response для ЖК с id = {buildingId}")
     public static Response getResponse(int buildingId) {
        return given()
-                .spec(requestSpec)
-                .basePath("/api/buildings/" + buildingId)
-                .get()
-                .then()
-                .extract().response();
+               .spec(requestSpec)
+               .basePath("/api/buildings/" + buildingId)
+               .get()
+               .then()
+               .spec(responseSpec200)
+               .extract().response();
     }
     @Step("Получить срок сдачи для ЖК с id = {buildingId}")
     public static String getReleaseDateFromResponse(Response response) {

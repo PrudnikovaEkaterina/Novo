@@ -1,10 +1,13 @@
 package ru.dom_novo.api.steps.cardNovostroykiApiSteps;
 
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.Assertions;
 import ru.dom_novo.api.models.buildingModels.*;
+import ru.dom_novo.regexp.RegexpMeth;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import static io.restassured.RestAssured.given;
 import static ru.dom_novo.api.specifications.Specification.requestSpec;
@@ -18,7 +21,7 @@ public class CardNovostroykiApiSteps {
                 .basePath("/api/buildings/" + buildingId)
                 .get()
                 .then()
-//                .spec(responseSpec200)
+                .spec(responseSpec200)
                 .extract().as(RootModel.class);
     }
 
@@ -147,4 +150,26 @@ public class CardNovostroykiApiSteps {
         return priceList;
     }
 
+    @Step("Получить список сроков сдачи корпусов ЖК")
+    public static List<String> getChildrenReleaseDateList (RootModel root) {
+        Map<String, ChildModel> childrenMap = root.getData().getChildren();
+        List<String> listReleaseDate = new ArrayList<>();
+        if(childrenMap!=null) {
+            for (Map.Entry<String, ChildModel> id: childrenMap.entrySet()){
+                listReleaseDate.add(id.getValue().getRelease_date());}
+    }
+        return listReleaseDate;
+    }
+
+    @Step("Проверить, что хотя бы один из корпусов соответсвует фильтру по сроку сдачи")
+    public static void checkChildrenReleaseDate(List<String> listReleaseDate, String releaseValue, int releaseYear, int releaseQuarter) {
+        if (!listReleaseDate.isEmpty()) {
+            if (listReleaseDate.stream().noneMatch(el -> el.contains(releaseValue))) {
+                List<List<Integer>> collect = listReleaseDate.stream().map(RegexpMeth::getListNumbersFromString).collect(Collectors.toList());
+                if (collect.stream().noneMatch(el -> el.get(1) < releaseYear)) {
+                    Assertions.assertTrue(collect.stream().filter(el -> el.get(1) == releaseYear).anyMatch(el -> el.get(0) <= releaseQuarter));
+                }
+            }
+        }
+    }
 }

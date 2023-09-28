@@ -2,7 +2,7 @@ package ru.dom_novo.web.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.dom_novo.api.steps.authApiSteps.AuthApi;
+import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
@@ -15,7 +15,7 @@ public class MePage {
             SAVE_CHANGES = $(".me-settings__chosen-icon");
 
     public void openMePageWithApiAuth(String phoneNumber) {
-       AuthApi.setAuthCookiesToBrowser(phoneNumber);
+       AuthApiSteps.setAuthCookiesToBrowser(phoneNumber);
        open(baseUrl + "/me");
     }
 

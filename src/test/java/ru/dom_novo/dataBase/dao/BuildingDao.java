@@ -56,6 +56,15 @@ public class BuildingDao {
         else
             return 0;
     }
+
+    public static String selectBuildingReleaseDate(int id) {
+        String releaseYear = jdbcTemplate.queryForObject("select JSON_VALUE (data_json, \"$.properties.204.values.*\") from buildings where id=?;",
+                String.class, id);
+        if (releaseYear!=null)
+            return releaseYear;
+        else
+            return null;
+    }
     public static List<Integer> selectDistinctHouseId(int building_id){
         return jdbcTemplate.queryForList("select  distinct house_id from flats where building_id=? and status=1", Integer.class, building_id);
     }
@@ -81,7 +90,7 @@ public class BuildingDao {
 //        обернула в блок try/catch так как запрос может не возвращать title_eng (не выполнится условие level<=5),
 //        чтобы избежать EmptyResultDataAccessException и возвращать null
         try {
-            return jdbcTemplate.queryForObject("select  title_eng from gar_ADDRESSOBJECTS where OBJECTID=? and level<=5", String.class, garObjectId);
+            return jdbcTemplate.queryForObject("select title_eng from gar_ADDRESSOBJECTS where OBJECTID=? and level<=5", String.class, garObjectId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
