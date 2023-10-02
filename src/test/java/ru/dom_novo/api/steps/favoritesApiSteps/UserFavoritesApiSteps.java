@@ -14,7 +14,7 @@ import static ru.dom_novo.api.helpers.CustomAllureListener.withCustomTemplates;
 import static ru.dom_novo.api.specifications.Specification.requestSpec;
 import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
-public class UserFavoritesApi {
+public class UserFavoritesApiSteps {
     @Step("Получить список избранных ЖК пользователя")
     public static List<Integer> getUserFavoritesBuilding(String phoneNumber) {
         String accessToken = AuthApiSteps.getAccessToken(phoneNumber);
@@ -29,6 +29,7 @@ public class UserFavoritesApi {
                 .extract().as(BuildingDataDto.class);
         return dataBuilding.getData().stream().map(BuildingDto::getId).collect(Collectors.toList());
     }
+
     @Step("Добавить пользователю ЖК в избранное")
     public static void addBuildingToUserFavorites(String phoneNumber) {
         String accessToken = AuthApiSteps.getAccessToken(phoneNumber);

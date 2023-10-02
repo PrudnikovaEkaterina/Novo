@@ -120,5 +120,9 @@ public class BuildingDao {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and floor >= ? and floor <= ?", Integer.class, buildingId, floorMin, floorMax);
     }
 
+    public static String selectTitleEngFromBuildings (int id) {
+            return jdbcTemplate.queryForObject("select title_eng from buildings where id = ?", String.class, id);
+    }
+
 }
 

@@ -1,6 +1,7 @@
 package ru.dom_novo.api.models.buildingModels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
@@ -9,6 +10,8 @@ public class ChildModel {
     public int id;
     public String title_eng;
     public int parent_id;
-    public String release_date;
-    public String release_date_tag;
+    @JsonProperty("release_date")
+    public String releaseDate;
+    @JsonProperty("release_date_tag")
+    public String releaseDateTag;
 }

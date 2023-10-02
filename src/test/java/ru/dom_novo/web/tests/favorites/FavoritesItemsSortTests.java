@@ -3,193 +3,126 @@ package ru.dom_novo.web.tests.favorites;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
-import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.api.models.buildingModels.RootModel;
-import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
+import ru.dom_novo.api.steps.buildingsOnMapSteps.BuildingsOnMapSteps;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
-import ru.dom_novo.dataBase.dao.FavoritesDao;
-import ru.dom_novo.dataBase.dao.UsersDao;
+import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApiSteps;
+import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
-import java.lang.reflect.Type;
-import java.util.*;
+
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-
 import static com.codeborne.selenide.Selenide.sleep;
-import static io.restassured.RestAssured.given;
-import static net.javacrumbs.jsonunit.core.ConfigurationWhen.path;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static ru.dom_novo.api.specifications.Specification.requestSpec;
-import static ru.dom_novo.api.specifications.Specification.responseSpec200;
 
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
 @Story("FavoritesItemsSort")
 public class FavoritesItemsSortTests extends TestBase {
-    FavoritesPage favoritesPage = new FavoritesPage();
-    String sort;
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена по возрастанию на странице Мое избранное")
     void checkSortFavoritesPriceAsc() throws InterruptedException {
-//      Получить id пользователя по номеру телефона;
-//      Получить список избранных пользователем ЖК;
-//      Для каждого ЖК получить data.price.from и положитт в  TreeMap, где ключ -цена, значение - title_eng ЖК;
-//      Собрать все значения из TreeMap в список;
-//      На странице Избранное применить сортировку  "Цена по возрастанию" и получить актальный список title_eng ЖК;
-//      Сранить 2 списка на равенство;
-        sort = "Цена по возрастанию";
-        String phoneNumber = GenerationData.setRandomUserPhone();
-        String accessToken = AuthApiSteps.getAccessToken(phoneNumber);
-//        given()
-//                .spec(requestSpec)
-//                .basePath("/api/buildings/list_on_map/")
-//                 .header("Authorization", "Bearer " + accessToken)
-//                .param("region_code[]", 50)
-//                .param("region_code[]", 77)
-//                .param("favorites", 1)
-//                .get()
-//                .then()
-//                .spec(responseSpec200)
-//                .extract().path("..")
-//
-//        Map<String,Integer> ages = JsonPath.from(json).param("map", new HashMap<String,Integer>()).
-//                getMap("class.each {map[it.surname]=it.age.toInteger()}; return map");
-//        System.out.println(ages);
-//                  .as(Map<path("data.min_price"),path("data.min_price")>);
+        FavoritesPage favoritesPage = new FavoritesPage();
+        String sort = "Цена по возрастанию";
 
-//        int userId = UsersDao.selectUserId(phoneNumber);
-//        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-//        Map<Long, String> map = new TreeMap<>();
-//        for(Integer buildingId:favoritesBuildingId){
-//            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-//            long priceFrom = root.getData().getFlats().getPrice().getFrom();
-//            String titleEng = root.getData().getTitleEng();
-//            map.put(priceFrom,titleEng);
-//        }
-//        List<String> listSortExpected = new ArrayList<>(map.values());
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        Map<Integer, Integer> map = BuildingsOnMapSteps.createMapFromRootBuildingOnMapModel(phoneNumber);
+        List<Integer> list = BuildingsOnMapSteps.sortMapByKeyAscAndReturnValue(map);
+        List<String> sortExpectedList = list.stream().map(BuildingDao::selectTitleEngFromBuildings).collect(Collectors.toList());
+
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
         sleep(1000);
-        List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-//        assertThat(listSortActual, is(listSortExpected));
+        List<String> sortActualList = favoritesPage.getBuildingsTitleEng();
+
+        assertThat(sortActualList, is(sortExpectedList));
     }
+
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена по убыванию' на странице Мое избранное")
     void checkSortFavoritesPriceDesc() throws InterruptedException {
-//      Получить id пользователя по номеру телефона;
-//      Получить список избранных пользователем ЖК;
-//      Для каждого ЖК получить data.price.from и положитт в  HashMap, где ключ -цена, значение - title_eng ЖК;
-//      Отсортировать ключи HashMap по убыванию. После этого собрать значения HashMap в список;
-//      На странице Избранное применить сортировку  "Цена по убыванию" и получить актальный список title_eng ЖК;
-//      Сранить 2 списка на равенство;
+        FavoritesPage favoritesPage = new FavoritesPage();
+        String sort  = "Цена по убыванию";
 
-        sort = "Цена по убыванию";
         String phoneNumber = GenerationData.setRandomUserPhone();
-        int userId = UsersDao.selectUserId(phoneNumber);
-        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-        Map<Long, String> map = new HashMap<>();
-        for(Integer buildingId:favoritesBuildingId){
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            long priceFrom = root.getData().getFlats().getPrice().getFrom();
-            String titleEng = root.getData().getTitleEng();
-            map.put(priceFrom,titleEng);
-        }
-        List<String> listSortExpected = map.entrySet().stream()
-                .sorted(Map.Entry.<Long, String>comparingByKey().reversed()).map(Map.Entry::getValue).collect(Collectors.toList());
+        Map<Integer, Integer> map = BuildingsOnMapSteps.createMapFromRootBuildingOnMapModel(phoneNumber);
+        List<Integer> list = BuildingsOnMapSteps.sortMapByKeyDescAndReturnBuildingId(map);
+        List<String> sortExpectedList = list.stream().map(BuildingDao::selectTitleEngFromBuildings).collect(Collectors.toList());
+
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
         sleep(1000);
-        List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        assertThat(listSortActual, is(listSortExpected));
+        List<String> sortActualList = favoritesPage.getBuildingsTitleEng();
+
+        assertThat(sortActualList, is(sortExpectedList));
     }
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Площадь по возрастанию' на странице Мое избранное")
     @Link("Тест падает для пользователя 79085040794, 79994817999 так как некоторые ЖК имеют одинаковую min(fl.area_total, в итоге выводятся в разной последовательности")
     void checkSortFavoritesAreaAsc() throws InterruptedException {
-        sort = "Площадь по возрастанию";
+        FavoritesPage favoritesPage = new FavoritesPage();
+        String sort = "Площадь по возрастанию";
+
         String phoneNumber = GenerationData.setRandomUserPhone();
-        int userId = UsersDao.selectUserId(phoneNumber);
-        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-        Map<String, Double> map = new HashMap<>();
-        for(Integer buildingId:favoritesBuildingId){
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom;
-            if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
-                 priceFrom = root.getData().getFlats().getSquareM2().getFrom();}
-            else priceFrom = 0;
-            String titleEng = root.getData().getTitleEng();
-            map.put(titleEng, priceFrom);
-        }
+        List<Integer> buildingIdList = UserFavoritesApiSteps.getUserFavoritesBuilding(phoneNumber);
+        Map<String, Double> map = CardNovostroykiApiSteps.createMapTitleEngAndSquareM2(buildingIdList);
         List<String> listSortExpected = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).collect(Collectors.toList());
+
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
         sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        System.out.println(listSortExpected);
+
         assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Площадь по убыванию' на странице Мое избранное")
     void checkSortFavoritesAreaDesc() throws InterruptedException {
-        sort = "Площадь по убыванию";
+        FavoritesPage favoritesPage = new FavoritesPage();
+        String sort = "Площадь по убыванию";
+
         String phoneNumber = GenerationData.setRandomUserPhone();
-        int userId = UsersDao.selectUserId(phoneNumber);
-        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-        Map<String, Double> map = new HashMap<>();
-        for(Integer buildingId:favoritesBuildingId){
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom;
-            if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
-                priceFrom = root.getData().getFlats().getSquareM2().getFrom();}
-            else priceFrom = 0;
-            String titleEng = root.getData().getTitleEng();
-            map.put(titleEng, priceFrom);
-        }
+        List<Integer> buildingIdList = UserFavoritesApiSteps.getUserFavoritesBuilding(phoneNumber);
+        Map<String, Double> map = CardNovostroykiApiSteps.createMapTitleEngAndSquareM2(buildingIdList);
         List<String> listSortExpected = map.entrySet().stream()
                 .sorted(Map.Entry.<String, Double>comparingByValue().reversed()).map(Map.Entry::getKey).collect(Collectors.toList());
+
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
         sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        System.out.println(listSortExpected);
+
         assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена за м2 - по возрастанию' на странице Мое избранное")
     void checkSortFavoritesPriceM2Asc() throws InterruptedException {
-        sort = "Цена за м2 - по возрастанию";
+        FavoritesPage favoritesPage = new FavoritesPage();
+        String sort = "Цена за м2 - по возрастанию";
+
         String phoneNumber = GenerationData.setRandomUserPhone();
-        int userId = UsersDao.selectUserId(phoneNumber);
-        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-        Map<String, Double> map = new HashMap<>();
-        for(Integer buildingId:favoritesBuildingId){
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom;
-            if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
-                priceFrom = root.getData().getFlats().getPriceM2().getFrom();}
-            else priceFrom = 0;
-            String titleEng = root.getData().getTitleEng();
-            map.put(titleEng, priceFrom);
-        }
+        List<Integer> buildingIdList = UserFavoritesApiSteps.getUserFavoritesBuilding(phoneNumber);
+        Map<String, Double> map = CardNovostroykiApiSteps.createMapTitleEngAndPriceM2(buildingIdList);
         List<String> listSortExpected = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).collect(Collectors.toList());
         favoritesPage
@@ -198,36 +131,29 @@ public class FavoritesItemsSortTests extends TestBase {
                 .setSortFavoritesBuildings(sort);
         sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        System.out.println(listSortExpected);
+
         assertThat(listSortActual, is(listSortExpected));
     }
 
     @Test
     @DisplayName("Проверить сортировку ЖК 'Цена за м2 - по убыванию' на странице Мое избранное")
     void checkSortFavoritesPriceM2Desc() throws InterruptedException {
-        sort = "Цена за м2 - по убыванию";
+        FavoritesPage favoritesPage = new FavoritesPage();
+        String sort = "Цена за м2 - по убыванию";
+
         String phoneNumber = GenerationData.setRandomUserPhone();
-        int userId = UsersDao.selectUserId(phoneNumber);
-        List<Integer> favoritesBuildingId = FavoritesDao.selectBuildingIdFromFavorites(userId);
-        Map<String, Double> map = new HashMap<>();
-        for(Integer buildingId:favoritesBuildingId){
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom;
-            if (root.getData().getFlats().getSquareM2().getFrom()!=null) {
-                priceFrom = root.getData().getFlats().getPriceM2().getFrom();}
-            else priceFrom = 0;
-            String titleEng = root.getData().getTitleEng();
-            map.put(titleEng, priceFrom);
-        }
+        List<Integer> buildingIdList = UserFavoritesApiSteps.getUserFavoritesBuilding(phoneNumber);
+        Map<String, Double> map = CardNovostroykiApiSteps.createMapTitleEngAndPriceM2(buildingIdList);
         List<String> listSortExpected = map.entrySet().stream()
                 .sorted(Map.Entry.<String, Double>comparingByValue().reversed()).map(Map.Entry::getKey).collect(Collectors.toList());
+
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
         sleep(1000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
-        System.out.println(listSortExpected);
+
         assertThat(listSortActual, is(listSortExpected));
     }
 

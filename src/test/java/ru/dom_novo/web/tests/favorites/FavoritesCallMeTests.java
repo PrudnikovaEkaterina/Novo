@@ -1,17 +1,14 @@
 package ru.dom_novo.web.tests.favorites;
 
-import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
-import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
+import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApiSteps;
 import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.pages.components.CallMeWidgetComponent;
 import ru.dom_novo.web.tests.TestBase;
-
-import static com.codeborne.selenide.Selenide.*;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -23,7 +20,7 @@ public class FavoritesCallMeTests extends TestBase {
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
-        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
+        UserFavoritesApiSteps.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();

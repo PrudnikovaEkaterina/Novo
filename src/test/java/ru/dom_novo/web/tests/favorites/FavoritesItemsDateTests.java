@@ -4,7 +4,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
-import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
+import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApiSteps;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.dataBase.dao.FavoritesDao;
 import ru.dom_novo.testData.GenerationData;
@@ -30,7 +30,7 @@ public class FavoritesItemsDateTests extends TestBase {
 
     @BeforeEach
     void beforeEach() throws InterruptedException {
-        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
+        UserFavoritesApiSteps.addBuildingToUserFavorites(phoneNumber);
         favoritesPage
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle();

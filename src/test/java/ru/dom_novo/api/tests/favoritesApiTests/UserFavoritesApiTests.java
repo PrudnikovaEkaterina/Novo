@@ -4,7 +4,7 @@ import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApi;
+import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApiSteps;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.dataBase.dao.FavoritesDao;
 
@@ -22,7 +22,7 @@ public class UserFavoritesApiTests {
     void checkUserFavoritesBuilding() {
         String phone = "79085040794";
         int userId = MeApiSteps.getUserId(phone);
-        List<Integer> userFavoritesBuildingListActual = UserFavoritesApi.getUserFavoritesBuilding(phone);
+        List<Integer> userFavoritesBuildingListActual = UserFavoritesApiSteps.getUserFavoritesBuilding(phone);
         List<Integer> userFavoritesBuildingListExpected = FavoritesDao.selectBuildingIdFromFavorites(userId);
         assertThat(userFavoritesBuildingListActual, is(userFavoritesBuildingListExpected));
 //        assertIterableEquals(userFavoritesBuildingListExpected, userFavoritesBuildingListActual);
