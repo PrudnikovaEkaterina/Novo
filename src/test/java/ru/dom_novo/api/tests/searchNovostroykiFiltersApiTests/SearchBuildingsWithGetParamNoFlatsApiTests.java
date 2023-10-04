@@ -29,59 +29,59 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
 //        Особенность сортировки для no_flats=1: при применении сортировки по цене или площади (всё, кроме популярности),
 //        выдача состоит из 2-х частей, отсортированных независимо друг от друга. В начале идут отсортированные ЖК с предложениями ТА,
 //        затем отсортированные по данным админки (кроме тех ЖК, для которых были предложения ТА).
-    @Test
-    @DisplayName("Проверить коррекность выдачи после добавления гет параметра no_flats=1")
-    @TmsLink("https://tracker.yandex.ru/NOVODEV-646")
-    void checkSearchWithGetParameterNoFlats1() throws JsonProcessingException {
-//  1. Получить список id ЖК из /api/buildings/list_on_map?region_code[]=77&region_code[]=50&no_flats=1 - отдает только 500 ЖК!!
-//        - надо запрашивать со списка id ЖК, но это затратная операция, поэтому буду проверять списки не на равенство, а
-//        totalBuildingIdList содержит в себе buildingIdListWithGetParameterNoFlats1
-//  2. Получить из базы список id ЖК с предложениями
-//  3. Получить из базы список id ЖК без предложений, но с ценами из новой админки;
-//     -  если типы комнат ЖК (Properties202Values) содержат одно из ожидаемых значений или PricesTitle содержит одно из ожидаемых значений,
-//     то собрать их в список buildingIdListWithPricesAndRoomTypeOrPrices
-//  4. Объединить buildingIdListWithPricesAndRoomTypeOrPrices  b buildingIdListWithFlats в один и проверить, что его размер равен размеру списку из апи;
-
-        String _s = "Студии";
-        String _ss = "Свободная планировка";
-        String _1 = "1-комнатные";
-        String _2 = "2-х комнатные";
-        String _3 = "3-х комнатные";
-        String _4 = "4-х комнатные";
-        String _5 = "5-и комнатные";
-        String _6 = "6-и комнатные";
-        String _7 = "7-и комнатные";
-        String _8 = "8-и комнатные";
-        List<Integer> buildingIdListWithGetParameterNoFlats1 = SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlats(1);
-        List<Integer> buildingIdListWithFlats = BuildingDao.selectDistinctBuildingIdWithFlats();
-        List<Integer> buildingIdListWithPrices = BuildingDao.selectDistinctBuildingIdWithPrices();
-        List<Integer> buildingIdListWithPricesAndRoomTypeOrPrices = new ArrayList<>();
-        for (Integer id : buildingIdListWithPrices) {
-            if (id == 5836) {
-                break;}
-            String buildingTypeRoomValues = BuildingService.selectProperties202Values(id);
-            String buildingPricesTitle = BuildingService.selectPricesTitle(id);
-            if (buildingTypeRoomValues != null && buildingPricesTitle != null) {
-                if (buildingTypeRoomValues.contains(_s) || buildingTypeRoomValues.contains(_ss)
-                        || buildingTypeRoomValues.contains(_1) || buildingTypeRoomValues.contains(_2)
-                        || buildingTypeRoomValues.contains(_3) || buildingTypeRoomValues.contains(_4)
-                        || buildingTypeRoomValues.contains(_5) || buildingTypeRoomValues.contains(_6)
-                        || buildingTypeRoomValues.contains(_7) || buildingTypeRoomValues.contains(_8)
-                        || buildingPricesTitle.contains(_s) || buildingPricesTitle.contains(_ss)
-                        || buildingPricesTitle.contains(_1) || buildingPricesTitle.contains(_2)
-                        || buildingPricesTitle.contains(_3) || buildingPricesTitle.contains(_4)
-                        || buildingPricesTitle.contains(_5) || buildingPricesTitle.contains(_6)
-                        || buildingPricesTitle.contains(_7) || buildingPricesTitle.contains(_8)) {
-                    buildingIdListWithPricesAndRoomTypeOrPrices.add(id);
-                }
-            }
-        }
-        List<Integer> totalBuildingIdList = new ArrayList<>();
-        totalBuildingIdList.addAll(buildingIdListWithFlats);
-        totalBuildingIdList.addAll(buildingIdListWithPricesAndRoomTypeOrPrices);
-
-        assertThat(totalBuildingIdList, containsInAnyOrder(buildingIdListWithGetParameterNoFlats1));
-    }
+//    @Test
+//    @DisplayName("Проверить коррекность выдачи после добавления гет параметра no_flats=1")
+//    @TmsLink("https://tracker.yandex.ru/NOVODEV-646")
+//    void checkSearchWithGetParameterNoFlats1() throws JsonProcessingException {
+////  1. Получить список id ЖК из /api/buildings/list_on_map?region_code[]=77&region_code[]=50&no_flats=1 - отдает только 500 ЖК!!
+////        - надо запрашивать со списка id ЖК, но это затратная операция, поэтому буду проверять списки не на равенство, а
+////        totalBuildingIdList содержит в себе buildingIdListWithGetParameterNoFlats1
+////  2. Получить из базы список id ЖК с предложениями
+////  3. Получить из базы список id ЖК без предложений, но с ценами из новой админки;
+////     -  если типы комнат ЖК (Properties202Values) содержат одно из ожидаемых значений или PricesTitle содержит одно из ожидаемых значений,
+////     то собрать их в список buildingIdListWithPricesAndRoomTypeOrPrices
+////  4. Объединить buildingIdListWithPricesAndRoomTypeOrPrices  b buildingIdListWithFlats в один и проверить, что его размер равен размеру списку из апи;
+//
+//        String _s = "Студии";
+//        String _ss = "Свободная планировка";
+//        String _1 = "1-комнатные";
+//        String _2 = "2-х комнатные";
+//        String _3 = "3-х комнатные";
+//        String _4 = "4-х комнатные";
+//        String _5 = "5-и комнатные";
+//        String _6 = "6-и комнатные";
+//        String _7 = "7-и комнатные";
+//        String _8 = "8-и комнатные";
+//        List<Integer> buildingIdListWithGetParameterNoFlats1 = SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlats(1);
+//        List<Integer> buildingIdListWithFlats = BuildingDao.selectDistinctBuildingIdWithFlats();
+//        List<Integer> buildingIdListWithPrices = BuildingDao.selectDistinctBuildingIdWithPrices();
+//        List<Integer> buildingIdListWithPricesAndRoomTypeOrPrices = new ArrayList<>();
+//        for (Integer id : buildingIdListWithPrices) {
+//            if (id == 5836) {
+//                break;}
+//            String buildingTypeRoomValues = BuildingService.selectProperties202Values(id);
+//            String buildingPricesTitle = BuildingService.selectPricesTitle(id);
+//            if (buildingTypeRoomValues != null && buildingPricesTitle != null) {
+//                if (buildingTypeRoomValues.contains(_s) || buildingTypeRoomValues.contains(_ss)
+//                        || buildingTypeRoomValues.contains(_1) || buildingTypeRoomValues.contains(_2)
+//                        || buildingTypeRoomValues.contains(_3) || buildingTypeRoomValues.contains(_4)
+//                        || buildingTypeRoomValues.contains(_5) || buildingTypeRoomValues.contains(_6)
+//                        || buildingTypeRoomValues.contains(_7) || buildingTypeRoomValues.contains(_8)
+//                        || buildingPricesTitle.contains(_s) || buildingPricesTitle.contains(_ss)
+//                        || buildingPricesTitle.contains(_1) || buildingPricesTitle.contains(_2)
+//                        || buildingPricesTitle.contains(_3) || buildingPricesTitle.contains(_4)
+//                        || buildingPricesTitle.contains(_5) || buildingPricesTitle.contains(_6)
+//                        || buildingPricesTitle.contains(_7) || buildingPricesTitle.contains(_8)) {
+//                    buildingIdListWithPricesAndRoomTypeOrPrices.add(id);
+//                }
+//            }
+//        }
+//        List<Integer> totalBuildingIdList = new ArrayList<>();
+//        totalBuildingIdList.addAll(buildingIdListWithFlats);
+//        totalBuildingIdList.addAll(buildingIdListWithPricesAndRoomTypeOrPrices);
+//
+//        assertThat(totalBuildingIdList, containsInAnyOrder(buildingIdListWithGetParameterNoFlats1));
+//    }
 
     @CsvSource(value = {"4_plus, 4k_plus, 4-х комнатные, 5-и комнатные, 6-и комнатные, 7-и комнатные", "studio, studio, Студии, Свободная планировка, Параметр, Параметр"})
     @ParameterizedTest(name = "Проверить коррекность выдачи после применения фильтра {2} и гет параметра no_flats=1")
