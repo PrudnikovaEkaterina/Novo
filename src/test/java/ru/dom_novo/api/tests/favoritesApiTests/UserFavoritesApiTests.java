@@ -25,7 +25,6 @@ public class UserFavoritesApiTests {
         List<Integer> userFavoritesBuildingListActual = UserFavoritesApiSteps.getUserFavoritesBuilding(phone);
         List<Integer> userFavoritesBuildingListExpected = FavoritesDao.selectBuildingIdFromFavorites(userId);
         assertThat(userFavoritesBuildingListActual, is(userFavoritesBuildingListExpected));
-//        assertIterableEquals(userFavoritesBuildingListExpected, userFavoritesBuildingListActual);
     }
 
 }
