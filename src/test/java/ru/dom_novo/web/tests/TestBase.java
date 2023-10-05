@@ -31,7 +31,7 @@ public class TestBase {
                 "enableVNC", true,
                 "enableVideo", true));
         Configuration.browserCapabilities = capabilities;
-//       System.setProperty("webdriver.chrome.driver", "/home/user/chromedriver");
+//      System.setProperty("webdriver.chrome.driver", "/home/user/chromedriver");
     }
 
     @BeforeEach
