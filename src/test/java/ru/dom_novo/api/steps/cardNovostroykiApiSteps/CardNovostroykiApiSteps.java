@@ -50,6 +50,17 @@ public class CardNovostroykiApiSteps {
                 .extract().path("data.release.year");
     }
 
+    @Step("Получить дату сдачи ЖК")
+    public static String getReleaseDate(int buildingId) {
+        return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .statusCode(200)
+                .extract().path("data.release_date");
+    }
+
     @Step("Получить список station_id")
     public static List<Integer> getStationIdList(int buildingId) {
         RootModel data = getBuildingData(buildingId);
@@ -168,7 +179,7 @@ public class CardNovostroykiApiSteps {
     }
 
     @Step("Проверить, что хотя бы один из корпусов соответсвует фильтру по сроку сдачи")
-    public static void checkChildrenReleaseDate(List<String> listReleaseDate, String releaseValue, int releaseYear, int releaseQuarter) {
+    public static void checkHousesReleaseDate(List<String> listReleaseDate, String releaseValue, int releaseYear, int releaseQuarter) {
         if (!listReleaseDate.isEmpty()) {
             if (listReleaseDate.stream().noneMatch(el -> el.contains(releaseValue))) {
                 List<List<Integer>> collect = listReleaseDate.stream().map(RegexpMeth::getListNumbersFromString).collect(Collectors.toList());

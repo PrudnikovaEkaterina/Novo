@@ -4,6 +4,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.dom_novo.dataBase.DataSourceProvider;
 import ru.dom_novo.dataBase.entities.buildingEntities.BuildingEntity;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingDao {
@@ -51,7 +53,7 @@ public class BuildingDao {
     public static int selectBuildingReleaseYear(int id) {
         String releaseYear = jdbcTemplate.queryForObject("select JSON_VALUE (data_json, \"$.properties.241.values.*\") from buildings where id=?;",
                 String.class, id);
-        if (releaseYear!=null)
+        if (releaseYear != null)
             return Integer.parseInt(releaseYear);
         else
             return 0;
@@ -60,15 +62,17 @@ public class BuildingDao {
     public static String selectBuildingReleaseDate(int id) {
         String releaseYear = jdbcTemplate.queryForObject("select JSON_VALUE (data_json, \"$.properties.204.values.*\") from buildings where id=?;",
                 String.class, id);
-        if (releaseYear!=null)
+        if (releaseYear != null)
             return releaseYear;
         else
             return null;
     }
-    public static List<Integer> selectDistinctHouseId(int building_id){
+
+    public static List<Integer> selectDistinctHouseId(int building_id) {
         return jdbcTemplate.queryForList("select  distinct house_id from flats where building_id=? and status=1", Integer.class, building_id);
     }
-    public static List<Integer> selectAllHouseId(int building_id){
+
+    public static List<Integer> selectAllHouseId(int building_id) {
         return jdbcTemplate.queryForList("select id from buildings where parent_id = ?", Integer.class, building_id);
     }
 
@@ -83,9 +87,11 @@ public class BuildingDao {
     public static List<Integer> selectDistinctBuildingGarObjectId() {
         return jdbcTemplate.queryForList("SELECT DISTINCT b.gar_object_id from buildings b JOIN flats f ON f.building_id=b.id JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
     }
+
     public static List<String> selectPathFromGarMunHierarchy(int garObjectId) {
         return jdbcTemplate.queryForList("select  PATH from gar_MUN_HIERARCHY where OBJECTID=?", String.class, garObjectId);
     }
+
     public static String selectTitleEngFromGarAddressObjects(String garObjectId) {
 //        обернула в блок try/catch так как запрос может не возвращать title_eng (не выполнится условие level<=5),
 //        чтобы избежать EmptyResultDataAccessException и возвращать null
@@ -95,33 +101,43 @@ public class BuildingDao {
             return null;
         }
     }
-    public static int selectCountFromFlatsWhereHouseIdIsNull (int buildingId) {
+
+    public static int selectCountFromFlatsWhereHouseIdIsNull(int buildingId) {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id = ? and status=1 and house_id is null;", Integer.class, buildingId);
     }
+
     public static List<Integer> selectDistinctBuildingIdWithFlats() {
         return jdbcTemplate.queryForList("select distinct b.id from buildings b JOIN flats f ON(b.id=f.building_id) JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) and f.status=1", Integer.class);
     }
-    public static List<Integer> selectDistinctBuildingIdWithPrices(){
+
+    public static List<Integer> selectDistinctBuildingIdWithPrices() {
         return jdbcTemplate.queryForList("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where not exists (select 1 from flats f where f.building_id = b.id and f.status=1) and JSON_VALUE(data_json, \"$.prices[*].*\") is not null and g.region_code in (50,77) and b.parent_id is null;", Integer.class);
     }
-    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1 (int buildingId){
+
+    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1(int buildingId) {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1", Integer.class, buildingId);
     }
 
-    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterPrice (int buildingId, int priceMin, int priceMax){
+    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterPrice(int buildingId, int priceMin, int priceMax) {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and price_total >= ? and price_total <= ?", Integer.class, buildingId, priceMin, priceMax);
     }
 
-    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterArea (int buildingId, int areaMin, int areaMax){
+    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterArea(int buildingId, int areaMin, int areaMax) {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and area_total >= ? and area_total <= ?", Integer.class, buildingId, areaMin, areaMax);
     }
 
-    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterFloor (int buildingId, int floorMin, int floorMax){
+    public static int selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterFloor(int buildingId, int floorMin, int floorMax) {
         return jdbcTemplate.queryForObject("select count(*) from flats where building_id=? and status=1 and floor >= ? and floor <= ?", Integer.class, buildingId, floorMin, floorMax);
     }
 
-    public static String selectTitleEngFromBuildings (int id) {
-            return jdbcTemplate.queryForObject("select title_eng from buildings where id = ?", String.class, id);
+    public static String selectTitleEngFromBuildings(int id) {
+        return jdbcTemplate.queryForObject("select title_eng from buildings where id = ?", String.class, id);
+    }
+
+    public static List<String> selectHouseReleaseDate(int id) {
+        return  jdbcTemplate.query(
+                "select JSON_VALUE (data_json, \"$.properties.241.values.*\"), JSON_VALUE (data_json, \"$.properties.242.values.*\") from buildings where id=?",
+                (rs, rowNum) -> String.format("%s %s", rs.getString(1),rs.getString(2)), id);
     }
 
 }

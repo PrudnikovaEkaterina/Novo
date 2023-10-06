@@ -19,7 +19,6 @@ public class AuthApiTests {
     @DisplayName("Авторизация пользователя")
     void auth() {
         AuthApiSteps.auth(phoneNumber);
-
     }
 
     @Test

@@ -16,6 +16,7 @@ import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFil
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.FlatService;
 import ru.dom_novo.regexp.RegexpMeth;
+import ru.dom_novo.testData.GenerationData;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -214,54 +215,37 @@ public class MoreFilterModalApiTests {
         }
     }
 
-    @ParameterizedTest(name = "Применить фильтр Cрок сдачи {0} и проверить поисковую выдачу на соответствие фильтру")
-    @EnumSource(ReleaseDateEnum.class)
-    void searchWithFilterReleaseDateAndVerifyResult(ReleaseDateEnum releaseDateEnum) {
-//      Получить дату сдачи из ReleaseDateEnum
-//      Получить год сдачи из значения String releaseDate
-//      Получить квартал сдачи из значения String releaseDate
-//      Получить список id ЖК с фильтром по сроку сдачи;
-//      Получить срок сдачи ЖК из апи, если не подходит под условие фильтра
-//      Получить срок сдачи ЖК из базы (для ЖК https://yadoma-realty.ru/zhk-portland в базе одно значение, в апи - другое), если не подходит под условие фильтра
-//          Если срок сдачи из базы не null
-//      Проверить ли срок сдачи из базы под условие фильтраБ если нет, то
-//      Получить срок сдачи для каждого корпуса и положить в список;
-//      Если хотя бы 1 значение из списка содержит Сдан, значит фильтр работает корректно;
-//      Если не 1 значение из списка не содержит Сдан, то:
-//      Создать список, который будет содержать в себе список из года и квартала сдачи корпусов;
-//      Если не один из годов сдачи списка не меньше года сдачи из значения String releaseDate, то:
-//      Проверить, что есть хотя бы одно значение, где год сдачи == String releaseDate, а квартал меньше или равен int quarter
-//           Если срок сдачи из базы не null
-//      Получить срок сдачи для каждого корпуса и положить в список;
-//      Если хотя бы 1 значение из списка содержит Сдан, значит фильтр работает корректно;
-//      Если не 1 значение из списка не содержит Сдан, то:
-//      Создать список, который будет содержать в себе список из года и квартала сдачи корпусов;
-//      Если не один из годов сдачи списка не меньше года сдачи из значения String releaseDate, то:
-//      Проверить, что есть хотя бы одно значение, где год сдачи == String releaseDate, а квартал меньше или равен int quarter
-        String releaseValue = "Сдан";
+    @Test
+    void searchWithFilterReleaseDateAndVerifyResult1() {
+        String releaseDate = GenerationData.setRandomReleaseDate();
 
-        String releaseDate = releaseDateEnum.name;
+        String release = "Сдан";
         int releaseYear = Integer.parseInt(releaseDate.substring(0, 4));
         int releaseQuarter = Integer.parseInt(releaseDate.substring(4));
 
         List<Integer> listBuildingId = MoreFilterModalApiSteps.getBuildingListWithFilterReleaseDate(releaseDate);
+
         for (Integer buildingId : listBuildingId) {
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            String buildingReleaseDate = root.getData().getReleaseDate();
+            String buildingReleaseDate = BuildingDao.selectBuildingReleaseDate(buildingId);
             if (buildingReleaseDate != null) {
-                if (!buildingReleaseDate.contains(releaseValue)) {
-                    List<Integer> numbers = RegexpMeth.getListNumbersFromString(buildingReleaseDate);
-                    if (numbers.get(1) > releaseYear || (numbers.get(1) == releaseYear && numbers.get(0) > releaseQuarter)) {
-                        String buildingReleaseDateBD = BuildingDao.selectBuildingReleaseDate(buildingId);
-                        if (buildingReleaseDateBD != null) {
-                            List<Integer> num = RegexpMeth.getListNumbersFromString(buildingReleaseDateBD);
-                            if (num.get(1) > releaseYear || (num.get(1) == releaseYear && num.get(0) > releaseQuarter)) {
-                                List<String> childrenReleaseDateList = CardNovostroykiApiSteps.getChildrenReleaseDateList(root);
-                                CardNovostroykiApiSteps.checkChildrenReleaseDate(childrenReleaseDateList, releaseValue, releaseYear, releaseQuarter);}}}
-                    else {
-                        List<String> childrenReleaseDateList = CardNovostroykiApiSteps.getChildrenReleaseDateList(root);
-                        CardNovostroykiApiSteps.checkChildrenReleaseDate(childrenReleaseDateList, releaseValue, releaseYear, releaseQuarter);}
+                List<Integer> num = RegexpMeth.getListNumbersFromString(buildingReleaseDate);
+                if (num.get(1) > releaseYear || (num.get(1) == releaseYear && num.get(0) > releaseQuarter)) {
+                    List<Integer> houseIdList = BuildingDao.selectDistinctHouseId(buildingId);
+                    List<String> housesReleaseDateList = new ArrayList<>();
+                    for (Integer houseId : houseIdList) {
+                        if (houseId != null)
+                            housesReleaseDateList.add(CardNovostroykiApiSteps.getReleaseDate(houseId));
+                    }
+                    CardNovostroykiApiSteps.checkHousesReleaseDate(housesReleaseDateList, release, releaseYear, releaseQuarter);
                 }
+            } else {
+                List<Integer> houseIdList = BuildingDao.selectDistinctHouseId(buildingId);
+                List<String> housesReleaseDateListStr = new ArrayList<>();
+                for (Integer houseId : houseIdList) {
+                    if (houseId != null)
+                        housesReleaseDateListStr.add(CardNovostroykiApiSteps.getReleaseDate(houseId));
+                }
+                CardNovostroykiApiSteps.checkHousesReleaseDate(housesReleaseDateListStr, release, releaseYear, releaseQuarter);
             }
         }
     }

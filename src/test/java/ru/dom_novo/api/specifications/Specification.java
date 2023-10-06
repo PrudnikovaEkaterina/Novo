@@ -18,7 +18,7 @@ public class Specification {
     public static RequestSpecification requestSpec = with()
             .filter(withCustomTemplates())
             .baseUri(projectConfig.baseUri())
-            .log().all()
+//            .log().all()
             .contentType(ContentType.JSON);
 
     public static ResponseSpecification responseSpec200 = new ResponseSpecBuilder()

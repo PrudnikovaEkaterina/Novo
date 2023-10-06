@@ -52,6 +52,7 @@ public class RegexpMeth {
     public static String getAllNumbersFromString (String source){
        return source.replaceAll("[^0-9]", "");
     }
+
     public static List<Integer> getListNumbersFromString (String source){
         List<Integer> list = new ArrayList<>();
         String [] array = source.replaceAll("[^0-9]", " ").split(" ");
