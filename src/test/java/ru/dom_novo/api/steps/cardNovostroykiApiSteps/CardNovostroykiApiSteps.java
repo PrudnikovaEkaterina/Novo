@@ -166,18 +166,6 @@ public class CardNovostroykiApiSteps {
         return priceList;
     }
 
-    @Step("Получить список сроков сдачи корпусов ЖК")
-    public static List<String> getChildrenReleaseDateList(RootModel root) {
-        Map<String, ChildModel> childrenMap = root.getData().getChildren();
-        List<String> listReleaseDate = new ArrayList<>();
-        if (childrenMap != null) {
-            for (Map.Entry<String, ChildModel> id : childrenMap.entrySet()) {
-                listReleaseDate.add(id.getValue().getReleaseDate());
-            }
-        }
-        return listReleaseDate;
-    }
-
     @Step("Проверить, что хотя бы один из корпусов соответсвует фильтру по сроку сдачи")
     public static void checkHousesReleaseDate(List<String> listReleaseDate, String releaseValue, int releaseYear, int releaseQuarter) {
         if (!listReleaseDate.isEmpty()) {

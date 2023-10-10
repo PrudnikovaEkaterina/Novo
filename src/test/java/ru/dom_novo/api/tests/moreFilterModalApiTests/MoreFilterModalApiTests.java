@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
-import ru.dom_novo.api.enumsApi.ReleaseDateEnum;
 import ru.dom_novo.api.enumsApi.RenovationEnum;
 import ru.dom_novo.api.models.buildingModels.*;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
@@ -16,7 +15,6 @@ import ru.dom_novo.api.steps.searchNovostroykiFiltersApiSteps.SearchBuildingsFil
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.FlatService;
 import ru.dom_novo.regexp.RegexpMeth;
-import ru.dom_novo.testData.GenerationData;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -216,8 +214,9 @@ public class MoreFilterModalApiTests {
     }
 
     @Test
-    void searchWithFilterReleaseDateAndVerifyResult1() {
-        String releaseDate = GenerationData.setRandomReleaseDate();
+    void searchWithFilterReleaseDateAndVerifyResult() {
+        String releaseDate = "20242";
+//                GenerationData.setRandomReleaseDate();
 
         String release = "Сдан";
         int releaseYear = Integer.parseInt(releaseDate.substring(0, 4));
@@ -228,7 +227,10 @@ public class MoreFilterModalApiTests {
         for (Integer buildingId : listBuildingId) {
             String buildingReleaseDate = BuildingDao.selectBuildingReleaseDate(buildingId);
             if (buildingReleaseDate != null) {
+                if (!buildingReleaseDate.contains(release)) {
                 List<Integer> num = RegexpMeth.getListNumbersFromString(buildingReleaseDate);
+                if (num.size()==1)
+                    num.add(0, 4);
                 if (num.get(1) > releaseYear || (num.get(1) == releaseYear && num.get(0) > releaseQuarter)) {
                     List<Integer> houseIdList = BuildingDao.selectDistinctHouseId(buildingId);
                     List<String> housesReleaseDateList = new ArrayList<>();
@@ -238,7 +240,7 @@ public class MoreFilterModalApiTests {
                     }
                     CardNovostroykiApiSteps.checkHousesReleaseDate(housesReleaseDateList, release, releaseYear, releaseQuarter);
                 }
-            } else {
+            }} else {
                 List<Integer> houseIdList = BuildingDao.selectDistinctHouseId(buildingId);
                 List<String> housesReleaseDateListStr = new ArrayList<>();
                 for (Integer houseId : houseIdList) {

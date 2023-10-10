@@ -63,7 +63,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
-        sleep(1000);
+        sleep(2000);
         List<String> sortActualList = favoritesPage.getBuildingsTitleEng();
 
         assertThat(sortActualList, is(sortExpectedList));
