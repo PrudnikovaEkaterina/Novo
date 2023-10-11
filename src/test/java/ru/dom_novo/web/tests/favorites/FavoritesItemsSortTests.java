@@ -86,7 +86,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
-        sleep(1000);
+        sleep(2000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
 
         assertThat(listSortActual, is(listSortExpected));
@@ -108,7 +108,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
-        sleep(1000);
+        sleep(2000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
 
         assertThat(listSortActual, is(listSortExpected));
@@ -129,7 +129,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
-        sleep(1000);
+        sleep(2000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
 
         assertThat(listSortActual, is(listSortExpected));
@@ -151,7 +151,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openMePageWithApiAuth(phoneNumber)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort);
-        sleep(1000);
+        sleep(2000);
         List<String> listSortActual = favoritesPage.getBuildingsTitleEng();
 
         assertThat(listSortActual, is(listSortExpected));
