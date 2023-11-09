@@ -98,7 +98,8 @@ public class FavoritesItemsSortTests extends TestBase {
         FavoritesPage favoritesPage = new FavoritesPage();
         String sort = "Площадь по убыванию";
 
-        String phoneNumber = GenerationData.setRandomUserPhone();
+        String phoneNumber = "70003423423";
+                GenerationData.setRandomUserPhone();
         List<Integer> buildingIdList = UserFavoritesApiSteps.getUserFavoritesBuilding(phoneNumber);
         Map<String, Double> map = CardNovostroykiApiSteps.createMapTitleEngAndSquareM2(buildingIdList);
         List<String> listSortExpected = map.entrySet().stream()

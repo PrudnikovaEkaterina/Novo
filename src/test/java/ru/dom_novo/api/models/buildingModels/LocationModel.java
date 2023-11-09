@@ -14,4 +14,7 @@ public class LocationModel {
     private Integer garObjectId;
     private Double lat;
     private Double lng;
+    private GeoModel geo;
+
+
 }

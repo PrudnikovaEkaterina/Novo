@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
@@ -61,7 +60,7 @@ public class SitemapGeoTests {
         List<Integer> buildingIdList = BuildingDao.selectDistinctBuildingIdFromFlats();
         Set<Integer> districtIdSetExpected = new HashSet<>();
         for (Integer id : buildingIdList) {
-            int district = CardNovostroykiApiSteps.getDistrict(id);
+            int district = CardNovostroykiApiSteps.getDistrictId(id);
             if (district!=0){
                 districtIdSetExpected.add(district);
             }

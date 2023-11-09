@@ -14,8 +14,6 @@ import ru.dom_novo.web.tests.TestBase;
 
 import java.io.IOException;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static java.math.RoundingMode.DOWN;
 
 @Tag("Web")
@@ -93,4 +91,5 @@ public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
         } else
             novostroykiPage.checkPriceValue(areaMinApi, areaMinWeb);
     }
+
 }

@@ -71,14 +71,24 @@ public class CardNovostroykiApiSteps {
         return list;
     }
 
-    @Step("Получить значение district")
-    public static int getDistrict(int buildingId) {
+    @Step("Получить значение district_id")
+    public static int getDistrictId(int buildingId) {
         RootModel data = getBuildingData(buildingId);
         int district = 0;
         if (data.getData().getLocation().getDistrict() != null) {
             district = Integer.parseInt(data.getData().getLocation().getDistrict());
         }
         return district;
+    }
+
+    @Step("Получить значение district_id")
+    public static int getCityId(int buildingId) {
+        RootModel data = getBuildingData(buildingId);
+        int cityId = 0;
+        if (data.getData().getLocation().getGeo().getCities() != null) {
+            cityId = data.getData().getLocation().getGeo().getCities().getId();
+        }
+        return cityId;
     }
 
     @Step("Получить список road_id")
