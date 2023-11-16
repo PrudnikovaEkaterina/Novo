@@ -6,15 +6,17 @@ import org.decimal4j.util.DoubleRounder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import ru.dom_novo.api.steps.cardNovostroykiApiSteps.CardNovostroykiApiSteps;
 import ru.dom_novo.dataBase.services.BuildingService;
 import ru.dom_novo.web.pages.NovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
 
 import java.io.IOException;
+import java.util.List;
 
 import static java.math.RoundingMode.DOWN;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -31,7 +33,7 @@ public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
         double priceMin = BuildingService.selectPriceMin(buildingId, pricesTitle) / 1000000.0;
         assert priceMin != 0;
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double searchPriceValue = novostroykiPage.getPriceValue();
+        double searchPriceValue = novostroykiPage.getRoomPriceValue();
         if (String.valueOf(priceMin).split("\\.")[1].length() > 1) {
             double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
             novostroykiPage.checkPriceValue(priceMinDoubleRound, searchPriceValue);
@@ -39,6 +41,7 @@ public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
             novostroykiPage.checkPriceValue(priceMin, searchPriceValue);
         novostroykiPage.checkSearchPriceListRoomForBuildingWithoutFlatsFromTrendAgent();
     }
+    // завтра рефаторю
 
     @Test
     @DisplayName("Проверить значение Цена от за м2 в поиске ЖК для объекта без предложений от ТА")
@@ -52,44 +55,31 @@ public class SearchNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
         novostroykiPage.checkPriceValue(unitPriceMin, pricePerSquareValue);
     }
 
-    @CsvSource(value = {"%sell_nb_studio%, Студии, Студии",
-            "%sell_nb_rooms_1%, 1-комн., 1-комнатные",
-            "%sell_nb_rooms_2%, 2-комн., 2-комнатные",
-            "%sell_nb_rooms_3%, 3-комн., 3-комнатные",
-            "%sell_nb_rooms_4_plus%, 4 и более, 4-комнатные и более"})
-    @ParameterizedTest(name = "Проверить значение Цена Oт для типа квартир {2} в поиске ЖК для объекта без предложений от ТА")
+    @Test
+    @DisplayName("Проверить значение Цена Oт для каждого из типов квартир в поиске ЖК для объекта без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkItemRoomPriceMinForBuildingWithoutFlatsFromTrendAgent(String data1, String data2, String data3) throws IOException {
-        int buildingId = BuildingService.getBuildingIdWithoutFlatsWherePricesSlugExistRoom(data1);
-        double priceMin = BuildingService.selectPriceMin(buildingId, data3) / 1000000.0;
-        assert priceMin != 0;
+    void checkItemRoomPriceMinForBuildingWithoutFlatsFromTrendAgent() {
+        List<String> roomList = List.of("Студии", "1-комн.", "2-комн.", "3-комн.", "4 и более");
+        int buildingId = 16215;  //BuildingService.getBuildingIdWithoutFlatsWherePricesSlugExistRoom("%sell_nb_rooms_1%");
+        List<Integer> flatsOffersPriceFromList = CardNovostroykiApiSteps.getFlatsOffersPriceFromList(buildingId);
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double searchStudioPriceValue = novostroykiPage.getStudioPriceValue(data2);
-        if (String.valueOf(priceMin).split("\\.")[1].length() > 1) {
-            double priceMinDoubleRound = DoubleRounder.round(priceMin, 1, DOWN);
-            novostroykiPage.checkPriceValue(priceMinDoubleRound, searchStudioPriceValue);
-        } else
-            novostroykiPage.checkPriceValue(priceMin, searchStudioPriceValue);
+        for (int i =0; i<flatsOffersPriceFromList.size(); i++){
+            double flatsOffersPriceFromValue = DoubleRounder.round(flatsOffersPriceFromList.get(i)/1000000.0, 1, DOWN);
+            assertThat(flatsOffersPriceFromValue, is (novostroykiPage.getRoomPriceValue(roomList.get(i))));
+        }
     }
 
-    @CsvSource(value = {"%sell_nb_studio%, Студии, Студии",
-            "%sell_nb_rooms_1%, 1-комн., 1-комнатные",
-            "%sell_nb_rooms_2%, 2-комн., 2-комнатные",
-            "%sell_nb_rooms_3%, 3-комн., 3-комнатные",
-            "%sell_nb_rooms_4_plus%, 4 и более, 4-комнатные и более"})
-    @ParameterizedTest(name = "Проверить значение Площадь от для типа квартир {2} в поиске ЖК для объекта без предложений от ТА")
+    @Test
+    @DisplayName("Проверить значение Площадь от для всех типов квартир в поиске для ЖК без предложений от ТА")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-558")
-    void checkSearchItemStudioAreaMinForBuildingWithoutFlatsFromTrendAgent(String data1, String data2, String data3) throws IOException {
-        int buildingId = BuildingService.getBuildingIdWithoutFlatsWherePricesSlugExistRoom(data1);
-        double areaMinApi = BuildingService.selectAreaMin(buildingId, data3);
-        assert areaMinApi != 0;
+    void checkSearchItemStudioAreaMinForBuildingWithoutFlatsFromTrendAgent() {
+        List<String> roomList = List.of("Студии", "1-комн.", "2-комн.", "3-комн.", "4 и более");
+        int buildingId = 16215;  //BuildingService.getBuildingIdWithoutFlatsWherePricesSlugExistRoom("%sell_nb_rooms_1%");
+        List<String> flatsOffersSquareM2FromList = CardNovostroykiApiSteps.getFlatsOffersSquareM2FromList(buildingId);
         novostroykiPage.openNovostroykiPageWithFilterNoFlatsAndBuildingId(buildingId);
-        double areaMinWeb = novostroykiPage.getStudioAreaValue(data2);
-        if (String.valueOf(areaMinApi).split("\\.")[1].length() > 1) {
-            double areaMinWebRound = DoubleRounder.round(areaMinWeb, 1, DOWN);
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWebRound);
-        } else
-            novostroykiPage.checkPriceValue(areaMinApi, areaMinWeb);
+        for (int i =0; i<flatsOffersSquareM2FromList.size(); i++){
+           String flatsOffersSquareM2FromValue = String.valueOf(flatsOffersSquareM2FromList.get(i));
+            assertThat(flatsOffersSquareM2FromValue, is (novostroykiPage.getRoomAreaValue(roomList.get(i))));
+        }
     }
-
 }

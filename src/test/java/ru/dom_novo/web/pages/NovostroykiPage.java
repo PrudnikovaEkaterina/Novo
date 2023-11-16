@@ -111,7 +111,7 @@ public class NovostroykiPage {
                 b = false;
         }
     }
-    public double getPriceValue() {
+    public double getRoomPriceValue() {
         sleep(1000);
         String price = SEARCH_PRICE_LIST_PRICE.getText();
         return RegexpMeth.extractPriceOrAreaDouble(price);
@@ -131,16 +131,16 @@ public class NovostroykiPage {
        return RegexpMeth.extractPrice(priceWithoutSpase);
     }
 
-    public double getStudioPriceValue(String room) {
+    public double getRoomPriceValue(String room) {
         sleep(1000);
         String price = $x("//td[text()='"+room+"']/following-sibling::td[2]").getText();
         return RegexpMeth.extractPriceOrAreaDouble(price);
     }
 
-    public double getStudioAreaValue(String room) {
+    public String getRoomAreaValue(String room) {
         sleep(1000);
         String area =  $x("//td[text()='"+room+"']/following-sibling::td[1]").getText();
-        return RegexpMeth.extractPriceOrAreaDouble(area);
+        return RegexpMeth.extractPriceOrAreaDouble1(area);
     }
     public String getTextFromSearchFiltersTags(){
       return   SEARCH_FILTERS_TAGS.first().getText();

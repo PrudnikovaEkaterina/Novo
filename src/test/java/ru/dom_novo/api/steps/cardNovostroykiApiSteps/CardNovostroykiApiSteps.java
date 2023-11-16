@@ -39,6 +39,27 @@ public class CardNovostroykiApiSteps {
                 .extract().path("data.flats.price.from");
     }
 
+    @Step("Получить список минимальных цен квартир ЖК")
+    public static List<Integer> getFlatsOffersPriceFromList (int buildingId) {
+        return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .extract().path("data.flats.offers.price.from");
+    }
+    @Step("Получить список минимальных площадей для квартир в ЖК")
+    public static List<String> getFlatsOffersSquareM2FromList (int buildingId) {
+        return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .extract().path("data.flats.offers.square_m2.from");
+    }
+
     @Step("Получить год сдачи ЖК")
     public static int getReleaseYear(int buildingId) {
         return given()

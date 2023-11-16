@@ -44,6 +44,17 @@ public class RegexpMeth {
         return price;
     }
 
+    public static String extractPriceOrAreaDouble1 (String source) {
+        String price = null;
+        Pattern p = Pattern.compile("[-]?[0-9]+(.[0-9]+)?");
+        Matcher m = p.matcher(source);
+        if (m.find()) {
+            price = m.group();
+        }
+        return price;
+    }
+
+
     public static String substring (int limit, String source){
         return source.codePointCount(0, source.length()) > limit ?
                 source.substring(0, source.offsetByCodePoints(0, limit)) : source;
