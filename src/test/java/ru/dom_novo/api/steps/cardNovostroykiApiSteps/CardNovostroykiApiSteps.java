@@ -39,6 +39,16 @@ public class CardNovostroykiApiSteps {
                 .extract().path("data.flats.price.from");
     }
 
+    public static int getPriceM2From(int buildingId) {
+        return given()
+                .spec(requestSpec)
+                .basePath("/api/buildings/" + buildingId)
+                .get()
+                .then()
+                .spec(responseSpec200)
+                .extract().path("data.flats.price_m2.from");
+    }
+
     @Step("Получить список минимальных цен квартир ЖК")
     public static List<Integer> getFlatsOffersPriceFromList (int buildingId) {
         return given()

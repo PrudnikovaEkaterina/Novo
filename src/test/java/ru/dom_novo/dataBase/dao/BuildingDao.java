@@ -26,22 +26,20 @@ public class BuildingDao {
                 new BeanPropertyRowMapper<>(BuildingEntity.class, false), slugRoom);
     }
 
-    public static List<BuildingEntity> selectBuildingIdWithoutFlatsWherePricesExistUnitPriceMin() {
-        return jdbcTemplate.query("select DISTINCT b.id from buildings b " +
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistUnitPriceMin() {
+        return jdbcTemplate.queryForList("select DISTINCT b.id from buildings b " +
                         "JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) " +
                         "and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
                         "and JSON_VALUE (b.data_json, \"$.prices[*].slug\") like 'sell_nb' " +
-                        "and JSON_VALUE (b.data_json, \"$.prices[*].unit_price_min\") is not null LIMIT 5;",
-                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+                        "and JSON_VALUE (b.data_json, \"$.prices[*].unit_price_min\") is not null LIMIT 5;", Integer.class);
     }
 
-    public static List<BuildingEntity> selectBuildingIdWithoutFlatsWherePricesExistAreaMin() {
-        return jdbcTemplate.query("select  b.id from buildings b " +
+    public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistAreaMin() {
+        return jdbcTemplate.queryForList ("select  b.id from buildings b " +
                         "JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) " +
                         "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
                         "and JSON_EXTRACT (b.data_json,\"$.prices[*].area_min\") is not null " +
-                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;",
-                new BeanPropertyRowMapper<>(BuildingEntity.class, false));
+                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like '%sell_nb%' LIMIT 5;", Integer.class);
     }
 
     public static List<BuildingEntity> selectAllFromBuildingsWhereParentIdIs(int parentId) {
