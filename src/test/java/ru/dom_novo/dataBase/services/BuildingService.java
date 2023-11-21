@@ -6,10 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import io.qameta.allure.Step;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.entities.buildingEntities.*;
-import ru.dom_novo.testData.GenerationData;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,13 +18,6 @@ public class BuildingService {
     public static List<Integer> getBuildingIdList(List<BuildingEntity> buildingEntityList) {
         return buildingEntityList.stream().map(BuildingEntity::getId).collect(Collectors.toList());
     }
-
-
-//    public static int getBuildingIdWithoutFlatsWherePricesExistUnitPriceMin() {
-//        List<Integer> buildingIdList = getBuildingIdList(BuildingDao.selectBuildingIdWithoutFlatsWherePricesExistUnitPriceMin());
-//        assert buildingIdList != null;
-//        return GenerationData.setRandomBuildingId(buildingIdList);
-//    }
 
     @Step("Преобразование поля data_json в объект DataJsonEntity")
     public static DataJsonEntity getDataJsonEntity(int buildingId) throws IOException {
@@ -59,8 +50,7 @@ public class BuildingService {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             Object roomType = JsonPath.read(dataJson, "$.properties.202.values.*");
-            String roomTypeStr = objectMapper.writeValueAsString(roomType);
-            return roomTypeStr;
+            return objectMapper.writeValueAsString(roomType);
         } catch (PathNotFoundException e) {
             return null;
         }
@@ -71,14 +61,11 @@ public class BuildingService {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 Object roomType = JsonPath.read(dataJson, "$.prices[*].title");
-                String roomTypeStr = objectMapper.writeValueAsString(roomType);
-                return roomTypeStr;
+                return objectMapper.writeValueAsString(roomType);
             }
             catch (PathNotFoundException e){
                 return null;
             }
-
-
     }
 //    @Step("Получить год сдачи ЖК") (устарело, для примера)
 //    public static int selectBuildingReleaseYear(int buildingId) throws IOException {

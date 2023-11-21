@@ -18,14 +18,6 @@ public class BuildingDao {
         return String.valueOf(buildingEnityList.get(0).getData_json());
     }
 
-    public static List<BuildingEntity> selectBuildingIdWithoutFlatsWherePricesSlugExistRoom(String slugRoom) {
-        return jdbcTemplate.query("select b.id from buildings b JOIN gar_ADDRESSOBJECTS g " +
-                        "on (b.gar_object_id = g.OBJECTID) " +
-                        "where g.region_code in (50,77) and not exists (select 1 from flats f where f.building_id = b.id and f.status=1) " +
-                        "and JSON_EXTRACT (b.data_json, \"$.prices[*].slug\") like ? LIMIT 5;",
-                new BeanPropertyRowMapper<>(BuildingEntity.class, false), slugRoom);
-    }
-
     public static List<Integer> selectBuildingIdWithoutFlatsWherePricesExistUnitPriceMin() {
         return jdbcTemplate.queryForList("select DISTINCT b.id from buildings b " +
                         "JOIN gar_ADDRESSOBJECTS g on (b.gar_object_id = g.OBJECTID) where g.region_code in (50,77) " +
@@ -133,12 +125,6 @@ public class BuildingDao {
 
     public static String selectTitleEngFromBuildings(int id) {
         return jdbcTemplate.queryForObject("select title_eng from buildings where id = ?", String.class, id);
-    }
-
-    public static List<String> selectHouseReleaseDate(int id) {
-        return  jdbcTemplate.query(
-                "select JSON_VALUE (data_json, \"$.properties.241.values.*\"), JSON_VALUE (data_json, \"$.properties.242.values.*\") from buildings where id=?",
-                (rs, rowNum) -> String.format("%s %s", rs.getString(1),rs.getString(2)), id);
     }
 
 }
