@@ -1,7 +1,6 @@
 package ru.dom_novo.testData;
 
 import com.github.javafaker.Faker;
-import ru.dom_novo.api.enumsApi.ReleaseDateEnum;
 import ru.dom_novo.web.enumsWeb.*;
 
 import java.util.List;
@@ -30,11 +29,9 @@ public class GenerationData {
         return faker.options().option(HousingClassEnum.values()).name;
     }
 
-    public static String setRandomReleaseDate() {return faker.options().option(ReleaseDateEnum.values()).name;}
-
-    public static String setRandomPhoneNumber() {
-        return "7" + faker.phoneNumber().subscriberNumber(10);
-    }
+//    public static String setRandomPhoneNumber() {
+//        return "7" + faker.phoneNumber().subscriberNumber(10);
+//    }
 
     public static String setRandomUserName() {
         return faker.name().firstName();

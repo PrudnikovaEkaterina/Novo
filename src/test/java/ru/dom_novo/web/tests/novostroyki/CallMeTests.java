@@ -1,6 +1,5 @@
 package ru.dom_novo.web.tests.novostroyki;
 
-import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
@@ -25,7 +24,7 @@ public class CallMeTests extends TestBase {
     @DisplayName("Отправить заполненную форму Заказать звонок и проверить добавление соответсвующей записи в БД")
     void orderCallBackAndCheckAdditionInDatabase() {
         String callbackPhoneModalTitle = "Укажите Ваш номер телефона и мы перезвоним!";
-        String phoneNumber = GenerationData.setRandomPhoneNumber();
+        String phoneNumber = GenerationData.setRandomUserPhone();
         String phoneThanksModalTitle = "Спасибо!\n" + "Мы уже обрабатываем вашу заявку";
         novostroykiPage
                 .hoverSearchItemContent()

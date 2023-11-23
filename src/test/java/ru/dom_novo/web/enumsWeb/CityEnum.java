@@ -3,7 +3,7 @@ package ru.dom_novo.web.enumsWeb;
 public enum CityEnum {
     LYUBERTSY("Люберцы"),
     HIMKI("Химки"),
-    DMITROV("Дмитров");
+    MITISHI("Мытищи");
 
     public final String name;
 

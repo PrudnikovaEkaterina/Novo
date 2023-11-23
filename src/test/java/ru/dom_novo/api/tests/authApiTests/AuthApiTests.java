@@ -13,7 +13,7 @@ import ru.dom_novo.testData.GenerationData;
 @Owner("PrudnikovaEkaterina")
 public class AuthApiTests {
 
-    String phoneNumber = GenerationData.setRandomPhoneNumber();
+    String phoneNumber = GenerationData.setRandomUserPhone();
 
     @Test
     @DisplayName("Авторизация пользователя")
@@ -24,7 +24,7 @@ public class AuthApiTests {
     @Test
     @DisplayName("Логаут пользователя")
     void logout() {
-        String token = AuthApiSteps.getAccessToken(phoneNumber);
+        String token = AuthApiSteps.getAccessTokenUsePhoneNumber(phoneNumber);
         AuthApiSteps.logout(token);
     }
 

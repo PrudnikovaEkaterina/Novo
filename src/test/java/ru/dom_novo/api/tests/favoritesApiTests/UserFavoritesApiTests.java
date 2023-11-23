@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import ru.dom_novo.api.steps.favoritesApiSteps.UserFavoritesApiSteps;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.dataBase.dao.FavoritesDao;
+import ru.dom_novo.testData.GenerationData;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ public class UserFavoritesApiTests {
     @Tag("Api")
     @DisplayName("Получение списка избранных ЖК пользователя и проверка его на соответсвие данным из БД")
     void checkUserFavoritesBuilding() {
-        String phone = "79085040794";
-        int userId = MeApiSteps.getUserId(phone);
-        List<Integer> userFavoritesBuildingListActual = UserFavoritesApiSteps.getUserFavoritesBuilding(phone);
+        String phoneNumber = GenerationData.setRandomUserPhone();
+        int userId = MeApiSteps.getUserId(phoneNumber);
+        List<Integer> userFavoritesBuildingListActual = UserFavoritesApiSteps.getUserFavoritesBuildingsIdList(phoneNumber);
         List<Integer> userFavoritesBuildingListExpected = FavoritesDao.selectBuildingIdFromFavorites(userId);
         assertThat(userFavoritesBuildingListActual, is(userFavoritesBuildingListExpected));
     }

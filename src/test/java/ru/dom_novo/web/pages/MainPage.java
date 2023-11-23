@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class MainPage {
     public void openMainPageWithApiAuth(String phoneNumber) {
-        AuthApiSteps.setAuthCookiesToBrowser(phoneNumber);
+        AuthApiSteps.setAuthCookiesToBrowserWithPhoneNumber(phoneNumber);
         open(baseUrl);
     }
 }

@@ -3,6 +3,7 @@ package ru.dom_novo.web.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import ru.dom_novo.api.steps.authApiSteps.AuthApiSteps;
 import ru.dom_novo.regexp.RegexpMeth;
@@ -11,6 +12,7 @@ import ru.dom_novo.web.pages.components.CallMeWidgetComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
@@ -41,10 +43,15 @@ public class FavoritesPage {
             FAVORITE_BUTTON_ICON = $$(".favorite-button__icon"),
             CALL_ME_WIDGET_BUTTON = $$(".call-me-widget__button");
 
-    public FavoritesPage openMePageWithApiAuth(String phoneNumber) throws InterruptedException {
-        AuthApiSteps.setAuthCookiesToBrowser(phoneNumber);
+    public FavoritesPage openFavoritesPageWithAuthUsePhoneNumber(String phoneNumber) {
+        AuthApiSteps.setAuthCookiesToBrowserWithPhoneNumber(phoneNumber);
         open(baseUrl + "/favorites");
-        sleep(1000);
+        return this;
+    }
+
+    public FavoritesPage openFavoritesPageWithAuthUseLoginResponse(Response loginResponse) {
+        AuthApiSteps.setAuthCookiesToBrowserWithLoginResponse(loginResponse);
+        open(baseUrl + "/favorites");
         return this;
     }
 
@@ -94,16 +101,19 @@ public class FavoritesPage {
         return Integer.parseInt(FAVORITES_NAV_NAV_COUNTER.last().getText());
     }
 
-    public void setSortFavoritesBuildings(String sort) {
+    public FavoritesPage setSortFavoritesBuildings(String sort) throws InterruptedException {
+        sleep(2000);
         FAVORITES_SORT_CURRENT.click();
         DROPDOWN_MENU_ITEM.findBy(Condition.text(sort)).click();
+        sleep(2000);
+        return this;
     }
 
     public List<String> getBuildingsTitleEng() {
         String delete = baseUrl+"/";
         List<String> list = new ArrayList<>();
         for (SelenideElement selenideElement : SEARCH_ITEM_CLICK_AREA) {
-            list.add(selenideElement.getAttribute("href").replace (delete, ""));
+            list.add(Objects.requireNonNull(selenideElement.getAttribute("href")).replace (delete, ""));
         }
         return list;
     }

@@ -21,7 +21,7 @@ public class MeTests extends TestBase {
 
     @BeforeEach
     void beforeEach() {
-        mePage.openMePageWithApiAuth(phoneNumber);
+        mePage.openMePageWithAuthUsePhoneNumber(phoneNumber);
     }
 
     @Test

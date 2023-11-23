@@ -17,7 +17,7 @@ public class MeApiSteps {
 
     @Step("Получить данные пользователя")
     public static UserModel getAuthMe (String phoneNumber) {
-        String token = AuthApiSteps.getAccessToken(phoneNumber);
+        String token = AuthApiSteps.getAccessTokenUsePhoneNumber(phoneNumber);
         return given()
                 .filter(withCustomTemplates())
                 .spec(requestSpec)

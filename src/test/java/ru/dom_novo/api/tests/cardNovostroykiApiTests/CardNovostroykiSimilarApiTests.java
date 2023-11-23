@@ -18,7 +18,8 @@ import java.util.Map;
 @Owner("PrudnikovaEkaterina")
 @Tag("Api")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-549")
-public class CardNovostroykiSimilarApiTests {
+public class
+CardNovostroykiSimilarApiTests {
 
     @EnumSource(BuildingEnum.class)
     @ParameterizedTest(name = "Проверить, что список похожих ЖК для ЖК {0} учитывает логику по цене")

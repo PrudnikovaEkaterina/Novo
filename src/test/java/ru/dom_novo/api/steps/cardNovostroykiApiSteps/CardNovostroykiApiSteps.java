@@ -6,9 +6,7 @@ import ru.dom_novo.api.models.buildingModels.*;
 import ru.dom_novo.regexp.RegexpMeth;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
@@ -38,7 +36,7 @@ public class CardNovostroykiApiSteps {
                 .spec(responseSpec200)
                 .extract().path("data.flats.price.from");
     }
-
+    @Step("Получить минимальную цену за квадратный метр в ЖК")
     public static int getPriceM2From(int buildingId) {
         return given()
                 .spec(requestSpec)
@@ -112,7 +110,7 @@ public class CardNovostroykiApiSteps {
         return district;
     }
 
-    @Step("Получить значение district_id")
+    @Step("Получить значение сity_id")
     public static int getCityId(int buildingId) {
         RootModel data = getBuildingData(buildingId);
         int cityId = 0;
@@ -217,35 +215,5 @@ public class CardNovostroykiApiSteps {
                 }
             }
         }
-    }
-
-    @Step("Создать Map, где ключ - titleEng, значение - square_m2 для списка ЖК")
-    public static Map<String, Double> createMapTitleEngAndSquareM2(List<Integer> buildingIdList) {
-        Map<String, Double> map = new HashMap<>();
-        for (Integer buildingId : buildingIdList) {
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom;
-            if (root.getData().getFlats().getSquareM2().getFrom() != null) {
-                priceFrom = root.getData().getFlats().getSquareM2().getFrom();
-            } else
-                priceFrom = 0;
-            map.put(root.getData().getTitleEng(), priceFrom);
-        }
-        return map;
-    }
-
-    @Step("Создать Map, где ключ - titleEng, значение - PriceM2 для ЖК из списка")
-    public static Map<String, Double> createMapTitleEngAndPriceM2(List<Integer> buildingIdList) {
-        Map<String, Double> map = new HashMap<>();
-        for (Integer buildingId : buildingIdList) {
-            RootModel root = CardNovostroykiApiSteps.getBuildingData(buildingId);
-            double priceFrom;
-            if (root.getData().getFlats().getPriceM2().getFrom() != null) {
-                priceFrom = root.getData().getFlats().getPriceM2().getFrom();
-            } else
-                priceFrom = 0;
-            map.put(root.getData().getTitleEng(), priceFrom);
-        }
-        return map;
     }
 }

@@ -1,11 +1,9 @@
 package ru.dom_novo.web.tests.header;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
 import ru.dom_novo.testData.GenerationData;
-import ru.dom_novo.web.enumsWeb.UserPhoneEnum;
 import ru.dom_novo.web.pages.MainPage;
 import ru.dom_novo.web.pages.components.HeaderComponent;
 import ru.dom_novo.web.tests.TestBase;
@@ -17,7 +15,7 @@ public class HeaderAccountTests extends TestBase {
     @Test
     @DisplayName("Отображение в header иконки Профиля для авторизованного пользователя")
     void checkVisibleAccountIconForAuthorizedUser () {
-        String phoneNumber = GenerationData.setRandomPhoneNumber();
+        String phoneNumber = GenerationData.setRandomUserPhone();
         mainPage.openMainPageWithApiAuth(phoneNumber);
         headerComponent.checkVisibleAccountIconForAuthorizedUser();
     }

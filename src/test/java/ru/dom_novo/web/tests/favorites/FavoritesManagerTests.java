@@ -9,6 +9,8 @@ import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
 
+import java.util.Objects;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -20,9 +22,9 @@ public class FavoritesManagerTests extends TestBase {
     String phoneNumber = GenerationData.setRandomUserPhone();
 
     @BeforeEach
-    void beforeEach() throws InterruptedException {
+    void beforeEach() {
         favoritesPage
-                .openMePageWithApiAuth(phoneNumber)
+                .openFavoritesPageWithAuthUsePhoneNumber(phoneNumber)
                 .checkFavoritesHeaderTitle();
     }
 
@@ -68,10 +70,7 @@ public class FavoritesManagerTests extends TestBase {
         favoritesPage.clickFavoritesManagerChatText();
         System.out.println(textExpected+managerPhone);
         System.out.println(textExpected+novoPhone);
-        if (managerPhone!=null)
-            favoritesPage.checkUrlAfterClickFavoritesManagerChatText(textExpected +managerPhone);
-        else
-            favoritesPage.checkUrlAfterClickFavoritesManagerChatText(textExpected +novoPhone);
+        favoritesPage.checkUrlAfterClickFavoritesManagerChatText(textExpected + Objects.requireNonNullElse(managerPhone, novoPhone));
     }
 
 }

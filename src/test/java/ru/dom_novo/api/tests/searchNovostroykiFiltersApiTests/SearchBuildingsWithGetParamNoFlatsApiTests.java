@@ -84,7 +84,7 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
         assertThat(totalBuildingIdList, containsInAnyOrder(buildingIdListWithGetParameterNoFlats1));
     }
 
-    @CsvSource(value = {"4_plus, 4k_plus, 4-х комнатные, 5-и комнатные, 6-и комнатные, 7-и комнатные", "studio, studio, Студии, Свободная планировка, Параметр, Параметр"})
+    @CsvSource(value = {"4_plus, 4k_plus, 4, 5, 6, 7", "studio, studio, Студии, Свободная планировка, Параметр, Параметр"})
     @ParameterizedTest(name = "Проверить коррекность выдачи после применения фильтра {2} и гет параметра no_flats=1")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-646")
     void checkSearchWithGetParameterNoFlats1AndFilterStudio4Plus(String data1, String data2, String data3, String data4, String data5, String data6) throws JsonProcessingException {
@@ -116,10 +116,10 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
         }
     }
 
-    @CsvSource(value = {"1, 1k, 1-комнатные", "2, 2k, 2-комнатные", "3, 3k, 3-комнатные"})
+    @CsvSource(value = {"1, 1k", "2, 2k", "3, 3k"})
     @ParameterizedTest(name = "Проверить коррекность выдачи после применения фильтра {2} и гет параметра no_flats=1")
     @TmsLink("https://tracker.yandex.ru/NOVODEV-646")
-    void checkSearchWithGetParameterNoFlats1AndFilterRoom(String data1, String data2, String data3) throws JsonProcessingException {
+    void checkSearchWithGetParameterNoFlats1AndFilterRoom(String data1, String data2) throws JsonProcessingException {
 //  1. Получить список id ЖК из/api/buildings/list_on_map?rooms[]=Комнатность&no_flats=1
 //  2. Если data.flats.offers не isEmpty(), то проверить, что есть offers.Key содержит нужный тип комнатности;
 //  3. Иначе:
@@ -168,32 +168,44 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
 //  - priceFrom <= priceMax && priceTo >= priceMin
         int priceMin = 200000000;
         int priceMax = 250000000;
+
         List<Integer> buildingIdListWithGetParameterNoFlats1 = SearchBuildingsFiltersApiSteps.getBuildingIdListWithParameterNoFlatsAndFilterPrice(1, priceMin, priceMax);
         for (Integer id : buildingIdListWithGetParameterNoFlats1) {
             if (BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1(id) > 0) {
                 Assertions.assertTrue(BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterPrice(id, priceMin, priceMax) > 0);
-            } else {
+            }
+            else {
                 RootModel root = CardNovostroykiApiSteps.getBuildingData(id);
-                if (!root.getData().getFlats().getOffers().isEmpty()){
-                    Assertions.assertTrue(CardNovostroykiApiSteps.getOffersPriceList(root, priceMax).stream()
-                            .filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));}
-                 else {
-                    List<Long> priceList = CardNovostroykiApiSteps.getFlatsPriceList(root, priceMax);
-                    System.out.println(priceList);
-                    if (!priceList.contains(null)) {
-                        if (priceList.get(0) > priceMax || priceList.get(1) < priceMin) {
-                            List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
-                            System.out.println(houseIdList);
-                            List<List<Long>> totalPriceHouseList = new ArrayList<>();
-                            for (Integer houseId : houseIdList) {
-                                RootModel rootHouse = CardNovostroykiApiSteps.getBuildingData(houseId);
-                                List<Long> priceHouseList = CardNovostroykiApiSteps.getFlatsPriceList(rootHouse, priceMax);
-                                System.out.println(priceHouseList);
-                                totalPriceHouseList.add(priceHouseList);
+                if (root.getData().getFlats() != null) {
+                    if (!root.getData().getFlats().getOffers().isEmpty()) {
+                        Assertions.assertTrue(CardNovostroykiApiSteps.getOffersPriceList(root, priceMax).stream()
+                                .filter(x -> x.get(0) != null && x.get(1) != null)
+                                .anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
+                    } else {
+                        List<Long> priceList = CardNovostroykiApiSteps.getFlatsPriceList(root, priceMax);
+                        if (!priceList.contains(null)) {
+                            if (priceList.get(0) > priceMax || priceList.get(1) < priceMin) {
+                                List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
+                                List<List<Long>> totalPriceHouseList = new ArrayList<>();
+                                for (Integer houseId : houseIdList) {
+                                    RootModel rootHouse = CardNovostroykiApiSteps.getBuildingData(houseId);
+                                    List<Long> priceHouseList = CardNovostroykiApiSteps.getFlatsPriceList(rootHouse, priceMax);
+                                    totalPriceHouseList.add(priceHouseList);
+                                }
+                                Assertions.assertTrue(totalPriceHouseList.stream().filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
                             }
-                            Assertions.assertTrue(totalPriceHouseList.stream().filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
                         }
                     }
+                }
+                else {
+                    List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
+                    List<List<Long>> totalPriceHouseList = new ArrayList<>();
+                    for (Integer houseId : houseIdList) {
+                        RootModel rootHouse = CardNovostroykiApiSteps.getBuildingData(houseId);
+                        List<Long> priceHouseList = CardNovostroykiApiSteps.getFlatsPriceList(rootHouse, priceMax);
+                        totalPriceHouseList.add(priceHouseList);
+                    }
+                    Assertions.assertTrue(totalPriceHouseList.stream().filter(x -> x.get(0) != null && x.get(1) != null).anyMatch(el -> el.get(0) <= priceMax && el.get(1) >= priceMin));
                 }
             }
         }
@@ -220,26 +232,28 @@ public class SearchBuildingsWithGetParamNoFlatsApiTests {
                 assertThat(BuildingDao.selectCountAllFromFlatsWhereBuildingIdIsValueAndStatusIs1WithFilterArea(id, squareMin, squareMax) > 0, is(true));
             } else {
                 RootModel rootModel = CardNovostroykiApiSteps.getBuildingData(id);
-                if (!rootModel.getData().getFlats().getOffers().isEmpty()) {
-                    List<SquareM2Model> squareM2ModelList = rootModel.getData().getFlats().getOffers().stream().map(OfferModel::getSquareM2).collect(Collectors.toList());
-                    assertThat(squareM2ModelList.stream().anyMatch(el -> el.getFrom() <= squareMax && el.getTo() >= squareMin), is(true));
-                } else {
-                    List<Double> areaList = rootModel.getData().getSquare().stream().map(Double::parseDouble).sorted().collect(Collectors.toList());
-                    if (areaList.get(0) > squareMax || areaList.get(1) < squareMin) {
-                        List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
-                        if (houseIdList.isEmpty())
-                            assertThat((areaList.get(0) <= squareMax && areaList.get(1) >= squareMin), is(true));
-                        else {
-                            List<List<Double>> totalAreaHouseList = new ArrayList<>();
-                            for (Integer houseId : houseIdList) {
-                                try {
-                                    List<Double> areaHouseList = CardNovostroykiApiSteps.getBuildingData(houseId).getData().getSquare().stream().map(Double::parseDouble).sorted().collect(Collectors.toList());
-                                    totalAreaHouseList.add(areaHouseList);
-                                } catch (NullPointerException e) {
-                                    e.printStackTrace();
+                if (rootModel.getData().getFlats() != null) {
+                    if (!rootModel.getData().getFlats().getOffers().isEmpty()) {
+                        List<SquareM2Model> squareM2ModelList = rootModel.getData().getFlats().getOffers().stream().map(OfferModel::getSquareM2).collect(Collectors.toList());
+                        assertThat(squareM2ModelList.stream().anyMatch(el -> el.getFrom() <= squareMax && el.getTo() >= squareMin), is(true));
+                    } else {
+                        List<Double> areaList = rootModel.getData().getSquare().stream().map(Double::parseDouble).sorted().collect(Collectors.toList());
+                        if (areaList.get(0) > squareMax || areaList.get(1) < squareMin) {
+                            List<Integer> houseIdList = BuildingDao.selectAllHouseId(id);
+                            if (houseIdList.isEmpty())
+                                assertThat((areaList.get(0) <= squareMax && areaList.get(1) >= squareMin), is(true));
+                            else {
+                                List<List<Double>> totalAreaHouseList = new ArrayList<>();
+                                for (Integer houseId : houseIdList) {
+                                    try {
+                                        List<Double> areaHouseList = CardNovostroykiApiSteps.getBuildingData(houseId).getData().getSquare().stream().map(Double::parseDouble).sorted().collect(Collectors.toList());
+                                        totalAreaHouseList.add(areaHouseList);
+                                    } catch (NullPointerException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
+                                assertThat(totalAreaHouseList.stream().anyMatch(el -> el.get(0) <= squareMax && el.get(1) >= squareMin), is(true));
                             }
-                            assertThat(totalAreaHouseList.stream().anyMatch(el -> el.get(0) <= squareMax && el.get(1) >= squareMin), is(true));
                         }
                     }
                 }

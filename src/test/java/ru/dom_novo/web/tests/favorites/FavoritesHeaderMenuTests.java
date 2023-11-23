@@ -19,10 +19,10 @@ public class FavoritesHeaderMenuTests extends TestBase {
     String phoneNumber = GenerationData.setRandomUserPhone();
 
     @BeforeEach
-    void beforeEach() throws InterruptedException {
-//        UserFavoritesApi.addBuildingToUserFavorites(phoneNumber);
+    void beforeEach() {
+//        UserFavoritesApi.addBuildingToUserFavoritesUsePhoneNumber(phoneNumber);
         favoritesPage
-                .openMePageWithApiAuth(phoneNumber)
+                .openFavoritesPageWithAuthUsePhoneNumber(phoneNumber)
                 .checkFavoritesHeaderTitle();
     }
 

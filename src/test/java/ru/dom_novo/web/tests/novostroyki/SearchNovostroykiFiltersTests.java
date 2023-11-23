@@ -14,9 +14,6 @@ import ru.dom_novo.web.pages.components.SearchNovostroykiFiltersComponent;
 import ru.dom_novo.web.tests.TestBase;
 
 import static com.codeborne.selenide.Selenide.sleep;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.stringContainsInOrder;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")

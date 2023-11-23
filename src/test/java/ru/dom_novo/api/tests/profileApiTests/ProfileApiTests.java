@@ -10,8 +10,8 @@ import ru.dom_novo.testData.GenerationData;
 @Tag("Api")
 @Owner("PrudnikovaEkaterina")
 public class ProfileApiTests {
-    String phone= GenerationData.setRandomPhoneNumber();
-    String accessToken = AuthApiSteps.getAccessToken(phone);
+    String phone= GenerationData.setRandomUserPhone();
+    String accessToken = AuthApiSteps.getAccessTokenUsePhoneNumber(phone);
 
     @Test
     @DisplayName("Изменение имени пользователя")

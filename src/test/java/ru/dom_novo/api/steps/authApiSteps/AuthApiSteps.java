@@ -70,8 +70,8 @@ public class AuthApiSteps {
         Assertions.assertNotNull(response.getBody().as(LoginResponseModel.class).getUser());
     }
 
-    @Step("Установка авторизационных кук в браузер")
-    public static void setAuthCookiesToBrowser(String phoneNumber) {
+    @Step("Установка авторизационных кук в браузер по номеру телефона")
+    public static void setAuthCookiesToBrowserWithPhoneNumber(String phoneNumber) {
         Response loginResponse = getLoginResponse(phoneNumber);
         String refreshToken = getRefreshTokenFromLoginResponse(loginResponse);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -90,9 +90,33 @@ public class AuthApiSteps {
         Selenide.refresh();
     }
 
+    @Step("Установка авторизационных кук в браузер на основе loginResponse")
+    public static void setAuthCookiesToBrowserWithLoginResponse(Response loginResponse) {
+        String refreshToken = getRefreshTokenFromLoginResponse(loginResponse);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        long timestampTime = timestamp.getTime();
+        long session = timestampTime + 2592000;
+        String sessionExpiresAt = String.valueOf(session).substring(0, 10);
+        String referralCode = getReferralCode(loginResponse);
+        open(baseUrl+"/build/desktop/images/header-logo.12b80bc1.svg");
+        org.openqa.selenium.Cookie cookie = new org.openqa.selenium.Cookie("refresh_token", refreshToken);
+        getWebDriver().manage().addCookie(cookie);
+        if (referralCode != null) {
+            org.openqa.selenium.Cookie cookie1 = new org.openqa.selenium.Cookie("ref", referralCode);
+            getWebDriver().manage().addCookie(cookie1);
+        }
+        Selenide.localStorage().setItem("session_expires_at", sessionExpiresAt);
+        Selenide.refresh();
+    }
+
     @Step("Получение access token пользователя")
-    public static String getAccessToken(String phone) {
+    public static String getAccessTokenUsePhoneNumber(String phone) {
         Response loginResponse = getLoginResponse(phone);
+        return loginResponse.body().as(LoginResponseModel.class).getAccessToken();
+    }
+
+    @Step("Получение access token пользователя")
+    public static String getAccessTokenUseLoginResponse(Response loginResponse) {
         return loginResponse.body().as(LoginResponseModel.class).getAccessToken();
     }
 

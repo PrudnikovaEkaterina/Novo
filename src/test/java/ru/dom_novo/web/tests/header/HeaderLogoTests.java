@@ -10,7 +10,6 @@ import ru.dom_novo.web.pages.MePage;
 import ru.dom_novo.web.pages.components.HeaderComponent;
 import ru.dom_novo.web.tests.TestBase;
 
-import static java.lang.Thread.sleep;
 
 @Tag("Web")
 @Owner("PrudnikovaEkaterina")
@@ -31,7 +30,7 @@ public class HeaderLogoTests extends TestBase {
     @Test
     @DisplayName("Переход co страницы Профиля на главную при клике на логотип в header")
     void checkGoToMainPageFromMePageAfterClickHeaderLogo ()  {
-        mePage.openMePageWithApiAuth(GenerationData.setRandomPhoneNumber());
+        mePage.openMePageWithAuthUsePhoneNumber(GenerationData.setRandomUserPhone());
         headerComponent
                 .clickHeaderLogo()
                 .checkGoToMainPageAfterClickHeaderLogo();

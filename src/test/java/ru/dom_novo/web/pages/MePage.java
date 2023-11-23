@@ -14,10 +14,11 @@ public class MePage {
             INPUT_EMAIL = $x("//input[@name='email']"),
             SAVE_CHANGES = $(".me-settings__chosen-icon");
 
-    public void openMePageWithApiAuth(String phoneNumber) {
-       AuthApiSteps.setAuthCookiesToBrowser(phoneNumber);
+    public void openMePageWithAuthUsePhoneNumber(String phoneNumber) {
+       AuthApiSteps.setAuthCookiesToBrowserWithPhoneNumber(phoneNumber);
        open(baseUrl + "/me");
     }
+
 
     public void changeUserName(String userName) {
         INPUT_NAME.setValue(userName);

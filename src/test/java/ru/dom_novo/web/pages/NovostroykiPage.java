@@ -1,7 +1,6 @@
 package ru.dom_novo.web.pages;
 
 import com.codeborne.selenide.*;
-import org.junit.jupiter.api.Assertions;
 import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.web.pages.components.CallMeWidgetComponent;
 import ru.dom_novo.web.pages.components.FooterComponent;
@@ -21,11 +20,10 @@ public class NovostroykiPage {
             CALL_ME_WIDGET_BUTTON_ICON = $x("//div[@class='call-me-widget search-item__call-me'][1]"),
             SEARCH_NOVOSTROYKI_CONTENT_TOTAL = $(".search-novostroyki-content__total"),
             SEARCH_PRICE_LIST_PRICE = $(".search-price-list__price"),
-            SEARCH_PRICE_LIST_ROOM = $(".search-price-list__room"),
             SEARCH_ITEM_TOTAL_AREA =$(".search-item__total-area");
 
     private final ElementsCollection
-            SEARCH_ITEM_ADDRESS_TEXT = $$(".search-item__address-text"),
+            SEARCH_ITEM_ADDRESS = $$(".search-item__address"),
             SEARCH_ITEM_DEVELOPER_TEXT = $$(".search-item__developer-text"),
             SEARCH_PRICE_LIST_TABLE = $$(".search-price-list__table"),
             TAG = $$(".base-round-link-button__text"),
@@ -50,7 +48,7 @@ public class NovostroykiPage {
 
     public void verifyResultSearchBuildingContent(String content) {
         sleep(1000);
-        SEARCH_ITEM_ADDRESS_TEXT.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(content)));
+        SEARCH_ITEM_ADDRESS.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(content)));
     }
 
     public void verifyResultSearchBuildingDeveloper(String developer) {
@@ -116,15 +114,6 @@ public class NovostroykiPage {
         String price = SEARCH_PRICE_LIST_PRICE.getText();
         return RegexpMeth.extractPriceOrAreaDouble(price);
     }
-    public void checkPriceValue(double expectedPrice, double actualPrice) {
-        Assertions.assertEquals(expectedPrice, actualPrice);
-    }
-
-    public void checkSearchPriceListRoomForBuildingWithoutFlatsFromTrendAgent() {
-        String value = SEARCH_PRICE_LIST_ROOM.getText();
-        Assertions.assertEquals("Квартиры",value);
-    }
-
     public int getPricePerSquareValue() {
         String price = SEARCH_ITEM_TOTAL_AREA.getText();
        String priceWithoutSpase = RegexpMeth.removeSpacesFromString(price);

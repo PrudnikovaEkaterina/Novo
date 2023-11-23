@@ -16,13 +16,13 @@ import ru.dom_novo.web.tests.TestBase;
 public class FavoritesCallMeTests extends TestBase {
     FavoritesPage favoritesPage = new FavoritesPage();
     CallMeWidgetComponent callMeWidgetComponent = new CallMeWidgetComponent();
-    String phoneNumber = GenerationData.setRandomPhoneNumber();
+    String phoneNumber = GenerationData.setRandomUserPhone();
 
     @BeforeEach
-    void beforeEach() throws InterruptedException {
-        UserFavoritesApiSteps.addBuildingToUserFavorites(phoneNumber);
+    void beforeEach() {
+        UserFavoritesApiSteps.addBuildingToUserFavoritesUsePhoneNumber(phoneNumber);
         favoritesPage
-                .openMePageWithApiAuth(phoneNumber)
+                .openFavoritesPageWithAuthUsePhoneNumber(phoneNumber)
                 .checkFavoritesHeaderTitle();
     }
 
