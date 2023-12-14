@@ -22,10 +22,10 @@ public class HeaderComponent {
             USER_MENU_DROPDOWN_TEXT_PROFILE = $$(".user-menu__dropdown-text").first(),
             USER_MENU_DROPDOWN_TEXT_EXIT = $$(".user-menu__dropdown-text").last(),
             HEADER_LOGO = $(".one-column-header__logo"),
-            FAVORITES_ICON = $x("//*[@href='/build/desktop/sprite.1101afdc.svg#favorite-2-usage']"),
+            FAVORITES_ICON = $x("//*[@href='#favorite-2-sprite']"),
             FAVORITES_TEXT = $(".favorites-menu-dropdown__favorites-text"),
             FAVORITES_COUNTER = $(".favorites-menu-dropdown__favorites-counter"),
-            ACCOUNT_ICON = $x("//*[@href='/build/desktop/sprite.1101afdc.svg#account-2-usage']");
+            ACCOUNT_ICON = $x("//*[@href='#account-2-sprite']");
 
     private final ElementsCollection
             FAVORITES_MENU_DROPDOWN = $$(".favorites-menu-dropdown__dropdown-item");

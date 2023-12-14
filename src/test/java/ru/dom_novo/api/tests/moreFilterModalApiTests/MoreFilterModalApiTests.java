@@ -116,7 +116,7 @@ public class MoreFilterModalApiTests {
     void searchRenovation(RenovationEnum renovationEnum) {
         String renovation = renovationEnum.id;
         List<Integer> buildingIdList = MoreFilterModalApiSteps.getBuildingIdListWithFilterRenovation(renovation);
-        List<Integer> buildingIdListDao = FlatService.getBuildingIdFromFlatsWithFilterRenovation(renovation).stream().filter(el -> el != 10375).collect(Collectors.toList());
+        List<Integer> buildingIdListDao = FlatService.getBuildingIdFromFlatsWithFilterRenovation(renovation).stream().collect(Collectors.toList());
         Collections.sort(buildingIdList);
         Collections.sort(buildingIdListDao);
         assertThat(buildingIdList, is(buildingIdListDao));

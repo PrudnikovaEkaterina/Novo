@@ -24,7 +24,7 @@ public class CallMeTests extends TestBase {
     @DisplayName("Отправить заполненную форму Заказать звонок и проверить добавление соответсвующей записи в БД")
     void orderCallBackAndCheckAdditionInDatabase() {
         String callbackPhoneModalTitle = "Укажите Ваш номер телефона и мы перезвоним!";
-        String phoneNumber = GenerationData.setRandomUserPhone();
+        String phoneNumber = "71234567890";
         String phoneThanksModalTitle = "Спасибо!\n" + "Мы уже обрабатываем вашу заявку";
         novostroykiPage
                 .hoverSearchItemContent()
