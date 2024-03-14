@@ -70,12 +70,14 @@ public class NovostroykiPage {
         TAG.findBy(Condition.text(tagName)).shouldBe(Condition.visible);
     }
 
+    @Step("Check the opening of the modal by clicking on the All filters button")
     public MoreFiltersModalComponent openMoreFiltersModal() {
         MORE_FILTERS_BUTTON.click();
         moreFiltersModal.verifyModalHeaderText();
         return moreFiltersModal;
     }
 
+    @Step("Get count of buildings on the page")
     public int getSearchNovostroykiContentTotal() {
         String[] mas = SEARCH_NOVOSTROYKI_CONTENT_TOTAL.getText().split(" ");
         return Integer.parseInt(mas[1]);
