@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.dom_novo.dataBase.dao.BuildingDao;
 import ru.dom_novo.dataBase.services.BuildingService;
+import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.CardNovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
@@ -32,9 +33,11 @@ public class CardNovostroykiWithoutFlatsFromTrendAgentTests extends TestBase {
 //        int buildingId =BuildingService.getBuildingIdWithoutFlatsWherePricesExistUnitPriceMin();
         int priceMin = BuildingService.selectPriceMin(buildingId, title);
         if (priceMin != 0) {
-            cardNovostroykiPage.openCard(buildingId);
-            int cardNovostroykiPriceValue = cardNovostroykiPage.getPriceValue();
-            int cardNovostroykiProfilePriceValue = cardNovostroykiPage.getProfilePriceValue();
+            cardNovostroykiPage.open(buildingId);
+            String priceValue = cardNovostroykiPage.getPriceValue();
+            int cardNovostroykiPriceValue = RegexpMeth.extractPrice(RegexpMeth.removeSpacesFromString(priceValue));
+            String profilePriceValue = cardNovostroykiPage.getProfilePriceValue();
+            int cardNovostroykiProfilePriceValue = RegexpMeth.extractPrice(RegexpMeth.removeSpacesFromString(profilePriceValue));
             assertThat(cardNovostroykiPriceValue, is(priceMin));
             assertThat(cardNovostroykiProfilePriceValue, is(priceMin));
         }

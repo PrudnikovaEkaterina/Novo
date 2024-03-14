@@ -4,7 +4,6 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.dom_novo.dataBase.services.CallbackPhonesService;
-import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.NovostroykiPage;
 import ru.dom_novo.web.tests.TestBase;
 

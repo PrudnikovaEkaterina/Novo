@@ -29,9 +29,9 @@ public class GenerationData {
         return faker.options().option(HousingClassEnum.values()).name;
     }
 
-//    public static String setRandomPhoneNumber() {
-//        return "7" + faker.phoneNumber().subscriberNumber(10);
-//    }
+    public static String setRandomPhoneNumber() {
+        return "7" + faker.phoneNumber().subscriberNumber(10);
+    }
 
     public static String setRandomUserName() {
         return faker.name().firstName();

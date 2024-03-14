@@ -34,7 +34,7 @@ public class FavoritesItemsSortTests extends TestBase {
                 .openFavoritesPageWithAuthUseLoginResponse(loginResponse)
                 .checkFavoritesHeaderTitle()
                 .setSortFavoritesBuildings(sort)
-                .getBuildingsTitleEng();
+                .collectBuildingsTitleEng();
     }
 
     @Test

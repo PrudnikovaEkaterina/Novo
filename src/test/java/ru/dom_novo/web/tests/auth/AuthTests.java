@@ -5,6 +5,7 @@ import io.qameta.allure.Story;
 import org.aeonbits.owner.ConfigCache;
 import org.junit.jupiter.api.*;
 import ru.dom_novo.config.AuthConfig;
+import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.AuthPage;
 import ru.dom_novo.web.pages.components.HeaderComponent;
 import ru.dom_novo.web.tests.TestBase;
@@ -23,24 +24,24 @@ public class AuthTests extends TestBase {
         authPage.openAuthPage();
     }
 
-//    @Test
-//    @Disabled
-//    @DisplayName("Позитивная проверка регистрации нового пользователя")
-//    void registrationNewUserSuccessful() {
-//        String phoneNumber = GenerationData.setRandomPhoneNumber();
-//        String smsCode = authConfig.smsCode();
-//        String userName = GenerationData.setRandomUserName();
-//        authPage.
-//                setPhone(phoneNumber)
-//                .clickAuthUserByPhoneConfirmLink()
-//                .clickButtonSendCode()
-//                .setSmsCode(smsCode)
-//                .checkAuthTitle()
-//                .setUserName(userName)
-//                .clickCompleteAuthNameButton();
-//        header.checkAccountName(userName);
-//        header.hoverHeaderAccountIconAndCheckUserMenuDropdownText();
-//    }
+    @Test
+    @Disabled
+    @DisplayName("Позитивная проверка регистрации нового пользователя")
+    void registrationNewUserSuccessful() {
+        String phoneNumber = GenerationData.setRandomPhoneNumber();
+        String smsCode = authConfig.smsCode();
+        String userName = GenerationData.setRandomUserName();
+        authPage.
+                setPhone(phoneNumber)
+                .clickCheckboxAuthConfirm()
+                .clickButtonSendCode()
+                .setSmsCode(smsCode)
+                .checkAuthTitle()
+                .setUserName(userName)
+                .clickCompleteAuthNameButton();
+        header.checkAccountName(userName);
+        header.hoverHeaderAccountIconAndCheckUserMenuDropdownText();
+    }
 
     @Test
     @DisplayName("Позитивная проверка авторизации пользователя")
@@ -49,7 +50,7 @@ public class AuthTests extends TestBase {
         String smsCode = authConfig.smsCode();
         authPage.
                 setPhone(phoneNumber)
-                .clickAuthUserByPhoneConfirmLink()
+                .clickCheckboxAuthConfirm()
                 .clickButtonSendCode()
                 .setSmsCode(smsCode);
         header.hoverHeaderAccountIconAndCheckUserMenuDropdownText();

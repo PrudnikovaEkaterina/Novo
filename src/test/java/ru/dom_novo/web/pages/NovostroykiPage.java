@@ -1,6 +1,7 @@
 package ru.dom_novo.web.pages;
 
 import com.codeborne.selenide.*;
+import io.qameta.allure.Step;
 import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.web.pages.components.CallMeWidgetComponent;
 import ru.dom_novo.web.pages.components.FooterComponent;
@@ -20,7 +21,7 @@ public class NovostroykiPage {
             CALL_ME_WIDGET_BUTTON_ICON = $x("//div[@class='call-me-widget search-item__call-me'][1]"),
             SEARCH_NOVOSTROYKI_CONTENT_TOTAL = $(".search-novostroyki-content__total"),
             SEARCH_PRICE_LIST_PRICE = $(".search-price-list__price"),
-            SEARCH_ITEM_TOTAL_AREA =$(".search-item__total-area");
+            SEARCH_ITEM_TOTAL_AREA = $(".search-item__total-area");
 
     private final ElementsCollection
             SEARCH_ITEM_ADDRESS = $$(".search-item__address"),
@@ -33,32 +34,38 @@ public class NovostroykiPage {
     CallMeWidgetComponent callMeWidget = new CallMeWidgetComponent();
     FooterComponent footer = new FooterComponent();
 
+    @Step("Open the novostroyki page")
     public void openNovostroykiPage() {
         open("/novostroyki");
     }
 
+    @Step("Open the novostroyki page with get parameters buildingId = {buildingId} and no_flats = 1")
     public void openNovostroykiPageWithFilterNoFlatsAndBuildingId(int buildingId) {
         open("/novostroyki?buildings=" + buildingId + "&no_flats=1");
     }
 
-
+    @Step("Check the title of the building in the search results")
     public void verifySearchBuildingTitleText(String title) {
         SEARCH_ITEM_TITLE_TEXT.shouldHave(Condition.text(title));
     }
 
+    @Step("Check that the building address contains {content}")
     public void verifyResultSearchBuildingContent(String content) {
         sleep(1000);
         SEARCH_ITEM_ADDRESS.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(content)));
     }
 
+    @Step("Check that the building developer contains {developer}")
     public void verifyResultSearchBuildingDeveloper(String developer) {
         SEARCH_ITEM_DEVELOPER_TEXT.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(developer)));
     }
 
-    public void verifyResultSearchByFilterRooms(String rooms) {
-        SEARCH_PRICE_LIST_TABLE.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(rooms)));
+    @Step("Check that flats prices section contains room {room}")
+    public void verifyResultSearchByFilterRooms(String room) {
+        SEARCH_PRICE_LIST_TABLE.shouldBe(CollectionCondition.allMatch("all elements contains text", el -> el.getText().contains(room)));
     }
 
+    @Step("Check appearances tag {tagName} after applying filter")
     public void verifyTagVisible(String tagName) {
         TAG.findBy(Condition.text(tagName)).shouldBe(Condition.visible);
     }
@@ -109,30 +116,33 @@ public class NovostroykiPage {
                 b = false;
         }
     }
+
     public double getRoomPriceValue() {
         sleep(1000);
         String price = SEARCH_PRICE_LIST_PRICE.getText();
         return RegexpMeth.extractPriceOrAreaDouble(price);
     }
+
     public int getPricePerSquareValue() {
         String price = SEARCH_ITEM_TOTAL_AREA.getText();
-       String priceWithoutSpase = RegexpMeth.removeSpacesFromString(price);
-       return RegexpMeth.extractPrice(priceWithoutSpase);
+        String priceWithoutSpase = RegexpMeth.removeSpacesFromString(price);
+        return RegexpMeth.extractPrice(priceWithoutSpase);
     }
 
     public double getRoomPriceValue(String room) {
         sleep(1000);
-        String price = $x("//td[text()='"+room+"']/following-sibling::td[2]").getText();
+        String price = $x("//td[text()='" + room + "']/following-sibling::td[2]").getText();
         return RegexpMeth.extractPriceOrAreaDouble(price);
     }
 
     public String getRoomAreaValue(String room) {
         sleep(1000);
-        String area =  $x("//td[text()='"+room+"']/following-sibling::td[1]").getText();
+        String area = $x("//td[text()='" + room + "']/following-sibling::td[1]").getText();
         return RegexpMeth.extractPriceOrAreaDouble1(area);
     }
-    public String getTextFromSearchFiltersTags(){
-      return   SEARCH_FILTERS_TAGS.first().getText();
+
+    public String getTextFromSearchFiltersTags() {
+        return SEARCH_FILTERS_TAGS.first().getText();
     }
 
 }

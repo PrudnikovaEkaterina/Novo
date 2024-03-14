@@ -37,7 +37,7 @@ public class GoHeaderLinksTests extends TestBase {
     void followingHelpInChoosingLink() {
         header
                 .followingApartmentQuizModalLink()
-                .verifyApartmentQuizModalTitle();
+                .checkApartmentQuizModalTitle();
     }
 
     @Test
@@ -61,8 +61,8 @@ public class GoHeaderLinksTests extends TestBase {
     void followingSingInLink() {
         header
                 .checkVisibleSignInLinkForUnauthorizedUser()
-                .followingSingInLink()
-                .verifyUrlFollowingSingInLink();
+                .followingLoginLink()
+                .verifyUrlFollowingLoginLink();
     }
 
 }

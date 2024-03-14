@@ -16,6 +16,7 @@ import ru.dom_novo.web.tests.TestBase;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
 import static com.codeborne.selenide.Selenide.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -25,52 +26,46 @@ import static org.hamcrest.Matchers.is;
 @Owner("PrudnikovaEkaterina")
 @TmsLink("https://tracker.yandex.ru/NOVODEV-575")
 public class CardNovostroykiDocumentsTests extends TestBase {
-    CardNovostroykiPage cardNovostroykiPage =new CardNovostroykiPage();
-    int buildingId=GenerationData.setRandomBuildingId();
+    CardNovostroykiPage cardNovostroykiPage = new CardNovostroykiPage();
+    int buildingId = GenerationData.setRandomBuildingId();
     List<DocumentModel> documentList = CardNovostroykiDocumentsApiSteps.getDocumentsList(buildingId);
     int documentListSize = CardNovostroykiDocumentsApiSteps.getDocumentsListSize(documentList);
     List<String> documentTitleListApi = CardNovostroykiDocumentsApiSteps.getDocumentsTitleList(documentList);
 
     @Test
     @DisplayName("Проверить отображение блока Документация в карточке ЖК")
-    void checkCardSectionDocumentTitle () {
+    void checkCardSectionDocumentTitle() {
         cardNovostroykiPage
-                .openCard(buildingId)
+                .open(buildingId)
                 .checkCardSectionDocumentTitle();
     }
 
     @Test
     @DisplayName("Проверить, что количество документов в блоке Документация соответсвует данным из апи")
-    void checkCardDocumentsSize () {
-        cardNovostroykiPage
-                .openCard(buildingId)
-                .hoverCardSectionDocumentTitle();
+    void checkCardDocumentsSize() {
+        cardNovostroykiPage.open(buildingId).checkCardSectionDocumentTitle();
         while (cardNovostroykiPage.checkVisibleCardDocumentsShowMoreButton()) {
-           cardNovostroykiPage
-                   .clickCardDocumentsShowMoreButton()
-                   .hoverCardSectionDocumentTitle();}
+            cardNovostroykiPage.clickCardDocumentsShowMoreButton();
+        }
         cardNovostroykiPage.checkCardDocumentsListSize(documentListSize);
     }
 
     @Test
     @DisplayName("Проверить, что title каждого из документов в блоке Документация соответсвует данным из апи")
-    void checkCardDocumentsTitles () {
-        cardNovostroykiPage
-                .openCard(buildingId)
-                .hoverCardSectionDocumentTitle();
+    void checkCardDocumentsTitles() {
+        cardNovostroykiPage.open(buildingId).checkCardSectionDocumentTitle();
         while (cardNovostroykiPage.checkVisibleCardDocumentsShowMoreButton()) {
-            cardNovostroykiPage
-                    .clickCardDocumentsShowMoreButton()
-                    .hoverCardSectionDocumentTitle();}
-        List<String> titleListWeb= cardNovostroykiPage.getCardDocumentsTitle();
-        assertThat(titleListWeb, is(documentTitleListApi));
+            cardNovostroykiPage.clickCardDocumentsShowMoreButton();
+            List<String> titleListWeb = cardNovostroykiPage.getCardDocumentsTitle();
+            assertThat(titleListWeb, is(documentTitleListApi));
+        }
     }
 
     @Test
     @DisplayName("Проверить загрузку и чтение файла формата .pdf по ссылке в блоке Документация")
-    void checkDownloadPdfFile () throws IOException {
-        cardNovostroykiPage.openCard(15054);
-        String expectedText="Прокшино";
+    void checkDownloadPdfFile() throws IOException {
+        cardNovostroykiPage.open(15054);
+        String expectedText = "Прокшино";
         File download = $("a[href*='https://move.ru/novostroyka/admin_document/16271402/']").download();
         PDF pdf = new PDF(download);
         Assertions.assertTrue(pdf.text.contains(expectedText));

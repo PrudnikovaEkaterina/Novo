@@ -5,6 +5,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 import ru.dom_novo.api.steps.meApiSteps.MeApiSteps;
+import ru.dom_novo.regexp.RegexpMeth;
 import ru.dom_novo.testData.GenerationData;
 import ru.dom_novo.web.pages.FavoritesPage;
 import ru.dom_novo.web.tests.TestBase;
@@ -54,7 +55,7 @@ public class FavoritesManagerTests extends TestBase {
     void checkFavoritesManagerPhone () {
         String managerPhoneExpected = MeApiSteps.getUserManagerPhone(phoneNumber);
         String managerPhoneDefault = MeApiSteps.getDefaultManagerPhone();
-        String managerPhoneActual = favoritesPage.getFavoritesManagerPhone();
+        String managerPhoneActual = RegexpMeth.getAllNumbersFromString(favoritesPage.getFavoritesManagerPhone());
         if (managerPhoneExpected!=null)
             assertThat(managerPhoneActual, is(managerPhoneExpected));
         else

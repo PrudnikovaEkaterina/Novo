@@ -21,7 +21,7 @@ public class HeaderLogoTests extends TestBase {
     @Test
     @DisplayName("Переход c карточки ЖК на главную при клике на логотип в header")
     void checkGoToMainPageFromCardPageAfterClickHeaderLogo ()  {
-       cardNovostroykiPage.openCard(GenerationData.setRandomBuildingId());
+       cardNovostroykiPage.open(GenerationData.setRandomBuildingId());
        headerComponent
                .clickHeaderLogo()
                .checkGoToMainPageAfterClickHeaderLogo();

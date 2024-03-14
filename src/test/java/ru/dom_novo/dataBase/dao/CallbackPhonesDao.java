@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import ru.dom_novo.dataBase.DataSourceProvider;
 import ru.dom_novo.dataBase.entities.CallbackPhonesEntity;
 import java.util.List;
+//перенесла в hibernate
 
 public class CallbackPhonesDao {
 

@@ -4,7 +4,7 @@ import ru.dom_novo.dataBase.dao.CallbackPhonesDao;
 import ru.dom_novo.dataBase.entities.CallbackPhonesEntity;
 
 import java.util.List;
-
+//перенесла в hibernate
 public class CallbackPhonesService {
     public static String getPhoneNumberFromLastCallback() {
         List<CallbackPhonesEntity> list = CallbackPhonesDao.selectLastEntryFromCallbackPhonesTables();

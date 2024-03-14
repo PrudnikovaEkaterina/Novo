@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//перенесла в hibernate
+
 public class FavoritesDao {
     private static final JdbcTemplate jdbcTemplate = new JdbcTemplate(
             DataSourceProvider.INSTANCE.getDataSource()
